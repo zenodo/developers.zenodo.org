@@ -1,5 +1,10 @@
 ## Changes
 
+**2016-09-12**
+
+- Added support for search, pagination, sorting and filtering.
+- Improved speed significantly.
+
 **2015-10-06**
 
 - Added new optional field `contributors` to deposition metadata.
