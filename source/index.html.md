@@ -1,13 +1,14 @@
 ---
-title: Developers - Zenodo
+title: Developers | Zenodo
 
 language_tabs:
-  - shell: cURL
   - python: Python
+  - shell: cURL
 
 toc_footers:
-  - <a href="https://zenodo.org/donate">Donate</a>
-  - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
+  - <a href="https://zenodo.org/privacy-policy">Privacy policy</a>
+  - <a href='https://zenodo.org/terms'>Terms of Use</a>
+  - <a href='https://zenodo.org/contact'>Contact</a>
 
 includes:
   - overview/introduction

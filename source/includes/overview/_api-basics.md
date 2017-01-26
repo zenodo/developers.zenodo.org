@@ -4,9 +4,9 @@ We provide a sandbox environment where you can test your API integration
 during development. The sandbox environment is available at
 [http://sandbox.zenodo.org](https://sandbox.zenodo.org).
 
-Please note that the sandbox environment can be cleaned at anytime. Also, the
-sandbox environment will issue test DOIs using the 10.5072 prefix instead of
-Zenodo's normal prefix (10.5281).
+Please note that the sandbox environment can be **cleaned at anytime**.
+Also, the sandbox environment will issue test DOIs using the 10.5072 prefix
+instead of Zenodo's normal prefix (10.5281).
 
 ## Versioning
 
@@ -37,9 +37,24 @@ HTTP will fail. We support authentication with via OAuth 2.0.
 
 ### Using access tokens
 
-A access token must be included in all requests as a URL parameter:
+An access token must be included in all requests as either:
 
-`https://zenodo.org/api/deposit/depositions?access_token=ACCESS_TOKEN`
+```
+GET /api/deposit/depositions?access_token=ACCESS_TOKEN
+```
+
+- an URL parameter (named ``access_token``):
+
+<div class="align-columns"></div>
+
+```
+GET /api/deposit/depositions
+Authorization: Bearer <ACCESS_TOKEN>
+```
+
+- or as HTTP request header (``Authorization``):
+
+<div class="align-columns"></div>
 
 ### Scopes
 

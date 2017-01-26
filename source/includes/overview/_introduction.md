@@ -1,15 +1,23 @@
-# Overview
+# REST API
 
 ## Introduction
 
-Zenodo currently offers two different APIs:
+The Zenodo REST API currently supports:
 
-* **REST API** — includes support for uploading your research outputs.
-* **OAI-PMH API** — allows you to harvest all or parts of Zenodo via the OAI-PMH
-  protocol.
+* **Deposit** — upload and publishing of research outputs (identical to
+  functionality available in the user interface).
 
-Check out the [Quickstart](#quickstart) guide for a quick example.
+Check out the [Quickstart](#quickstart) guide for an example on how to
+programmatically upload and publish your research outputs.
 
-The REST API allows you to programmatically upload and publish research outputs
-on Zenodo, with the same functionality which is available in our
-[Upload](https://zenodo.org/deposit) user interface.
+The following REST APIs are currently in testing before we launch them in
+**beta** with full documentation:
+
+* **Records** — search published records.
+* **Files** — download/upload of files.
+* **Communities** - search communities.
+* **Funders** — search for funders.
+* **Grants** — search for grants.
+* **Licenses** — search for licenses.
+
+You can have a sneak peek at the APIs in test from our root endpoint: `https://zenodo.org/api/`
