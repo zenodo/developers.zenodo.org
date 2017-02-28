@@ -1,7 +1,6 @@
 ### Representation
 
 The Deposition resource is used for uploading and editing records on Zenodo.
-(`TODO: add richer description of the resource`)
 
 
 #### Deposit
