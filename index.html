@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Developers - Zenodo</title>
+    <title>Developers | Zenodo</title>
 
     <style>
       .highlight table td { padding: 5px; }
@@ -92,7 +92,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,100,italic" rel="stylesheet">
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;python&quot;]">
+  <body class="index" data-languages="[&quot;python&quot;,&quot;shell&quot;]">
     <div class="header">
       <a class="logo-container" href="https://zenodo.org">
         <img src="images/zenodo.svg" alt="Zenodo" />
@@ -115,8 +115,8 @@
     </a>
     <div class="tocify-wrapper">
         <div class="lang-selector">
-              <a href="#" data-language-name="shell">cURL</a>
               <a href="#" data-language-name="python">Python</a>
+              <a href="#" data-language-name="shell">cURL</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -125,8 +125,9 @@
       <div id="toc">
       </div>
         <ul class="toc-footer">
-            <li><a href="https://zenodo.org/donate">Donate</a></li>
-            <li><a href='https://github.com/lord/slate'>Documentation Powered by Slate</a></li>
+            <li><a href="https://zenodo.org/privacy-policy">Privacy policy</a></li>
+            <li><a href='https://zenodo.org/terms'>Terms of Use</a></li>
+            <li><a href='https://zenodo.org/contact'>Contact</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
@@ -134,33 +135,46 @@
         <div class="dark-box"></div>
         <div class="content">
           
-            <h1 id="overview">Overview</h1>
+            <h1 id="rest-api">REST API</h1>
 
 <h2 id="introduction">Introduction</h2>
 
-<p>Zenodo currently offers two different APIs:</p>
+<p>The Zenodo REST API currently supports:</p>
 
 <ul>
-<li><strong>REST API</strong> — includes support for uploading your research outputs.</li>
-<li><strong>OAI-PMH API</strong> — allows you to harvest all or parts of Zenodo via the OAI-PMH
-protocol.</li>
+<li><strong>Deposit</strong> — upload and publishing of research outputs (identical to
+functionality available in the user interface).</li>
 </ul>
 
-<p>Check out the <a href="#quickstart">Quickstart</a> guide for a quick example.</p>
+<p>Check out the <a href="#quickstart">Quickstart</a> guide for an example on how to
+programmatically upload and publish your research outputs.</p>
 
-<p>The REST API allows you to programmatically upload and publish research outputs
-on Zenodo, with the same functionality which is available in our
-<a href="https://zenodo.org/deposit">Upload</a> user interface.</p>
+<p>The following REST APIs are currently in testing before we launch them in
+<strong>beta</strong> with full documentation:</p>
 
-            <h2 id="quickstart">Quickstart</h2>
+<ul>
+<li><strong>Records</strong> — search published records.</li>
+<li><strong>Files</strong> — download/upload of files.</li>
+<li><strong>Communities</strong> - search communities.</li>
+<li><strong>Funders</strong> — search for funders.</li>
+<li><strong>Grants</strong> — search for grants.</li>
+<li><strong>Licenses</strong> — search for licenses.</li>
+</ul>
+
+<p>You can have a sneak peek at the APIs in test from our root endpoint: <code class="prettyprint">https://zenodo.org/api/</code></p>
+
+            <h2 id="quickstart-upload">Quickstart - Upload</h2>
 
 <p>This short guide will give a quick overview of how to upload and publish on
-Zenodo, and will be using Python together with the <a href="http://www.python-
-requests.org/en/latest/user/install/">Requests</a> package.</p>
+Zenodo, and will be using Python together with the
+<a href="http://www.python-requests.org/en/latest/user/install/">Requests</a> package.</p>
 <pre class="highlight shell_session"><code><span class="w">$ </span><span class="nc">pip</span><span class="kv"> install requests
 </span></code></pre>
-<p>First, make sure you have the <a href="http://www.python-
-requests.org/en/latest/user/install/">Requests</a> module installed:</p>
+<ul>
+<li>First, make sure you have the
+<a href="http://www.python-requests.org/en/latest/user/install/">Requests</a> module
+installed:</li>
+</ul>
 
 <div class="align-columns"></div>
 <pre class="highlight shell_session"><code><span class="w">$ </span><span class="nc">python</span><span class="kv">
@@ -168,21 +182,26 @@ requests.org/en/latest/user/install/">Requests</a> module installed:</p>
 [GCC 4.8.1] on linux2
 Type "help", "copyright", "credits" or "license" for more information.
 </code></pre>
-<p>Next, fire up a Python command prompt:</p>
+<ul>
+<li>Next, fire up a Python command prompt:</li>
+</ul>
 
 <div class="align-columns"></div>
 <pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">json</span>
 </code></pre>
-<p>Import the <code class="prettyprint">requests</code> and <code class="prettyprint">json</code> modules:</p>
+<ul>
+<li>Import the <code class="prettyprint">requests</code> module:</li>
+</ul>
 
 <div class="align-columns"></div>
-<pre class="highlight python"><code><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"https://zenodo.org/api/deposit/depositions"</span><span class="p">)</span>
-<span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+<pre class="highlight python"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"https://zenodo.org/api/deposit/depositions"</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
 <span class="mi">401</span>
-<span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre>
-<p>Try to access the API:</p>
+<ul>
+<li>Try to access the API:</li>
+</ul>
 
 <div class="align-columns"></div>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
@@ -193,19 +212,23 @@ Type "help", "copyright", "credits" or "license" for more information.
   </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">401</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>All API access requires an access token, so
-<a href="https://zenodo.org/account/settings/applications/tokens/new/">create</a> one.</p>
+<ul>
+<li>All API access requires an access token, so
+<a href="https://zenodo.org/account/settings/applications/tokens/new/">create</a> one.</li>
+</ul>
 
 <div class="align-columns"></div>
 <pre class="highlight python"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions'</span><span class="p">,</span>
 <span class="o">...</span>                  <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">})</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
 <span class="mi">200</span>
-<span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 <span class="p">[]</span>
 </code></pre>
-<p>Let&rsquo;s try again (replace <code class="prettyprint">ACCESS_TOKEN</code> with your newly created personal
-access token):</p>
+<ul>
+<li>Let&rsquo;s try again (replace <code class="prettyprint">ACCESS_TOKEN</code> with your newly created personal
+access token):</li>
+</ul>
 
 <aside class="notice">
   Note, if you already uploaded something, the output will be different.
@@ -214,11 +237,10 @@ access token):</p>
 <div class="align-columns"></div>
 <pre class="highlight python"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">}</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions'</span><span class="p">,</span>
-<span class="o">...</span>                   <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">},</span> <span class="n">data</span><span class="o">=</span><span class="s">"{}"</span><span class="p">,</span>
+<span class="o">...</span>                   <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">},</span> <span class="n">json</span><span class="o">=</span><span class="p">{},</span>
 <span class="o">...</span>                   <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
 <span class="mi">201</span>
-
 <span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre><pre class="highlight json"><code><span class="p">{</span><span class="w">
   </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-15T16:10:03.319363+00:00"</span><span class="p">,</span><span class="w">
@@ -245,20 +267,20 @@ access token):</p>
   </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>Next, let&rsquo;s create a new empty upload:</p>
+<ul>
+<li>Next, let&rsquo;s create a new empty upload:</li>
+</ul>
 
 <div class="align-columns"></div>
 <pre class="highlight python"><code><span class="o">&gt;&gt;&gt;</span> <span class="c"># Get the deposition id from the previous response</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">deposition_id</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">'id'</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="c"># Maximum total record size is 50GB.</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'filename'</span><span class="p">:</span> <span class="s">'myfirstfile.csv'</span><span class="p">}</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">files</span> <span class="o">=</span> <span class="p">{</span><span class="s">'file'</span><span class="p">:</span> <span class="nb">open</span><span class="p">(</span><span class="s">'/path/to/myfirstfile.csv'</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)}</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/</span><span class="si">%</span><span class="s">s/files'</span> <span class="o">%</span> <span class="n">deposition_id</span><span class="p">,</span>
-<span class="o">...</span>                  <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">},</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
-<span class="o">...</span>                  <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">)</span>
+<span class="o">...</span>                   <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">},</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+<span class="o">...</span>                   <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
 <span class="mi">201</span>
-
 <span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
 </code></pre><pre class="highlight json"><code><span class="p">{</span><span class="w">
@@ -268,34 +290,39 @@ access token):</p>
   </span><span class="nt">"filesize"</span><span class="p">:</span><span class="w"> </span><span class="s2">"27"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>Now, let&rsquo;s upload a new file:</p>
+<ul>
+<li>Now, let&rsquo;s upload a new file:</li>
+</ul>
 
 <div class="align-columns"></div>
-<pre class="highlight python"><code><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">'metadata'</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s">'title'</span><span class="p">:</span> <span class="s">'My first upload'</span><span class="p">,</span>
-        <span class="s">'upload_type'</span><span class="p">:</span> <span class="s">'poster'</span><span class="p">,</span>
-        <span class="s">'description'</span><span class="p">:</span> <span class="s">'This is my first upload'</span><span class="p">,</span>
-        <span class="s">'creators'</span><span class="p">:</span> <span class="p">[{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'Doe, John'</span><span class="p">,</span>
-                      <span class="s">'affiliation'</span><span class="p">:</span> <span class="s">'Zenodo'</span><span class="p">}]</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/</span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="n">deposition_id</span><span class="p">,</span>
-                 <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">},</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
-                 <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-<span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+<pre class="highlight python"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+<span class="o">...</span>     <span class="s">'metadata'</span><span class="p">:</span> <span class="p">{</span>
+<span class="o">...</span>         <span class="s">'title'</span><span class="p">:</span> <span class="s">'My first upload'</span><span class="p">,</span>
+<span class="o">...</span>         <span class="s">'upload_type'</span><span class="p">:</span> <span class="s">'poster'</span><span class="p">,</span>
+<span class="o">...</span>         <span class="s">'description'</span><span class="p">:</span> <span class="s">'This is my first upload'</span><span class="p">,</span>
+<span class="o">...</span>         <span class="s">'creators'</span><span class="p">:</span> <span class="p">[{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'Doe, John'</span><span class="p">,</span>
+<span class="o">...</span>                       <span class="s">'affiliation'</span><span class="p">:</span> <span class="s">'Zenodo'</span><span class="p">}]</span>
+<span class="o">...</span>     <span class="p">}</span>
+<span class="o">...</span> <span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/</span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="n">deposition_id</span><span class="p">,</span>
+<span class="o">...</span>                  <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">},</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+<span class="o">...</span>                  <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
 <span class="mi">200</span>
 </code></pre>
-<p>Last thing missing, is just to add some metadata:</p>
+<ul>
+<li>Last thing missing, is just to add some metadata:</li>
+</ul>
 
 <div class="align-columns"></div>
-<pre class="highlight python"><code><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/</span><span class="si">%</span><span class="s">s/actions/publish'</span> <span class="o">%</span> <span class="n">deposition_id</span><span class="p">,</span>
-                  <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">}</span> <span class="p">)</span>
-<span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+<pre class="highlight python"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/</span><span class="si">%</span><span class="s">s/actions/publish'</span> <span class="o">%</span> <span class="n">deposition_id</span><span class="p">,</span>
+                      <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">}</span> <span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
 <span class="mi">202</span>
 </code></pre>
-<p>And we&rsquo;re ready to publish:</p>
+<ul>
+<li>And we&rsquo;re ready to publish:</li>
+</ul>
 
 <aside class="warning">
   Don&rsquo;t execute this last step - it will put your test upload straight online.
@@ -307,9 +334,9 @@ access token):</p>
 during development. The sandbox environment is available at
 <a href="https://sandbox.zenodo.org">http://sandbox.zenodo.org</a>.</p>
 
-<p>Please note that the sandbox environment can be cleaned at anytime. Also, the
-sandbox environment will issue test DOIs using the 10.5072 prefix instead of
-Zenodo&rsquo;s normal prefix (10.5281).</p>
+<p>Please note that the sandbox environment can be <strong>cleaned at anytime</strong>.
+Also, the sandbox environment will issue test DOIs using the 10.5072 prefix
+instead of Zenodo&rsquo;s normal prefix (10.5281).</p>
 
 <h2 id="versioning">Versioning</h2>
 
@@ -341,9 +368,22 @@ to <a href="https://zenodo.org/account/settings/applications/tokens/new/">create
 
 <h3 id="using-access-tokens">Using access tokens</h3>
 
-<p>A access token must be included in all requests as a URL parameter:</p>
+<p>An access token must be included in all requests as either:</p>
+<pre class="highlight plaintext"><code>GET /api/deposit/depositions?access_token=&lt;ACCESS_TOKEN&gt;
+</code></pre>
+<ul>
+<li>an URL parameter (named <code class="prettyprint">access_token</code>):</li>
+</ul>
 
-<p><code class="prettyprint">https://zenodo.org/api/deposit/depositions?access_token=ACCESS_TOKEN</code></p>
+<div class="align-columns"></div>
+<pre class="highlight plaintext"><code>GET /api/deposit/depositions
+Authorization: Bearer &lt;ACCESS_TOKEN&gt;
+</code></pre>
+<ul>
+<li>or as HTTP request header (<code class="prettyprint">Authorization</code>):</li>
+</ul>
+
+<div class="align-columns"></div>
 
 <h3 id="scopes">Scopes</h3>
 
@@ -509,14 +549,13 @@ possibly an attribute <code class="prettyprint">errors</code> with a list of mor
 <p>The attribute <code class="prettyprint">errors</code> is a JSON array of objects, with the attributes <code class="prettyprint">message</code>
 and <code class="prettyprint">code</code>, and possibly <code class="prettyprint">field</code> for validation errors.</p>
 
-            <h1 id="resources">Resources</h1>
+            <h1 id="entities">Entities</h1>
 
             <h2 id="depositions">Depositions</h2>
 
             <h3 id="representation">Representation</h3>
 
-<p>The Deposition resource is used for uploading and editing records on Zenodo.
-(<code class="prettyprint">TODO: add richer description of the resource</code>)</p>
+<p>The Deposition resource is used for uploading and editing records on Zenodo.</p>
 
 <h4 id="deposit">Deposit</h4>
 
@@ -791,13 +830,50 @@ and <code class="prettyprint">code</code>, and possibly <code class="prettyprint
 <p>List all depositions for the currently authenticated user.</p>
 <pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'/api/deposit/depositions'</span><span class="p">,</span>
-                        <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">})</span>
-<span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+                        <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'q'</span><span class="p">:</span> <span class="s">'my title'</span><span class="p">,</span>
+                                <span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">})</span>
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
 </code></pre><pre class="highlight shell"><code>curl -i /api/deposit/depositions/?access_token<span class="o">=</span>ACCESS_TOKEN
 </code></pre>
 <h4 id="http-request">HTTP Request</h4>
 
 <p><code class="prettyprint">GET /api/deposit/depositions</code></p>
+
+<h4 id="query-arguments">Query arguments</h4>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">q</code></br><em>string</em></td>
+<td style="text-align: left">optional</td>
+<td style="text-align: left">Search query (using Elasticsearch query string syntax).</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">status</code></br><em>string</em></td>
+<td style="text-align: left">optional</td>
+<td style="text-align: left">Filter result based on deposit status (either <code class="prettyprint">draft</code> or <code class="prettyprint">published</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">sort</code></br><em>string</em></td>
+<td style="text-align: left">optional</td>
+<td style="text-align: left">Sort order (<code class="prettyprint">bestmatch</code> or <code class="prettyprint">mostrecent</code>). Prefix with minus to change form ascending to descending (e.g. <code class="prettyprint">-mostrecent</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">page</code></br><em>integer</em></td>
+<td style="text-align: left">optional</td>
+<td style="text-align: left">Page number for pagination.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">size</code></br><em>integer</em></td>
+<td style="text-align: left">optional</td>
+<td style="text-align: left">Number of results to return per page.</td>
+</tr>
+</tbody></table>
 
 <h4 id="success-response">Success Response</h4>
 
@@ -974,6 +1050,12 @@ be deleted.</p>
 <a href="#errors">error responses</a>.</p>
 
             <h2 id="deposition-files">Deposition files</h2>
+
+<aside class="notice">
+    Heads up! We will be launching a new file API which is significant more
+    performant than the current API and which supports much larger file sizes.
+    The current API supports 100MB per file, the new supports 50GB per file.
+</aside>
 
             <h3 id="representation">Representation</h3>
 
@@ -1326,6 +1408,13 @@ depositions in state <code class="prettyprint">inprogress</code>).</li>
 
             <h2 id="changes">Changes</h2>
 
+<p><strong>2016-09-12</strong></p>
+
+<ul>
+<li>Added support for search, pagination, sorting and filtering.</li>
+<li>Improved speed significantly.</li>
+</ul>
+
 <p><strong>2015-10-06</strong></p>
 
 <ul>
@@ -1412,10 +1501,45 @@ not available for download.</p>
 
 <p><code class="prettyprint">https://zenodo.org/oai2d</code></p>
 
+<h2 id="resumption-tokens">Resumption tokens</h2>
+
+<p>Resumption tokens are only valid for <strong>2 minutes</strong>. In case a token expired, you will receive a <code class="prettyprint">422 Unprocessable Entity</code> HTTP error.</p>
+
+<aside class="notice">
+  This means that you must execute the next HTTP request using the
+  resumption token within those two minutes. We recommend that you offload any post processing of the harvested record to a background queue.
+</aside>
+
+<h2 id="rate-limit">Rate limit</h2>
+
+<p>The OAI-PMH API is rated limited like the REST API - i.e. you will receive
+a <code class="prettyprint">429 Too Many Requests</code> HTTP error if you exceed the limit.</p>
+
 <h2 id="metadata-formats">Metadata formats</h2>
 
 <p>Metadata for each record is available in several formats. The available formats
 include:</p>
+
+<p><strong><code class="prettyprint">oai_datacite</code></strong></p>
+
+<p>OAI DataCite (latest schema version) — This metadata format has been
+specifically established for the dissemination of DataCite records using
+OAI-PMH. In addition to the original DataCite metadata, this format contains
+several other elements describing the version of the metadata, whether it is of
+reference quality, and the registering datacentre. For more information about
+this format and its schema please see the
+<a href="http://oai.datacite.org/">DataCite OAI schema</a> website.</p>
+
+<p>This metadata format will always deliver metadata according to the latest
+available DataCite schema version.</p>
+
+<p><a href="https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=oai_datacite&amp;set=openaire_data">See example</a></p>
+
+<aside class="success">
+    We recommend you harvest using the &ldquo;oai_datacite&rdquo; metadata format. The
+    format contains the most complete metadata and is our primary supported
+    export format.
+</aside>
 
 <p><strong><code class="prettyprint">oai_datacite3</code></strong></p>
 
@@ -1426,25 +1550,25 @@ the version of the metadata, whether it is of reference quality, and the
 registering datacentre. For more information about this format and its schema
 please see the <a href="http://oai.datacite.org/">DataCite OAI schema</a> web site.</p>
 
-<aside class="success">
-    We recommend you harvest using this metadata format. The format
-    contains the most complete metadata and is our primary supported format.
+<aside class="notice">
+    Heads up! We will be upgrading to <a
+    href="http://schema.datacite.org/meta/kernel-4/index.html">DataCite
+    Metadata Schema v4.0</a> and discontinue support for DataCite v3.0 by end
+    February 2018, hence please ensure your OAI-PMH client are capable of
+    reading both versions. There are only few backwards incompatible changes
+    between v4.0 and v3.0.
 </aside>
 
-<p><a href="view-source:https://zenodo.org/oai2d?verb=ListRecords
-&amp;metadataPrefix=oai_datacite3&amp;set=openaire_data">See example</a></p>
+<p><a href="https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=oai_datacite3&amp;set=openaire_data">See example</a></p>
 
-<p><strong><code class="prettyprint">oai_datacite</code></strong></p>
+<p><strong><code class="prettyprint">datacite</code></strong></p>
 
-<p>OAI DataCite — This metadata format has been specifically established for the
-dissemination of DataCite records using OAI-PMH. In addition to the original
-DataCite metadata, this format contains several other elements describing the
-version of the metadata, whether it is of reference quality, and the registering
-datacentre. For more information about this format and its schema please see the
-<a href="http://oai.datacite.org/">DataCite OAI schema</a> web site.</p>
+<p>DataCite (latest version) — This metadata format contains only the original
+DataCite metadata without additions or alterations according to the latest
+DataCite schema. Please note that this format is not OAI-PMH  version 2.0
+compliant.</p>
 
-<p><a href="view-source:https://zenodo.org/oai2d?verb=ListRecords&amp;
-metadataPrefix=oai_datacite&amp;set=openaire_data">See example</a></p>
+<p><a href="https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=datacite&amp;set=openaire_data">See example</a></p>
 
 <p><strong><code class="prettyprint">datacite3</code></strong></p>
 
@@ -1453,34 +1577,25 @@ metadata without additions or alterations. The schema for this format does
 not exist and metadata will not validate against it. Please note that this
 format is not OAI-PMH version 2.0 compliant.</p>
 
-<p><a href="view-source:https://zenodo.org/oai2d?verb=ListRecords&amp;
-metadataPrefix=datacite3&amp;set=openaire_data">See example</a></p>
-
-<p><strong><code class="prettyprint">datacite</code></strong></p>
-
-<p>DataCite v2.2 — This metadata format contains only the original DataCite
-metadata without additions or alterations. The schema for this format does not
-exist and metadata will not validate against it. Please note that this format is
-not OAI-PMH version 2.0 compliant.</p>
-
 <aside class="notice">
-    Heads up! We will be upgrading to <a
-    href="http://schema.datacite.org/meta/kernel-3/index.html">DataCite Metadata
-    Schema v3.0</a> and discontinue support for DataCite v2.2, hence please
-    ensure your OAI-PMH client are capable of reading both versions. There are
-    only few backwards incompatible changes between v3.0 and v2.2.
+    Heads up! We will discontinue support for DataCite v3.0 by end
+    February 2018.
 </aside>
 
-<p><a href="view-source:https://zenodo.org/oai2d?verb=ListRecords&amp;
-metadataPrefix=datacite&amp;set=openaire_data">See example</a></p>
+<p><a href="https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=datacite3&amp;set=openaire_data">See example</a></p>
 
 <p><strong><code class="prettyprint">oai_dc</code></strong></p>
 
-<p>Dublin Core — only minimal metadata is included in this format, and is primarily
-provided for clients which does not support <code class="prettyprint">oai_datacite</code>.</p>
+<p>Dublin Core — only minimal metadata is included in this format. The format is exported according to the <a href="http;//guidelines.openaire.eu">OpenAIRE Guidelines</a>.</p>
 
-<p><a href="view-source:https://zenodo.org/oai2d?verb=ListRecords&amp;
-metadataPrefix=oai_dc&amp;set=openaire">See example</a></p>
+<p><a href="https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=oai_dc&amp;set=openaire">See example</a></p>
+
+<p><strong><code class="prettyprint">marc21</code></strong></p>
+
+<p>MARC21 — export format primarily supported for legacy reasons. Please consider
+using one of the other export formats as we may discontinue support for MARC21.</p>
+
+<p><a href="https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=marc21&amp;set=openaire">See example</a></p>
 
 <h2 id="sets">Sets</h2>
 
@@ -1507,20 +1622,22 @@ metadataPrefix=oai_datacite&amp;set=user-cfa">See example</a></p>
 
 <p>If you need selective harvesting and your use case is not supported by above
 sets, please <a href="http://about.zenodo.org/contact/">contact us</a> and we may possible
-set a specific set for you.</p>
+create a specific set for you.</p>
 
 <h2 id="update-schedule">Update schedule</h2>
 
-<p>Sets are updated once an hour.</p>
-
-<h2 id="rate-limit">Rate limit</h2>
-
-<p>The OAI-PMH API is rated limited to one request per 2 seconds. We would be
-grateful if you <a href="https://zenodo.org/support">notify us</a> that you are harvesting
-us and in which context. It allows us to take your use case into consideration
-for future developments.</p>
+<p>Most updates are available immediately, some few updates are only reflected in the OAI sets once an hour.</p>
 
 <h2 id="changes">Changes</h2>
+
+<p><strong>2016-09-12</strong></p>
+
+<ul>
+<li>Deprecated metadata formats <code class="prettyprint">datacite3</code> and <code class="prettyprint">oai_datacite3</code>. End of life is February 2018.</li>
+<li>Removed rate limit of 0.5 requests/second.</li>
+<li>Changed resumption token expiry to two minutes due to major update of our
+underlying repository software.</li>
+</ul>
 
 <p><strong>2014-03-10</strong></p>
 
@@ -1536,8 +1653,8 @@ v3.0.</li>
         </div>
         <div class="dark-box">
             <div class="lang-selector">
-                  <a href="#" data-language-name="shell">cURL</a>
                   <a href="#" data-language-name="python">Python</a>
+                  <a href="#" data-language-name="shell">cURL</a>
             </div>
         </div>
       </div>
