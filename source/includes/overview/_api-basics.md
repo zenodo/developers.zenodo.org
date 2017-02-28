@@ -40,7 +40,7 @@ HTTP will fail. We support authentication with via OAuth 2.0.
 An access token must be included in all requests as either:
 
 ```
-GET /api/deposit/depositions?access_token=ACCESS_TOKEN
+GET /api/deposit/depositions?access_token=<ACCESS_TOKEN>
 ```
 
 - an URL parameter (named ``access_token``):
