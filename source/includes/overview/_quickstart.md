@@ -95,6 +95,7 @@ access token):
     "edit": "https://zenodo.org/api/deposit/depositions/1234/actions/edit",
     "files": "https://zenodo.org/api/deposit/depositions/1234/files",
     "publish": "https://zenodo.org/api/deposit/depositions/1234/actions/publish",
+    "newversion": "https://zenodo.org/api/deposit/depositions/1234/actions/newversion",
     "self": "https://zenodo.org/api/deposit/depositions/1234"
   },
   "metadata": {

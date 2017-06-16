@@ -1,5 +1,9 @@
 ## Changes
 
+**2017-06-15**
+
+- Added support for DOI versioning as part of deposit actions.
+
 **2016-09-12**
 
 - Added support for search, pagination, sorting and filtering.
