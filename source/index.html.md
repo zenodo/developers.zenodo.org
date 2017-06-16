@@ -34,6 +34,7 @@ includes:
   - resources/deposit-actions/publish
   - resources/deposit-actions/edit
   - resources/deposit-actions/discard
+  - resources/deposit-actions/newversion
   - resources/changes
   - oai-pmh/root
 search: true
