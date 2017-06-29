@@ -7,7 +7,7 @@ The Zenodo REST API currently supports:
 * **Deposit** — upload and publishing of research outputs (identical to
   functionality available in the user interface).
 
-Check out the [Quickstart](#quickstart) guide for an example on how to
+Check out the [Quickstart](#quickstart-upload) guide for an example on how to
 programmatically upload and publish your research outputs.
 
 The following REST APIs are currently in testing before we launch them in
