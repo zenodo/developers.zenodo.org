@@ -251,6 +251,7 @@ access token):</li>
     </span><span class="nt">"edit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/deposit/depositions/1234/actions/edit"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"files"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/deposit/depositions/1234/files"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"publish"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/deposit/depositions/1234/actions/publish"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"newversion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/deposit/depositions/1234/actions/newversion"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/deposit/depositions/1234"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -1406,7 +1407,49 @@ depositions in state <code class="prettyprint">inprogress</code>).</li>
 <p>See <a href="#http-status-codes">HTTP status codes</a> (400 and 500 series errors) and
 <a href="#errors">error responses</a>.</p>
 
+            <h3 id="new-version">New version</h3>
+
+<p>Create a new version of a deposition.</p>
+
+<p>This action will create a new deposit, which will be a snapshot of the current resouce, inheriting the metadata as well as snapshot of files.
+The new version deposit will have a state similar to a new, unpublished deposit, most importantly its files will be modifiable as for a new deposit.</p>
+
+<p>Only one unpublished new version deposit can be available at any moment, i.e.: calling new version action multiple times will have no effect, as long as the resulting new version deposit from the first call is not published or deleted.</p>
+
+<p>NOTE: The response body of this action is NOT the new version deposit, but the original resource.
+The new version deposition can be accessed through the <code class="prettyprint">&quot;latest_draft&quot;</code> under <code class="prettyprint">&quot;links&quot;</code> in the response body.</p>
+<pre class="highlight shell"><code>curl -i -X POST https://zenodo.org/api/deposit/depositions/1234/actions/newversion?access_token<span class="o">=</span>ACCESS_TOKEN
+</code></pre><pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/1234/actions/newversion'</span><span class="p">,</span>
+                  <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">})</span>
+</code></pre>
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">POST /api/deposit/depositions/:id/actions/newversion</code></p>
+
+<h4 id="scopes">Scopes</h4>
+
+<p><code class="prettyprint">deposit:actions</code></p>
+
+<h4 id="success-response">Success response</h4>
+
+<ul>
+<li><strong>Code:</strong> <code class="prettyprint">201 Created</code></li>
+<li><strong>Body</strong>: a <a href="#deposit">deposition</a> resource.</li>
+</ul>
+
+<h4 id="error-response">Error response</h4>
+
+<p>See <a href="#http-status-codes">HTTP status codes</a> (400 and 500 series errors) and
+<a href="#errors">error responses</a>.</p>
+
             <h2 id="changes">Changes</h2>
+
+<p><strong>2017-06-15</strong></p>
+
+<ul>
+<li>Added support for DOI versioning as part of deposit actions.</li>
+</ul>
 
 <p><strong>2016-09-12</strong></p>
 
