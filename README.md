@@ -36,6 +36,7 @@ bundle exec middleman server
 
 # OR run this to run with vagrant
 vagrant up
+# (you might need to try ``vagrant provision`` first if the service doesn't start)
 ```
 
 You can now see the docs rendered at http://localhost:4567.
