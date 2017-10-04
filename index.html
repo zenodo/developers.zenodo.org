@@ -727,7 +727,7 @@ and <code class="prettyprint">code</code>, and possibly <code class="prettyprint
 <tr>
 <td style="text-align: left"><code class="prettyprint">grants</code></br><em>array of objects</em></td>
 <td style="text-align: left">No</td>
-<td style="text-align: left">List of European Commission FP7 grants which have funded the research for this deposition. Each array element is an object with the attributes:</br>* <code class="prettyprint">id</code>: FP7 grant number.</br></br><strong>Example:</strong> <code class="prettyprint">[{&#39;id&#39;:&#39;283595&#39;}]</code></td>
+<td style="text-align: left">List of OpenAIRE-supported grants, which have funded the research for this deposition. Each array element is an object with the attributes:</br>* <code class="prettyprint">id</code>: grant ID.</br></br><strong>Example:</strong> <code class="prettyprint">[{&#39;id&#39;:&#39;283595&#39;}]</code> (European Commission grants only)</br>or funder DOI-prefixed: <code class="prettyprint">[{&#39;id&#39;: &#39;10.13039/501100000780::283595&#39;}]</code> (All grants, recommended)</br></br> Accepted funder DOI prefixes:</br> <strong>Australian Research Council</strong>: <code class="prettyprint">10.13039/501100000923</code></br> <strong>European Commission</strong>: <code class="prettyprint">10.13039/501100000780</code></br> <strong>Fundação para a Ciência e a Tecnologia</strong>: <code class="prettyprint">10.13039/501100001871</code></br> <strong>Ministarstvo Prosvete, Nauke i Tehnološkog Razvoja</strong>: <code class="prettyprint">10.13039/501100004564</code></br> <strong>Ministarstvo Znanosti, Obrazovanja i Sporta</strong>: <code class="prettyprint">10.13039/501100006588</code></br> <strong>National Health and Medical Research Council</strong>: <code class="prettyprint">10.13039/501100000925</code></br> <strong>National Science Foundation</strong>: <code class="prettyprint">10.13039/100000001</code></br> <strong>Nederlandse Organisatie voor Wetenschappelijk Onderzoek</strong>: <code class="prettyprint">10.13039/501100003246</code></br> <strong>Wellcome Trust</strong>: <code class="prettyprint">10.13039/100004440</code></br></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">journal_title</code></br><em>string</em></td>
@@ -823,6 +823,16 @@ and <code class="prettyprint">code</code>, and possibly <code class="prettyprint
 <td style="text-align: left"><code class="prettyprint">subjects</code></br><em>array of objects</em></td>
 <td style="text-align: left">No</td>
 <td style="text-align: left">Specify subjects from a taxonomy or controlled vocabulary. Each term must be uniquely identified (e.g. a URL). For free form text, use the keywords field. Each array element is an object with the attributes:</br>* <code class="prettyprint">term</code>: Term from taxonomy or controlled vocabulary.</br>* <code class="prettyprint">identifier</code>: Unique identifier for term.</br>* <code class="prettyprint">scheme</code>: Persistent identifier scheme for id (automatically detected).</br></br><strong>Example:</strong> <code class="prettyprint">[{&quot;term&quot;: &quot;Astronomy&quot;, &quot;identifier&quot;: &quot;http://id.loc.gov/authorities/subjects/sh85009003&quot;, &quot;scheme&quot;: &quot;url&quot;}]</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">version</code></br><em>string</em></td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Version of the resource. Any string will be accepted, however the suggested format is a semantically versioned tag (see more details on semantic versioning at <a href="http://semver.org/">semver.org</a>)</br><strong>Example:</strong> <code class="prettyprint">2.1.5</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">language</code></br><em>string</em></td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Specify the main language of the record as ISO 639-2 or 639-3 code, see <a href="https://www.loc.gov/standards/iso639-2/php/code_list.php">Library of Congress ISO 639 codes list</a>.</br><strong>Example:</strong> <code class="prettyprint">eng</code></td>
 </tr>
 </tbody></table>
 
@@ -1444,6 +1454,13 @@ The new version deposition can be accessed through the <code class="prettyprint"
 <a href="#errors">error responses</a>.</p>
 
             <h2 id="changes">Changes</h2>
+
+<p><strong>2017-10-04</strong></p>
+
+<ul>
+<li>Added new optional field <code class="prettyprint">version</code> to deposition metadata.</li>
+<li>Added new optional field <code class="prettyprint">language</code> to deposition metadata.</li>
+</ul>
 
 <p><strong>2017-06-15</strong></p>
 
