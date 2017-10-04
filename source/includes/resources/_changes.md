@@ -1,5 +1,10 @@
 ## Changes
 
+**2017-10-04**
+
+- Added new optional field `version` to deposition metadata.
+- Added new optional field `language` to deposition metadata.
+
 **2017-06-15**
 
 - Added support for DOI versioning as part of deposit actions.
