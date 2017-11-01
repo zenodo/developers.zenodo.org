@@ -50,6 +50,11 @@ available DataCite schema version.
 
 [See example](https://zenodo.org/oai2d?verb=ListRecords&metadataPrefix=oai_datacite&set=openaire_data)
 
+<aside class="notice">
+  To get the raw XML output of the example above, view the page's source using
+  the web browser's "view source" option.
+</aside>
+
 <aside class="success">
     We recommend you harvest using the ``oai_datacite`` metadata format. The
     format contains the most complete metadata and is our primary supported
@@ -124,7 +129,7 @@ harvesting_ of communities.
 In order to harvest the entire repository you make an OAI-PMH request without
 passing any set specification.
 
-[See example](view-source:https://zenodo.org/oai2d?verb=ListRecords&
+[See example](https://zenodo.org/oai2d?verb=ListRecords&
 metadataPrefix=oai_datacite)
 
 
@@ -135,7 +140,7 @@ Community sets — allows selective harvesting of specific communities. Replace
 provides a direct harvesting API link on their front-page, which includes the
 correct community identifier.
 
-[See example](view-source:https://zenodo.org/oai2d?verb=ListRecords&
+[See example](https://zenodo.org/oai2d?verb=ListRecords&
 metadataPrefix=oai_datacite&set=user-cfa)
 
 If you need selective harvesting and your use case is not supported by above
