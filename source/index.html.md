@@ -35,6 +35,10 @@ includes:
   - resources/deposit-actions/edit
   - resources/deposit-actions/discard
   - resources/deposit-actions/newversion
+  - resources/licenses/root
+  - resources/licenses/representation
+  - resources/licenses/list
+  - resources/licenses/retrieve
   - resources/changes
   - oai-pmh/root
 search: true
