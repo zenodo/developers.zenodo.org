@@ -1453,6 +1453,130 @@ The new version deposition can be accessed through the <code class="prettyprint"
 <p>See <a href="#http-status-codes">HTTP status codes</a> (400 and 500 series errors) and
 <a href="#errors">error responses</a>.</p>
 
+            <h2 id="licenses">Licenses</h2>
+
+            <h3 id="representation">Representation</h3>
+
+<p>The License resource is used for serving the license metadata that can be
+applied to uploaded content on Zenodo.</p>
+
+<h4 id="license">License</h4>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Field</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">created</code></br><em>timestamp</em></td>
+<td style="text-align: left">Creation time of the license (in ISO8601 format).</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">updated</code></br><em>timestamp</em></td>
+<td style="text-align: left">Last modification time of deposition (in ISO8601 format).</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">metadata</code></br><em>object</em></td>
+<td style="text-align: left">The <a href="#license-metadata">license metadata</a> resource</td>
+</tr>
+</tbody></table>
+
+<h4 id="license-metadata">License metadata</h4>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">id</code></br><em>string</em></td>
+<td style="text-align: left">Identifier for the license.</br><strong>Example:</strong> <code class="prettyprint">cc-by-nc-4.0</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">title</code></br><em>string</em></td>
+<td style="text-align: left">The name of the license</br><strong>Example:</strong> GNU Lesser General Public License v3.0</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">url</code></br><em>string</em></td>
+<td style="text-align: left">URL of the license</br><strong>Example:</strong> <a href="http://www.opensource.org/licenses/MIT">http://www.opensource.org/licenses/MIT</a></td>
+</tr>
+</tbody></table>
+
+            <h3 id="list">List</h3>
+
+<p>Search through licenses.</p>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'/api/licenses/'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+</code></pre><pre class="highlight shell"><code>curl /api/licenses/
+</code></pre>
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">GET /api/licenses/</code></p>
+
+<h4 id="query-arguments">Query arguments</h4>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">q</code></br><em>string</em></td>
+<td style="text-align: left">optional</td>
+<td style="text-align: left">Search query (using Elasticsearch query string syntax).</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">page</code></br><em>integer</em></td>
+<td style="text-align: left">optional</td>
+<td style="text-align: left">Page number for pagination.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">size</code></br><em>integer</em></td>
+<td style="text-align: left">optional</td>
+<td style="text-align: left">Number of results to return per page.</td>
+</tr>
+</tbody></table>
+
+<h4 id="success-response">Success Response</h4>
+
+<ul>
+<li><strong>Code:</strong> <code class="prettyprint">200 OK</code></li>
+<li><strong>Body</strong>: an array of <a href="#license">license</a> resources.</li>
+</ul>
+
+<h4 id="error-response">Error response</h4>
+
+<p>See <a href="#http-status-codes">HTTP status codes</a> (400 and 500 series errors) and
+<a href="#errors">error responses</a>. |</p>
+
+            <h3 id="retrieve">Retrieve</h3>
+
+<p>Retrieve a single license resource.</p>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"/api/licenses/cc-by-nc-4.0"</span><span class="p">)</span>
+</code></pre><pre class="highlight shell"><code>curl /api/licenses/cc-by-nc-4.0
+</code></pre>
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">GET /api/licenses/:id</code></p>
+
+<h4 id="success-response">Success response</h4>
+
+<ul>
+<li><strong>Code:</strong> <code class="prettyprint">200 OK</code></li>
+<li><strong>Body</strong>: a <a href="#license">license</a> resource.</li>
+</ul>
+
+<h4 id="error-response">Error response</h4>
+
+<p>See <a href="#http-status-codes">HTTP status codes</a> (400 and 500 series errors) and
+<a href="#errors">error responses</a>. |</p>
+
             <h2 id="changes">Changes</h2>
 
 <p><strong>2017-10-04</strong></p>
