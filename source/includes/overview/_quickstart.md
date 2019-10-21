@@ -120,7 +120,7 @@ access token):
 ```python
 >>> # Get the deposition id from the previous response
 >>> deposition_id = r.json()['id']
->>> data = {'filename': 'myfirstfile.csv'}
+>>> data = {'name': 'myfirstfile.csv'}
 >>> files = {'file': open('/path/to/myfirstfile.csv', 'rb')}
 >>> r = requests.post('https://zenodo.org/api/deposit/depositions/%s/files' % deposition_id,
 ...                   params={'access_token': ACCESS_TOKEN}, data=data,
@@ -134,7 +134,7 @@ access token):
 ```json
 {
   "checksum": "2b70e04bb31f2656ce967dc07103297f",
-  "filename": "myfirstfile.csv",
+  "name": "myfirstfile.csv",
   "id": "eb78d50b-ecd4-407a-9520-dfc7a9d1ab2c",
   "filesize": "27"
 }

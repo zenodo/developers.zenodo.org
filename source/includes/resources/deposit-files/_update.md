@@ -16,7 +16,7 @@ import requests
 
 url = 'https://zenodo.org/api/deposit/depositions/1234/files/21fedcba-9876-5432-1fed-cba987654321?access_token=ACCESS_TOKEN'
 headers = {"Content-Type": "application/json"}
-data = {"filename": "someothername.csv"}
+data = {"name": "someothername.csv"}
 r = requests.put(url, data=json.dumps(data), headers=headers)
 ```
 
@@ -40,7 +40,7 @@ A partial [deposition file](#deposition-file) resources with only the
 
 ```json
 {
-    "filename": "<new_file_name>"
+    "name": "<new_file_name>"
 }
 ```
 
