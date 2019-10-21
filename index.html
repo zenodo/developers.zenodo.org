@@ -275,7 +275,7 @@ access token):</li>
 <div class="align-columns"></div>
 <pre class="highlight python"><code><span class="o">&gt;&gt;&gt;</span> <span class="c"># Get the deposition id from the previous response</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">deposition_id</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">'id'</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'filename'</span><span class="p">:</span> <span class="s">'myfirstfile.csv'</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'myfirstfile.csv'</span><span class="p">}</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">files</span> <span class="o">=</span> <span class="p">{</span><span class="s">'file'</span><span class="p">:</span> <span class="nb">open</span><span class="p">(</span><span class="s">'/path/to/myfirstfile.csv'</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)}</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/</span><span class="si">%</span><span class="s">s/files'</span> <span class="o">%</span> <span class="n">deposition_id</span><span class="p">,</span>
 <span class="o">...</span>                   <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">},</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
@@ -286,7 +286,7 @@ access token):</li>
 
 </code></pre><pre class="highlight json"><code><span class="p">{</span><span class="w">
   </span><span class="nt">"checksum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2b70e04bb31f2656ce967dc07103297f"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"filename"</span><span class="p">:</span><span class="w"> </span><span class="s2">"myfirstfile.csv"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"myfirstfile.csv"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eb78d50b-ecd4-407a-9520-dfc7a9d1ab2c"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"filesize"</span><span class="p">:</span><span class="w"> </span><span class="s2">"27"</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -662,7 +662,7 @@ and <code class="prettyprint">code</code>, and possibly <code class="prettyprint
 <tr>
 <td style="text-align: left"><code class="prettyprint">description</code></br><em>string</em></td>
 <td style="text-align: left">Yes</td>
-<td style="text-align: left">Abstract or description for deposition. Following HTML tags are allowed: <code class="prettyprint">a</code>, <code class="prettyprint">p</code>, <code class="prettyprint">br</code>, <code class="prettyprint">blockquote</code>, <code class="prettyprint">strong</code>, <code class="prettyprint">b</code>, <code class="prettyprint">u</code>, <code class="prettyprint">i</code>, <code class="prettyprint">em</code>, <code class="prettyprint">ul</code>, <code class="prettyprint">ol</code>, <code class="prettyprint">li</code>, <code class="prettyprint">sub</code>, <code class="prettyprint">sup</code>, <code class="prettyprint">div</code>, <code class="prettyprint">strike</code>.</td>
+<td style="text-align: left">Abstract or description for deposition. Allows HTML.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">access_right</code></br><em>string</em></td>
@@ -682,7 +682,7 @@ and <code class="prettyprint">code</code>, and possibly <code class="prettyprint
 <tr>
 <td style="text-align: left"><code class="prettyprint">access_conditions</code></br><em>string</em></td>
 <td style="text-align: left">Yes, if <code class="prettyprint">access_right</code> is <code class="prettyprint">&quot;restricted&quot;</code>.</td>
-<td style="text-align: left">Specify the conditions under which you grant users access to the files in your upload. User requesting access will be asked to justify how they fulfil the conditions. Based on the justification, you decide who to grant/deny access. You are not allowed to charge users for granting access to data hosted on Zenodo. Following HTML tags are allowed: <code class="prettyprint">a</code>, <code class="prettyprint">p</code>, <code class="prettyprint">br</code>, <code class="prettyprint">blockquote</code>, <code class="prettyprint">strong</code>, <code class="prettyprint">b</code>, <code class="prettyprint">u</code>, <code class="prettyprint">i</code>, <code class="prettyprint">em</code>, <code class="prettyprint">ul</code>, <code class="prettyprint">ol</code>, <code class="prettyprint">li</code>, <code class="prettyprint">sub</code>, <code class="prettyprint">sup</code>, <code class="prettyprint">div</code>, <code class="prettyprint">strike</code>.</td>
+<td style="text-align: left">Specify the conditions under which you grant users access to the files in your upload. User requesting access will be asked to justify how they fulfil the conditions. Based on the justification, you decide who to grant/deny access. You are not allowed to charge users for granting access to data hosted on Zenodo. Allows HTML.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">doi</code></br><em>string</em></td>
@@ -702,7 +702,7 @@ and <code class="prettyprint">code</code>, and possibly <code class="prettyprint
 <tr>
 <td style="text-align: left"><code class="prettyprint">notes</code></br><em>string</em></td>
 <td style="text-align: left">No</td>
-<td style="text-align: left">Additional notes. No HTML allowed.</td>
+<td style="text-align: left">Additional notes. Allows HTML.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">related_identifiers</code></br><em>array of objects</em></td>
@@ -834,7 +834,47 @@ and <code class="prettyprint">code</code>, and possibly <code class="prettyprint
 <td style="text-align: left">No</td>
 <td style="text-align: left">Specify the main language of the record as ISO 639-2 or 639-3 code, see <a href="https://www.loc.gov/standards/iso639-2/php/code_list.php">Library of Congress ISO 639 codes list</a>.</br><strong>Example:</strong> <code class="prettyprint">eng</code></td>
 </tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">location</code></br><em>array of objects</em></td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">List of locations</br>* <code class="prettyprint">lat (double):</code> latitude </br>* <code class="prettyprint">lon (double):</code> longitude</br>* <code class="prettyprint">place (string):</code> place&rsquo;s name (required)</br>* <code class="prettyprint">description (string):</code> place&rsquo;s description (optional)</br><strong>Example:</strong> <code class="prettyprint">[{&quot;lat&quot;: 34.02577, &quot;lon&quot;: -118.7804, &quot;place&quot;: &quot;Los Angeles&quot;}, {&quot;place&quot;: &quot;Mt.Fuji, Japan&quot;, &quot;description&quot;: &quot;Sample found 100ft from the foot of the mountain.&quot;}]</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">dates</code></br><em>array of objects</em></td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">List of date intervals</br>* <code class="prettyprint">start (ISO date string):</code> start date (*) </br>* <code class="prettyprint">end (ISO date string):</code> end date (*)</br>* <code class="prettyprint">type (Collected, Valid, Withdrawn):</code> The interval’s type (required)</br>* <code class="prettyprint">description (string):</code> The interval&rsquo;s description (optional)</br>(*) Note that you have to specify at least a start or end date. For an exact date, use the same value for both <code class="prettyprint">start</code> and <code class="prettyprint">end</code>.</br><strong>Example:</strong> <code class="prettyprint">[{&quot;start&quot;: &quot;2018-03-21&quot;, &quot;end&quot;: &quot;2018-03-25&quot;, &quot;type&quot;: &quot;Collected&quot;, &quot;description&quot;: &quot;Specimen A5 collection period.&quot;}]</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">method</code></br><em>string</em></td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">The methodology employed for the study or research. Allows HTML.</td>
+</tr>
 </tbody></table>
+
+<aside class="notice">
+  For string fields that allow HTML (e.g. description, notes), for security reasons, only the following tags are accepted:
+  <code>a</code>,
+  <code>abbr</code>,
+  <code>acronym</code>,
+  <code>b</code>,
+  <code>blockquote</code>,
+  <code>br</code>,
+  <code>code</code>,
+  <code>div</code>,
+  <code>em</code>,
+  <code>i</code>,
+  <code>li</code>,
+  <code>ol</code>,
+  <code>p</code>,
+  <code>pre</code>,
+  <code>span</code>,
+  <code>strike</code>,
+  <code>strong</code>,
+  <code>sub</code>,
+  <code>sup</code>,
+  <code>u</code>,
+  <code>ul</code>.
+</aside>
 
             <h3 id="list">List</h3>
 
@@ -1134,7 +1174,7 @@ deposition on Zenodo.</p>
 <span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="n">url</span> <span class="o">=</span> <span class="s">'https://zenodo.org/api/deposit/depositions/1234/files?access_token=ACCESS_TOKEN'</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'filename'</span><span class="p">:</span> <span class="s">'myfirstfile.csv'</span><span class="p">}</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'myfirstfile.csv'</span><span class="p">}</span>
 <span class="n">files</span> <span class="o">=</span> <span class="p">{</span><span class="s">'file'</span><span class="p">:</span> <span class="nb">open</span><span class="p">(</span><span class="s">'path/to/local_file.csv'</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)}</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">)</span>
 </code></pre>
@@ -1250,7 +1290,7 @@ upload a new file.</p>
 
 <span class="n">url</span> <span class="o">=</span> <span class="s">'https://zenodo.org/api/deposit/depositions/1234/files/21fedcba-9876-5432-1fed-cba987654321?access_token=ACCESS_TOKEN'</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">}</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">"filename"</span><span class="p">:</span> <span class="s">"someothername.csv"</span><span class="p">}</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">"name"</span><span class="p">:</span> <span class="s">"someothername.csv"</span><span class="p">}</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 </code></pre>
 <h4 id="http-request">HTTP Request</h4>
@@ -1270,7 +1310,7 @@ upload a new file.</p>
 <p>A partial <a href="#deposition-file">deposition file</a> resources with only the
 <code class="prettyprint">filename</code> attributes. Example:</p>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="nt">"filename"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;new_file_name&gt;"</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;new_file_name&gt;"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <h4 id="success-response">Success response</h4>
