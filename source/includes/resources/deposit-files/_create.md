@@ -14,7 +14,7 @@ import json
 import requests
 
 url = 'https://zenodo.org/api/deposit/depositions/1234/files?access_token=ACCESS_TOKEN'
-data = {'filename': 'myfirstfile.csv'}
+data = {'name': 'myfirstfile.csv'}
 files = {'file': open('path/to/local_file.csv', 'rb')}
 r = requests.post(url, data=data, files=files)
 ```
