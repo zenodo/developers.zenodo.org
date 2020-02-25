@@ -35,6 +35,10 @@ includes:
   - resources/deposit-actions/edit
   - resources/deposit-actions/discard
   - resources/deposit-actions/newversion
+  - resources/records/root
+  - resources/records/representation
+  - resources/records/list
+  - resources/records/retrieve
   - resources/licenses/root
   - resources/licenses/representation
   - resources/licenses/list
