@@ -16,8 +16,10 @@ curl -i -X POST https://zenodo.org/api/deposit/depositions/1234/actions/newversi
 
 ```python
 import requests
-r = requests.post('https://zenodo.org/api/deposit/depositions/1234/actions/newversion',
-                  params={'access_token': ACCESS_TOKEN})
+r = requests.post(
+    "https://zenodo.org/api/deposit/depositions/1234/actions/newversion",
+    params={"access_token": ACCESS_TOKEN},
+)
 ```
 
 #### HTTP Request

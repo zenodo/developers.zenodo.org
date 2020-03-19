@@ -1,12 +1,14 @@
 ### List
 
-List all open access records.
+List all open access records if no `ACCESS_TOKEN` is provided. 
+Otherwise it will add the records to which the authenticate user has access.
 
 ```python
 import requests
-response = requests.get('/api/records',
-                        params={'q': 'my title',
-                                'access_token': ACCESS_TOKEN})
+
+response = requests.get(
+    "/api/records", params={"q": "my title", "access_token": ACCESS_TOKEN}
+)
 print(response.json())
 ```
 
@@ -22,7 +24,7 @@ curl -i /api/records/?access_token=ACCESS_TOKEN
 
 | Parameter                   | Required | Description                                                                                                                    |
 |:----------------------------|:---------|:-------------------------------------------------------------------------------------------------------------------------------|
-| `q`</br>_string_            | optional | Search query (using Elasticsearch query string syntax).                                                                        |
+| `q`</br>_string_            | optional | [Search query](https://help.zenodo.org/guides/search/) (using Elasticsearch query string syntax).                                                                         |
 | `status`</br>_string_       | optional | Filter result based on deposit status (either ``draft`` or ``published``)                                                      |
 | `sort`</br>_string_         | optional | Sort order (``bestmatch`` or ``mostrecent``). Prefix with minus to change form ascending to descending (e.g. ``-mostrecent``). |
 | `page`</br>_integer_        | optional | Page number for pagination.                                                                                                    |
@@ -39,12 +41,17 @@ Response format of the search can be requested by specifying it in the header.
 | Accept                                    | Description       |
 |:------------------------------------------|:------------------|
 | `application/json`                        | JSON              |
+| `application/ld+json`                     | JSON-LD           |
 | `application/vnd.zenodo.v1+json`          | Zenodo            |
 | `application/marcxml+xml`                 | Marc XML          |
 | `application/x-bibtex`                    | Bibtex            |
 | `application/x-datacite+xml`              | Datacite XML      |
 | `application/x-dc+xml`                    | Dublin Core       |
-
+| `application/dcat+xml`                    | DCAT XML          |
+| `application/vnd.citationstyles.csl+json` | Citation JSON     |
+| `application/vnd.geo+json`                | Geo-JSON          |
+| `application/x-datacite-v41+xml`          | Datacite v4.1 XML |
+| `text/x-bibliography`                     | Bibliography      |
 
 #### Success Response
 

@@ -1,6 +1,6 @@
 ### Create
 
-Upload a new file.
+<div class="align-columns"></div>
 
 ```shell
 curl -i https://zenodo.org/api/deposit/depositions/1234/files?access_token=ACCESS_TOKEN
@@ -18,6 +18,10 @@ data = {'name': 'myfirstfile.csv'}
 files = {'file': open('path/to/local_file.csv', 'rb')}
 r = requests.post(url, data=data, files=files)
 ```
+
+Upload a new file.
+
+<div class="align-columns"></div>
 
 #### HTTP Request
 

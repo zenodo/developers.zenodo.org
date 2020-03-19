@@ -39,6 +39,14 @@ includes:
   - resources/records/representation
   - resources/records/list
   - resources/records/retrieve
+  - resources/files/root
+  - resources/files/representation
+  - resources/files/list
+  - resources/files/create
+  - resources/files/sort
+  - resources/files/retrieve
+  - resources/files/update
+  - resources/files/delete
   - resources/licenses/root
   - resources/licenses/representation
   - resources/licenses/list
