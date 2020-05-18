@@ -1466,8 +1466,10 @@ The new version deposit will have a state similar to a new, unpublished deposit,
 
 <p>Only one unpublished new version deposit can be available at any moment, i.e.: calling new version action multiple times will have no effect, as long as the resulting new version deposit from the first call is not published or deleted.</p>
 
-<p>NOTE: The response body of this action is NOT the new version deposit, but the original resource.
-The new version deposition can be accessed through the <code class="prettyprint">&quot;latest_draft&quot;</code> under <code class="prettyprint">&quot;links&quot;</code> in the response body.</p>
+<p>NOTES: 
+- The response body of this action is NOT the new version deposit, but the original resource.
+The new version deposition can be accessed through the <code class="prettyprint">&quot;latest_draft&quot;</code> under <code class="prettyprint">&quot;links&quot;</code> in the response body.
+- The <code class="prettyprint">id</code> used to create this new version has to be the <code class="prettyprint">id</code> of the latest version. It is not possible to use the global id that references all the versions.</p>
 <pre class="highlight shell"><code>curl -i -X POST https://zenodo.org/api/deposit/depositions/1234/actions/newversion?access_token<span class="o">=</span>ACCESS_TOKEN
 </code></pre><pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/1234/actions/newversion'</span><span class="p">,</span>
