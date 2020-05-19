@@ -4,7 +4,7 @@ List all open access records.
 
 ```python
 import requests
-response = requests.get('/api/records',
+response = requests.get('https://zenodo.org/api/records',
                         params={'q': 'my title',
                                 'access_token': ACCESS_TOKEN})
 print(response.json())
@@ -23,18 +23,18 @@ curl -i /api/records/?access_token=ACCESS_TOKEN
 | Parameter                   | Required | Description                                                                                                                    |
 |:----------------------------|:---------|:-------------------------------------------------------------------------------------------------------------------------------|
 | `q`</br>_string_            | optional | Search query (using Elasticsearch query string syntax).                                                                        |
-| `status`</br>_string_       | optional | Filter result based on deposit status (either ``draft`` or ``published``)                                                      |
+| `status`</br>_string_       | optional | Filter result based on the deposit status (either ``draft`` or ``published``)                                                      |
 | `sort`</br>_string_         | optional | Sort order (``bestmatch`` or ``mostrecent``). Prefix with minus to change form ascending to descending (e.g. ``-mostrecent``). |
 | `page`</br>_integer_        | optional | Page number for pagination.                                                                                                    |
 | `size`</br>_integer_        | optional | Number of results to return per page.                                                                                          |
-| `communities`</br> _string_ | optional | Return records part of the specified communities. (Use of `community identifier`)                                              |
-| `type`</br> _string_        | optional | Return records part of the specified type. (`Publication`, `Poster`, `Presentation`...)                                        |
-| `subtype`</br> _string_     | optional | Return records part of the specified subtype. (`Journal article`, `Preprint`, `Proposal`...)                                   |
-| `custom`</br> _string_      | optional | Return records part of the specified custom keywords. (Format `custom=[field_name]:field_value`)                               |
+| `communities`</br> _string_ | optional | Return records that are part of the specified communities. (Use of `community identifier`)                                              |
+| `type`</br> _string_        | optional | Return records of the specified type. (`Publication`, `Poster`, `Presentation`...)                                        |
+| `subtype`</br> _string_     | optional | Return records of the specified subtype. (`Journal article`, `Preprint`, `Proposal`...)                                   |
+| `custom`</br> _string_      | optional | Return records containing the specified custom keywords. (Format `custom=[field_name]:field_value`)                               |
 
 #### Header
 
-Response format of the search can be requested by specifying it in the header.
+The response format of the search can be requested by specifying it in the header.
 
 | Accept                                    | Description       |
 |:------------------------------------------|:------------------|

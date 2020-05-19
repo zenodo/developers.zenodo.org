@@ -1,26 +1,26 @@
 ### Retrieve
 
-Retrieve a single record resource.
+Retrieve a single record.
 
 ```shell
-curl -i /api/records/1234
+curl -i https://zenodo.org/api/records/1234
 ```
 
 ```python
 import requests
-r = requests.get("/api/records/1234)
+r = requests.get("https://zenodo.org/api/records/1234)
 ```
 
 #### HTTP Request
 
-`GET /api/records/:id`
+`GET https://zenodo.org/api/records/:id`
 
 Again, the output format of the search can be specified in the [header](#header)
 
 #### Success response
 
 * **Code:** `200 OK`
-* **Body**: a [record](#records) resource.
+* **Body**: a [record](#records).
 
 #### Error response
 

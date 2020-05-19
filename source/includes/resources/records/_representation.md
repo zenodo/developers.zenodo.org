@@ -1,3 +1,3 @@
 ### Representation
 
-The Records ressource is used to search through published records.
+The Records resource is used to search through published records.
