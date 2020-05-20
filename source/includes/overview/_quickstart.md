@@ -4,44 +4,42 @@ This short guide will give a quick overview of how to upload and publish on
 Zenodo, and will be using Python together with the
 [Requests](http://www.python-requests.org/en/latest/user/install/) package.
 
-```terminal
-$ pip install requests
-```
+```terminal	
+$ pip install requests	
+```	
 
-- First, make sure you have the
-[Requests](http://www.python-requests.org/en/latest/user/install/) module
-installed:
+- First, make sure you have the	
+[Requests](http://www.python-requests.org/en/latest/user/install/) module	
+installed:	
 
-<div class="align-columns"></div>
+<div class="align-columns"></div>	
 
-```terminal
-$ python
-Python 2.7.5+
-[GCC 4.8.1] on linux2
-Type "help", "copyright", "credits" or "license" for more information.
-```
-- Next, fire up a Python command prompt:
+```terminal	
+$ python	
+Python 3.6.5
+[GCC 4.8.1] on linux2	
+Type "help", "copyright", "credits" or "license" for more information.	
+```	
+- Next, fire up a Python command prompt:	
+
+<div class="align-columns"></div>	
+
+```python	
+import requests	
+```	
+
+- Import the `requests` module:	
+
 
 <div class="align-columns"></div>
 
 ```python
-import requests
-```
-
-- Import the `requests` module:
-
-<div class="align-columns"></div>
-
-```python
+>>> import requests
 >>> r = requests.get("https://zenodo.org/api/deposit/depositions")
 >>> r.status_code
 401
 >>> r.json()
 ```
-
-- Try to access the API:
-
-<div class="align-columns"></div>
 
 ```json
 {
@@ -53,12 +51,17 @@ import requests
 }
 ```
 
+- We will try to access the API without an authentication token:
+
+<div class="align-columns"></div>
+
 - All API access requires an access token, so
 [create](https://zenodo.org/account/settings/applications/tokens/new/) one.
 
 <div class="align-columns"></div>
 
 ```python
+>>> ACCESS_TOKEN = 'ChangeMe'
 >>> r = requests.get('https://zenodo.org/api/deposit/depositions',
 ...                  params={'access_token': ACCESS_TOKEN})
 >>> r.status_code
@@ -78,38 +81,48 @@ access token):
 
 ```python
 >>> headers = {"Content-Type": "application/json"}
->>> r = requests.post('https://zenodo.org/api/deposit/depositions',
-...                   params={'access_token': ACCESS_TOKEN}, json={},
-...                   headers=headers)
+>>> params = {'access_token': ACCESS_TOKEN}
+>>> r = requests.post('https://sandbox.zenodo.org/api/deposit/depositions',
+                   params=params,
+                   json={},
+                   # Headers are not necessary here since "requests" automatically
+                   # adds "Content-Type: application/json", because we're using
+                   # the "json=" keyword argument
+                   # headers=headers, 
+                   headers=headers)
 >>> r.status_code
 201
 >>> r.json()
 ```
 ```json
 {
-  "created": "2016-06-15T16:10:03.319363+00:00",
-  "files": [],
-  "id": 1234,
-  "links": {
-    "discard": "https://zenodo.org/api/deposit/depositions/1234/actions/discard",
-    "edit": "https://zenodo.org/api/deposit/depositions/1234/actions/edit",
-    "files": "https://zenodo.org/api/deposit/depositions/1234/files",
-    "publish": "https://zenodo.org/api/deposit/depositions/1234/actions/publish",
-    "newversion": "https://zenodo.org/api/deposit/depositions/1234/actions/newversion",
-    "self": "https://zenodo.org/api/deposit/depositions/1234"
-  },
-  "metadata": {
-    "prereserve_doi": {
-      "doi": "10.5072/zenodo.1234",
-      "recid": 1234
-    }
-  },
-  "modified": "2016-06-15T16:10:03.319371+00:00",
-  "owner": 1,
-  "record_id": 1234,
-  "state": "unsubmitted",
-  "submitted": false,
-  "title": ""
+    "conceptrecid": "542200",
+    "created": "2020-05-19T11:58:41.606998+00:00",
+    "files": [],
+    "id": 542201,
+    "links": {
+        "bucket": "https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b",
+        "discard": "https://zenodo.org/api/deposit/depositions/542201/actions/discard",
+        "edit": "https://zenodo.org/api/deposit/depositions/542201/actions/edit",
+        "files": "https://zenodo.org/api/deposit/depositions/542201/files",
+        "html": "https://zenodo.org/deposit/542201",
+        "latest_draft": "https://zenodo.org/api/deposit/depositions/542201",
+        "latest_draft_html": "https://zenodo.org/deposit/542201",
+        "publish": "https://zenodo.org/api/deposit/depositions/542201/actions/publish",
+        "self": "https://zenodo.org/api/deposit/depositions/542201"
+    },
+    "metadata": {
+        "prereserve_doi": {
+            "doi": "10.5072/zenodo.542201",
+            "recid": 542201
+        }
+    },
+    "modified": "2020-05-19T11:58:41.607012+00:00",
+    "owner": 12345,
+    "record_id": 542201,
+    "state": "unsubmitted",
+    "submitted": false,
+    "title": ""
 }
 ```
 
@@ -117,7 +130,73 @@ access token):
 
 <div class="align-columns"></div>
 
+- Now, let's upload a new file.  
+We have recently released a new API, which is significantly more perfomant and supports much larger file sizes. While the older API supports 100MB per file, the new one has no size limitation.
+
+<div class="align-columns"></div>
+
 ```python
+bucket_url = r.json()["links"]["bucket"]
+```
+
+```shell
+curl https://zenodo.org/api/deposit/depositions/222761?access_token=$ACCESS_TOKEN
+{ ...  
+  "links": { "bucket": "https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b", ... },
+... }
+```
+
+ - To use the **new files API** we will do a PUT request to the 'bucket' link.
+The bucket is a folder like object storing the files of our record.
+Our bucket URL will look like this: ``'https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b'``
+and can be found under the 'links' key in our records metadata.
+
+```shell
+# This will stream the file located in '/path/to/your/file.dat' and store it in our bucket.
+# The uploaded file will be named according to the last argument in the upload URL,
+# 'file.dat' in our case.
+$ curl --upload-file /path/to/your/file.dat https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b/file.dat?access_token=$ACCES_TOKEN
+{ ... }
+```
+
+```python
+# NEW API
+filename = "my-file.zip"
+path = "/path/to/%s" % filename
+
+# We pass the file object (fp) directly to the request as the 'data' to be uploaded.
+# The target URL is a combination of the buckets link with the desired filename seperated by a slash.
+with open(path, "rb") as fp:
+    r = requests.put(
+        "%s/%s" % (bucket_url, filename),
+        data=fp,
+        # No headers included in the request, since it's a raw byte request
+        params=params,
+    )
+r.json()
+```
+```json
+{
+  "mimetype": "application/pdf",
+  "updated": "2020-02-26T14:20:53.811817+00:00",
+  "links": {"self": "https://sandbox.zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf",
+  "version": "https://sandbox.zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf?versionId=38a724d3-40f1-4b27-b236-ed2e43200f85",
+  "uploads": "https://sandbox.zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf?uploads"},
+  "is_head": true,
+  "created": "2020-02-26T14:20:53.805734+00:00",
+  "checksum": "md5:2942bfabb3d05332b66eb128e0842cff",
+  "version_id": "38a724d3-40f1-4b27-b236-ed2e43200f85",
+  "delete_marker": false,
+  "key": "dummy_example.pdf",
+  "size": 13264
+ }
+ ```
+
+<div class="align-columns"></div>
+
+
+```python
+# OLD API
 >>> # Get the deposition id from the previous response
 >>> deposition_id = r.json()['id']
 >>> data = {'name': 'myfirstfile.csv'}
@@ -128,7 +207,6 @@ access token):
 >>> r.status_code
 201
 >>> r.json()
-
 ```
 
 ```json
@@ -140,7 +218,7 @@ access token):
 }
 ```
 
-- Now, let's upload a new file:
+- Here are the instructions for the **old files API**:
 
 <div class="align-columns"></div>
 
