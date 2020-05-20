@@ -144,6 +144,8 @@
 <ul>
 <li><strong>Deposit</strong> — upload and publishing of research outputs (identical to
 functionality available in the user interface).</li>
+<li><strong>Records</strong> — search published records.</li>
+<li><strong>Files</strong> — download/upload of files.</li>
 </ul>
 
 <p>Check out the <a href="#quickstart-upload">Quickstart</a> guide for an example on how to
@@ -153,8 +155,6 @@ programmatically upload and publish your research outputs.</p>
 <strong>beta</strong> with full documentation:</p>
 
 <ul>
-<li><strong>Records</strong> — search published records.</li>
-<li><strong>Files</strong> — download/upload of files.</li>
 <li><strong>Communities</strong> - search communities.</li>
 <li><strong>Funders</strong> — search for funders.</li>
 <li><strong>Grants</strong> — search for grants.</li>
@@ -168,43 +168,38 @@ programmatically upload and publish your research outputs.</p>
 <p>This short guide will give a quick overview of how to upload and publish on
 Zenodo, and will be using Python together with the
 <a href="http://www.python-requests.org/en/latest/user/install/">Requests</a> package.</p>
-<pre class="highlight shell_session"><code><span class="w">$ </span><span class="nc">pip</span><span class="kv"> install requests
+<pre class="highlight shell_session"><code><span class="w">$ </span><span class="nc">pip</span><span class="kv"> install requests  
 </span></code></pre>
 <ul>
-<li>First, make sure you have the
-<a href="http://www.python-requests.org/en/latest/user/install/">Requests</a> module
-installed:</li>
+<li>First, make sure you have the 
+<a href="http://www.python-requests.org/en/latest/user/install/">Requests</a> module<br>
+installed:<br></li>
 </ul>
 
-<div class="align-columns"></div>
-<pre class="highlight shell_session"><code><span class="w">$ </span><span class="nc">python</span><span class="kv">
-</span>Python 2.7.5+
-[GCC 4.8.1] on linux2
-Type "help", "copyright", "credits" or "license" for more information.
+<div class="align-columns"></div>   
+<pre class="highlight shell_session"><code><span class="w">$ </span><span class="nc">python</span><span class="kv">    
+</span>Python 3.6.5
+[GCC 4.8.1] on linux2   
+Type "help", "copyright", "credits" or "license" for more information.  
 </code></pre>
 <ul>
-<li>Next, fire up a Python command prompt:</li>
+<li>Next, fire up a Python command prompt:<br></li>
 </ul>
 
-<div class="align-columns"></div>
-<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<div class="align-columns"></div>   
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span> 
 </code></pre>
 <ul>
-<li>Import the <code class="prettyprint">requests</code> module:</li>
+<li>Import the <code class="prettyprint">requests</code> module: </li>
 </ul>
 
 <div class="align-columns"></div>
-<pre class="highlight python"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"https://zenodo.org/api/deposit/depositions"</span><span class="p">)</span>
+<pre class="highlight python"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">requests</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"https://zenodo.org/api/deposit/depositions"</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
 <span class="mi">401</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-</code></pre>
-<ul>
-<li>Try to access the API:</li>
-</ul>
-
-<div class="align-columns"></div>
-<pre class="highlight json"><code><span class="p">{</span><span class="w">
+</code></pre><pre class="highlight json"><code><span class="p">{</span><span class="w">
   </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The server could not verify that you are authorized to access
   the URL requested. You either supplied the wrong credentials (e.g. a bad
   password), or your browser doesn't understand how to supply the credentials
@@ -213,12 +208,19 @@ Type "help", "copyright", "credits" or "license" for more information.
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <ul>
+<li>We will try to access the API without an authentication token:</li>
+</ul>
+
+<div class="align-columns"></div>
+
+<ul>
 <li>All API access requires an access token, so
 <a href="https://zenodo.org/account/settings/applications/tokens/new/">create</a> one.</li>
 </ul>
 
 <div class="align-columns"></div>
-<pre class="highlight python"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions'</span><span class="p">,</span>
+<pre class="highlight python"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">ACCESS_TOKEN</span> <span class="o">=</span> <span class="s">'ChangeMe'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions'</span><span class="p">,</span>
 <span class="o">...</span>                  <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">})</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
 <span class="mi">200</span>
@@ -236,36 +238,46 @@ access token):</li>
 
 <div class="align-columns"></div>
 <pre class="highlight python"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions'</span><span class="p">,</span>
-<span class="o">...</span>                   <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">},</span> <span class="n">json</span><span class="o">=</span><span class="p">{},</span>
-<span class="o">...</span>                   <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://sandbox.zenodo.org/api/deposit/depositions'</span><span class="p">,</span>
+                   <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
+                   <span class="n">json</span><span class="o">=</span><span class="p">{},</span>
+                   <span class="c"># Headers are not necessary here since "requests" automatically</span>
+                   <span class="c"># adds "Content-Type: application/json", because we're using</span>
+                   <span class="c"># the "json=" keyword argument</span>
+                   <span class="c"># headers=headers, </span>
+                   <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
 <span class="mi">201</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre><pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-15T16:10:03.319363+00:00"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"files"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1234</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"discard"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/deposit/depositions/1234/actions/discard"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"edit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/deposit/depositions/1234/actions/edit"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"files"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/deposit/depositions/1234/files"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"publish"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/deposit/depositions/1234/actions/publish"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"newversion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/deposit/depositions/1234/actions/newversion"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/deposit/depositions/1234"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"prereserve_doi"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"doi"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.5072/zenodo.1234"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"recid"</span><span class="p">:</span><span class="w"> </span><span class="mi">1234</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-15T16:10:03.319371+00:00"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"owner"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"record_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1234</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unsubmitted"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"submitted"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="nt">"conceptrecid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"542200"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-05-19T11:58:41.606998+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"files"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">542201</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"bucket"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"discard"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/deposit/depositions/542201/actions/discard"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"edit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/deposit/depositions/542201/actions/edit"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"files"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/deposit/depositions/542201/files"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"html"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/deposit/542201"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"latest_draft"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/deposit/depositions/542201"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"latest_draft_html"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/deposit/542201"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"publish"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/deposit/depositions/542201/actions/publish"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/deposit/depositions/542201"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"prereserve_doi"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"doi"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.5072/zenodo.542201"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"recid"</span><span class="p">:</span><span class="w"> </span><span class="mi">542201</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-05-19T11:58:41.607012+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"owner"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"record_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">542201</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unsubmitted"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"submitted"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <ul>
@@ -273,7 +285,62 @@ access token):</li>
 </ul>
 
 <div class="align-columns"></div>
-<pre class="highlight python"><code><span class="o">&gt;&gt;&gt;</span> <span class="c"># Get the deposition id from the previous response</span>
+
+<ul>
+<li>Now, let&rsquo;s upload a new file.<br>
+We have recently released a new API, which is significantly more perfomant and supports much larger file sizes. While the older API supports 100MB per file, the new one has no size limitation.</li>
+</ul>
+
+<div class="align-columns"></div>
+<pre class="highlight python"><code><span class="n">bucket_url</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">"links"</span><span class="p">][</span><span class="s">"bucket"</span><span class="p">]</span>
+</code></pre><pre class="highlight shell"><code>curl https://zenodo.org/api/deposit/depositions/222761?access_token<span class="o">=</span><span class="nv">$ACCESS_TOKEN</span>
+<span class="o">{</span> ...  
+  <span class="s2">"links"</span>: <span class="o">{</span> <span class="s2">"bucket"</span>: <span class="s2">"https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b"</span>, ... <span class="o">}</span>,
+... <span class="o">}</span>
+</code></pre>
+<ul>
+<li>To use the <strong>new files API</strong> we will do a PUT request to the &lsquo;bucket&rsquo; link.
+The bucket is a folder like object storing the files of our record.
+Our bucket URL will look like this: <code class="prettyprint">&#39;https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b&#39;</code>
+and can be found under the &#39;links&rsquo; key in our records metadata.</li>
+</ul>
+<pre class="highlight shell"><code><span class="c"># This will stream the file located in '/path/to/your/file.dat' and store it in our bucket.</span>
+<span class="c"># The uploaded file will be named according to the last argument in the upload URL,</span>
+<span class="c"># 'file.dat' in our case.</span>
+<span class="gp">$ </span>curl --upload-file /path/to/your/file.dat https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b/file.dat?access_token<span class="o">=</span><span class="nv">$ACCES_TOKEN</span>
+<span class="o">{</span> ... <span class="o">}</span>
+</code></pre><pre class="highlight python"><code><span class="c"># NEW API</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s">"my-file.zip"</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s">"/path/to/</span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="n">filename</span>
+
+<span class="c"># We pass the file object (fp) directly to the request as the 'data' to be uploaded.</span>
+<span class="c"># The target URL is a combination of the buckets link with the desired filename seperated by a slash.</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
+        <span class="s">"</span><span class="si">%</span><span class="s">s/</span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">bucket_url</span><span class="p">,</span> <span class="n">filename</span><span class="p">),</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">fp</span><span class="p">,</span>
+        <span class="c"># No headers included in the request, since it's a raw byte request</span>
+        <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre><pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"mimetype"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/pdf"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-02-26T14:20:53.811817+00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://sandbox.zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://sandbox.zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf?versionId=38a724d3-40f1-4b27-b236-ed2e43200f85"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"uploads"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://sandbox.zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf?uploads"</span><span class="p">},</span><span class="w">
+  </span><span class="nt">"is_head"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-02-26T14:20:53.805734+00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"checksum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"md5:2942bfabb3d05332b66eb128e0842cff"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"version_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"38a724d3-40f1-4b27-b236-ed2e43200f85"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"delete_marker"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dummy_example.pdf"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">13264</span><span class="w">
+ </span><span class="p">}</span><span class="w">
+</span></code></pre>
+<div class="align-columns"></div>
+<pre class="highlight python"><code><span class="c"># OLD API</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c"># Get the deposition id from the previous response</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">deposition_id</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">'id'</span><span class="p">]</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'myfirstfile.csv'</span><span class="p">}</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">files</span> <span class="o">=</span> <span class="p">{</span><span class="s">'file'</span><span class="p">:</span> <span class="nb">open</span><span class="p">(</span><span class="s">'/path/to/myfirstfile.csv'</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)}</span>
@@ -283,7 +350,6 @@ access token):</li>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
 <span class="mi">201</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-
 </code></pre><pre class="highlight json"><code><span class="p">{</span><span class="w">
   </span><span class="nt">"checksum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2b70e04bb31f2656ce967dc07103297f"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"myfirstfile.csv"</span><span class="p">,</span><span class="w">
@@ -292,7 +358,7 @@ access token):</li>
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <ul>
-<li>Now, let&rsquo;s upload a new file:</li>
+<li>Here are the instructions for the <strong>old files API</strong>:</li>
 </ul>
 
 <div class="align-columns"></div>
@@ -1494,6 +1560,159 @@ The new version deposition can be accessed through the <code class="prettyprint"
 
 <p>See <a href="#http-status-codes">HTTP status codes</a> (400 and 500 series errors) and
 <a href="#errors">error responses</a>.</p>
+
+            <h2 id="records">Records</h2>
+
+            <h3 id="representation">Representation</h3>
+
+<p>The Records resource is used to search through published records.</p>
+
+            <h3 id="list">List</h3>
+
+<p>List all open access records.</p>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://zenodo.org/api/records'</span><span class="p">,</span>
+                        <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'q'</span><span class="p">:</span> <span class="s">'my title'</span><span class="p">,</span>
+                                <span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">})</span>
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+</code></pre><pre class="highlight shell"><code>curl -i /api/records/?access_token<span class="o">=</span>ACCESS_TOKEN
+</code></pre>
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">GET /api/records/</code></p>
+
+<h4 id="query-arguments">Query arguments</h4>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">q</code></br><em>string</em></td>
+<td style="text-align: left">optional</td>
+<td style="text-align: left">Search query (using Elasticsearch query string syntax).</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">status</code></br><em>string</em></td>
+<td style="text-align: left">optional</td>
+<td style="text-align: left">Filter result based on the deposit status (either <code class="prettyprint">draft</code> or <code class="prettyprint">published</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">sort</code></br><em>string</em></td>
+<td style="text-align: left">optional</td>
+<td style="text-align: left">Sort order (<code class="prettyprint">bestmatch</code> or <code class="prettyprint">mostrecent</code>). Prefix with minus to change form ascending to descending (e.g. <code class="prettyprint">-mostrecent</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">page</code></br><em>integer</em></td>
+<td style="text-align: left">optional</td>
+<td style="text-align: left">Page number for pagination.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">size</code></br><em>integer</em></td>
+<td style="text-align: left">optional</td>
+<td style="text-align: left">Number of results to return per page.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">communities</code></br> <em>string</em></td>
+<td style="text-align: left">optional</td>
+<td style="text-align: left">Return records that are part of the specified communities. (Use of <code class="prettyprint">community identifier</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">type</code></br> <em>string</em></td>
+<td style="text-align: left">optional</td>
+<td style="text-align: left">Return records of the specified type. (<code class="prettyprint">Publication</code>, <code class="prettyprint">Poster</code>, <code class="prettyprint">Presentation</code>&hellip;)</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">subtype</code></br> <em>string</em></td>
+<td style="text-align: left">optional</td>
+<td style="text-align: left">Return records of the specified subtype. (<code class="prettyprint">Journal article</code>, <code class="prettyprint">Preprint</code>, <code class="prettyprint">Proposal</code>&hellip;)</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">custom</code></br> <em>string</em></td>
+<td style="text-align: left">optional</td>
+<td style="text-align: left">Return records containing the specified custom keywords. (Format <code class="prettyprint">custom=[field_name]:field_value</code>)</td>
+</tr>
+</tbody></table>
+
+<h4 id="header">Header</h4>
+
+<p>The response format of the search can be requested by specifying it in the header.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Accept</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">application/json</code></td>
+<td style="text-align: left">JSON</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">application/vnd.zenodo.v1+json</code></td>
+<td style="text-align: left">Zenodo</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">application/marcxml+xml</code></td>
+<td style="text-align: left">Marc XML</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">application/x-bibtex</code></td>
+<td style="text-align: left">Bibtex</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">application/x-datacite+xml</code></td>
+<td style="text-align: left">Datacite XML</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">application/x-dc+xml</code></td>
+<td style="text-align: left">Dublin Core</td>
+</tr>
+</tbody></table>
+
+<h4 id="success-response">Success Response</h4>
+
+<ul>
+<li><strong>Code:</strong> <code class="prettyprint">200 OK</code></li>
+<li><strong>Body</strong>: an array of <a href="#records">record</a> resources.</li>
+</ul>
+
+<h4 id="error-response">Error Response</h4>
+
+<p>See <a href="#http-status-codes">HTTP status codes</a> (400 and 500 series errors) and
+<a href="#errors">error responses</a>.</p>
+
+<h4 id="search-guide">Search guide</h4>
+
+<p>Advanced search queries can as well be performed on Zenodo website through the search box. This is documented in the <a href="https://help.zenodo.org/guides/search/">search guide</a></p>
+
+            <h3 id="retrieve">Retrieve</h3>
+
+<p>Retrieve a single record.</p>
+<pre class="highlight shell"><code>curl -i https://zenodo.org/api/records/1234
+</code></pre><pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"https://zenodo.org/api/records/1234)</span><span class="err">
+</span></code></pre>
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">GET https://zenodo.org/api/records/:id</code></p>
+
+<p>Again, the output format of the search can be specified in the <a href="#header">header</a></p>
+
+<h4 id="success-response">Success response</h4>
+
+<ul>
+<li><strong>Code:</strong> <code class="prettyprint">200 OK</code></li>
+<li><strong>Body</strong>: a <a href="#records">record</a>.</li>
+</ul>
+
+<h4 id="error-response">Error response</h4>
+
+<p>See <a href="#http-status-codes">HTTP status codes</a> (400 and 500 series errors) and
+<a href="#errors">error responses</a>. |</p>
 
             <h2 id="licenses">Licenses</h2>
 
