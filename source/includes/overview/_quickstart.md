@@ -4,31 +4,31 @@ This short guide will give a quick overview of how to upload and publish on
 Zenodo, and will be using Python together with the
 [Requests](http://www.python-requests.org/en/latest/user/install/) package.
 
-```terminal	
-$ pip install requests	
-```	
+```terminal
+$ pip install requests
+```
 
-- First, make sure you have the	
-[Requests](http://www.python-requests.org/en/latest/user/install/) module	
-installed:	
+- First, make sure you have the
+[Requests](http://www.python-requests.org/en/latest/user/install/) module
+installed:
 
-<div class="align-columns"></div>	
+<div class="align-columns"></div>
 
-```terminal	
-$ python	
+```terminal
+$ python
 Python 3.6.5
-[GCC 4.8.1] on linux2	
-Type "help", "copyright", "credits" or "license" for more information.	
-```	
-- Next, fire up a Python command prompt:	
+[GCC 4.8.1] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+```
+- Next, fire up a Python command prompt:
 
-<div class="align-columns"></div>	
+<div class="align-columns"></div>
 
-```python	
-import requests	
-```	
+```python
+import requests
+```
 
-- Import the `requests` module:	
+- Import the `requests` module:
 
 
 <div class="align-columns"></div>
@@ -88,7 +88,7 @@ access token):
                    # Headers are not necessary here since "requests" automatically
                    # adds "Content-Type: application/json", because we're using
                    # the "json=" keyword argument
-                   # headers=headers, 
+                   # headers=headers,
                    headers=headers)
 >>> r.status_code
 201
@@ -130,8 +130,7 @@ access token):
 
 <div class="align-columns"></div>
 
-- Now, let's upload a new file.  
-We have recently released a new API, which is significantly more perfomant and supports much larger file sizes. While the older API supports 100MB per file, the new one has no size limitation.
+- Now, let's upload a new file. We have recently released a new API, which is significantly more perfomant and supports much larger file sizes. While the older API supports 100MB per file, the new one has no size limitation.
 
 <div class="align-columns"></div>
 
@@ -140,16 +139,16 @@ bucket_url = r.json()["links"]["bucket"]
 ```
 
 ```shell
-curl https://zenodo.org/api/deposit/depositions/222761?access_token=$ACCESS_TOKEN
-{ ...  
-  "links": { "bucket": "https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b", ... },
+$ curl https://zenodo.org/api/deposit/depositions/222761?access_token=$ACCESS_TOKEN
+{ ...
+  "links": {
+    "bucket": "https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b",
+    ...,
+  },
 ... }
 ```
 
- - To use the **new files API** we will do a PUT request to the 'bucket' link.
-The bucket is a folder like object storing the files of our record.
-Our bucket URL will look like this: ``'https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b'``
-and can be found under the 'links' key in our records metadata.
+- To use the **new files API** we will do a PUT request to the `bucket` link. The bucket is a folder-like object storing the files of our record. Our bucket URL will look like this: `https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b` and can be found under the `links` key in our records metadata.
 
 ```shell
 # This will stream the file located in '/path/to/your/file.dat' and store it in our bucket.
@@ -160,43 +159,44 @@ $ curl --upload-file /path/to/your/file.dat https://zenodo.org/api/files/568377d
 ```
 
 ```python
-# NEW API
+# New API
 filename = "my-file.zip"
 path = "/path/to/%s" % filename
 
-# We pass the file object (fp) directly to the request as the 'data' to be uploaded.
-# The target URL is a combination of the buckets link with the desired filename seperated by a slash.
+# The target URL is a combination of the bucket link with the desired filename
+# seperated by a slash.
 with open(path, "rb") as fp:
     r = requests.put(
         "%s/%s" % (bucket_url, filename),
         data=fp,
-        # No headers included in the request, since it's a raw byte request
         params=params,
     )
 r.json()
 ```
+
 ```json
 {
-  "mimetype": "application/pdf",
-  "updated": "2020-02-26T14:20:53.811817+00:00",
-  "links": {"self": "https://sandbox.zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf",
-  "version": "https://sandbox.zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf?versionId=38a724d3-40f1-4b27-b236-ed2e43200f85",
-  "uploads": "https://sandbox.zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf?uploads"},
-  "is_head": true,
-  "created": "2020-02-26T14:20:53.805734+00:00",
+  "key": "my-file.zip",
+  "mimetype": "application/zip",
   "checksum": "md5:2942bfabb3d05332b66eb128e0842cff",
   "version_id": "38a724d3-40f1-4b27-b236-ed2e43200f85",
-  "delete_marker": false,
-  "key": "dummy_example.pdf",
-  "size": 13264
- }
- ```
+  "size": 13264,
+  "created": "2020-02-26T14:20:53.805734+00:00",
+  "updated": "2020-02-26T14:20:53.811817+00:00",
+  "links": {
+    "self": "https://zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf",
+    "version": "https://zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf?versionId=38a724d3-40f1-4b27-b236-ed2e43200f85",
+    "uploads": "https://zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf?uploads"
+  },
+  "is_head": true,
+  "delete_marker": false
+}
+```
 
 <div class="align-columns"></div>
 
-
 ```python
-# OLD API
+# Old API
 >>> # Get the deposition id from the previous response
 >>> deposition_id = r.json()['id']
 >>> data = {'name': 'myfirstfile.csv'}
