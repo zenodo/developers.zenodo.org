@@ -168,29 +168,29 @@ programmatically upload and publish your research outputs.</p>
 <p>This short guide will give a quick overview of how to upload and publish on
 Zenodo, and will be using Python together with the
 <a href="http://www.python-requests.org/en/latest/user/install/">Requests</a> package.</p>
-<pre class="highlight shell_session"><code><span class="w">$ </span><span class="nc">pip</span><span class="kv"> install requests  
+<pre class="highlight shell_session"><code><span class="w">$ </span><span class="nc">pip</span><span class="kv"> install requests
 </span></code></pre>
 <ul>
-<li>First, make sure you have the 
-<a href="http://www.python-requests.org/en/latest/user/install/">Requests</a> module<br>
-installed:<br></li>
+<li>First, make sure you have the
+<a href="http://www.python-requests.org/en/latest/user/install/">Requests</a> module
+installed:</li>
 </ul>
 
-<div class="align-columns"></div>   
-<pre class="highlight shell_session"><code><span class="w">$ </span><span class="nc">python</span><span class="kv">    
+<div class="align-columns"></div>
+<pre class="highlight shell_session"><code><span class="w">$ </span><span class="nc">python</span><span class="kv">
 </span>Python 3.6.5
-[GCC 4.8.1] on linux2   
-Type "help", "copyright", "credits" or "license" for more information.  
+[GCC 4.8.1] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
 </code></pre>
 <ul>
-<li>Next, fire up a Python command prompt:<br></li>
+<li>Next, fire up a Python command prompt:</li>
 </ul>
 
-<div class="align-columns"></div>   
-<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span> 
+<div class="align-columns"></div>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
 </code></pre>
 <ul>
-<li>Import the <code class="prettyprint">requests</code> module: </li>
+<li>Import the <code class="prettyprint">requests</code> module:</li>
 </ul>
 
 <div class="align-columns"></div>
@@ -245,7 +245,7 @@ access token):</li>
                    <span class="c"># Headers are not necessary here since "requests" automatically</span>
                    <span class="c"># adds "Content-Type: application/json", because we're using</span>
                    <span class="c"># the "json=" keyword argument</span>
-                   <span class="c"># headers=headers, </span>
+                   <span class="c"># headers=headers,</span>
                    <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
 <span class="mi">201</span>
@@ -287,59 +287,59 @@ access token):</li>
 <div class="align-columns"></div>
 
 <ul>
-<li>Now, let&rsquo;s upload a new file.<br>
-We have recently released a new API, which is significantly more perfomant and supports much larger file sizes. While the older API supports 100MB per file, the new one has no size limitation.</li>
+<li>Now, let&rsquo;s upload a new file. We have recently released a new API, which is significantly more perfomant and supports much larger file sizes. While the older API supports 100MB per file, the new one has no size limitation.</li>
 </ul>
 
 <div class="align-columns"></div>
 <pre class="highlight python"><code><span class="n">bucket_url</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">"links"</span><span class="p">][</span><span class="s">"bucket"</span><span class="p">]</span>
-</code></pre><pre class="highlight shell"><code>curl https://zenodo.org/api/deposit/depositions/222761?access_token<span class="o">=</span><span class="nv">$ACCESS_TOKEN</span>
-<span class="o">{</span> ...  
-  <span class="s2">"links"</span>: <span class="o">{</span> <span class="s2">"bucket"</span>: <span class="s2">"https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b"</span>, ... <span class="o">}</span>,
+</code></pre><pre class="highlight shell"><code><span class="gp">$ </span>curl https://zenodo.org/api/deposit/depositions/222761?access_token<span class="o">=</span><span class="nv">$ACCESS_TOKEN</span>
+<span class="o">{</span> ...
+  <span class="s2">"links"</span>: <span class="o">{</span>
+    <span class="s2">"bucket"</span>: <span class="s2">"https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b"</span>,
+    ...,
+  <span class="o">}</span>,
 ... <span class="o">}</span>
 </code></pre>
 <ul>
-<li>To use the <strong>new files API</strong> we will do a PUT request to the &lsquo;bucket&rsquo; link.
-The bucket is a folder like object storing the files of our record.
-Our bucket URL will look like this: <code class="prettyprint">&#39;https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b&#39;</code>
-and can be found under the &#39;links&rsquo; key in our records metadata.</li>
+<li>To use the <strong>new files API</strong> we will do a PUT request to the <code class="prettyprint">bucket</code> link. The bucket is a folder-like object storing the files of our record. Our bucket URL will look like this: <code class="prettyprint">https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b</code> and can be found under the <code class="prettyprint">links</code> key in our records metadata.</li>
 </ul>
 <pre class="highlight shell"><code><span class="c"># This will stream the file located in '/path/to/your/file.dat' and store it in our bucket.</span>
 <span class="c"># The uploaded file will be named according to the last argument in the upload URL,</span>
 <span class="c"># 'file.dat' in our case.</span>
 <span class="gp">$ </span>curl --upload-file /path/to/your/file.dat https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b/file.dat?access_token<span class="o">=</span><span class="nv">$ACCES_TOKEN</span>
 <span class="o">{</span> ... <span class="o">}</span>
-</code></pre><pre class="highlight python"><code><span class="c"># NEW API</span>
+</code></pre><pre class="highlight python"><code><span class="c"># New API</span>
 <span class="n">filename</span> <span class="o">=</span> <span class="s">"my-file.zip"</span>
 <span class="n">path</span> <span class="o">=</span> <span class="s">"/path/to/</span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="n">filename</span>
 
-<span class="c"># We pass the file object (fp) directly to the request as the 'data' to be uploaded.</span>
-<span class="c"># The target URL is a combination of the buckets link with the desired filename seperated by a slash.</span>
+<span class="c"># The target URL is a combination of the bucket link with the desired filename</span>
+<span class="c"># seperated by a slash.</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
         <span class="s">"</span><span class="si">%</span><span class="s">s/</span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">bucket_url</span><span class="p">,</span> <span class="n">filename</span><span class="p">),</span>
         <span class="n">data</span><span class="o">=</span><span class="n">fp</span><span class="p">,</span>
-        <span class="c"># No headers included in the request, since it's a raw byte request</span>
         <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
     <span class="p">)</span>
 <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre><pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"mimetype"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/pdf"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-02-26T14:20:53.811817+00:00"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://sandbox.zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://sandbox.zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf?versionId=38a724d3-40f1-4b27-b236-ed2e43200f85"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"uploads"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://sandbox.zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf?uploads"</span><span class="p">},</span><span class="w">
-  </span><span class="nt">"is_head"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-02-26T14:20:53.805734+00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-file.zip"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"mimetype"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/zip"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"checksum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"md5:2942bfabb3d05332b66eb128e0842cff"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"version_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"38a724d3-40f1-4b27-b236-ed2e43200f85"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"delete_marker"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dummy_example.pdf"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">13264</span><span class="w">
- </span><span class="p">}</span><span class="w">
+  </span><span class="nt">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">13264</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-02-26T14:20:53.805734+00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-02-26T14:20:53.811817+00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf?versionId=38a724d3-40f1-4b27-b236-ed2e43200f85"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"uploads"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf?uploads"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"is_head"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"delete_marker"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
 <div class="align-columns"></div>
-<pre class="highlight python"><code><span class="c"># OLD API</span>
+<pre class="highlight python"><code><span class="c"># Old API</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="c"># Get the deposition id from the previous response</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">deposition_id</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">'id'</span><span class="p">]</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'myfirstfile.csv'</span><span class="p">}</span>
@@ -738,7 +738,7 @@ and <code class="prettyprint">code</code>, and possibly <code class="prettyprint
 <tr>
 <td style="text-align: left"><code class="prettyprint">license</code></br><em>string</em></td>
 <td style="text-align: left">Yes, if <code class="prettyprint">access_right</code> is <code class="prettyprint">&quot;open&quot;</code> or <code class="prettyprint">&quot;embargoed&quot;</code>.</td>
-<td style="text-align: left">Controlled vocabulary:</br>The selected license applies to all files in this deposition, but not to the metadata which is licensed under <a href="http://about.zenodo.org/terms/">Creative Commons Zero</a>. Further information about licenses is available at <a href="http://licenses.opendefinition.org/">Open Definition Licenses Service</a>. Defaults to <code class="prettyprint">cc-by</code> for non-datasets and <code class="prettyprint">cc-zero</code> for datasets.</td>
+<td style="text-align: left">Controlled vocabulary:</br>The selected license applies to all files in this deposition, but not to the metadata which is licensed under <a href="http://about.zenodo.org/terms/">Creative Commons Zero</a>. You can find the available license IDs via our <a href="#licenses"><code class="prettyprint">/api/licenses</code> endpoint</a>. Defaults to <code class="prettyprint">cc-zero</code> for datasets and <code class="prettyprint">cc-by</code> for everything else.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">embargo_date</code></br><em>date</em></td>
