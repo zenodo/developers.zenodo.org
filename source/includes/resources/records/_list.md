@@ -30,6 +30,7 @@ curl -i /api/records/?access_token=ACCESS_TOKEN
 | `communities`</br> _string_ | optional | Return records that are part of the specified communities. (Use of `community identifier`)                                              |
 | `type`</br> _string_        | optional | Return records of the specified type. (`Publication`, `Poster`, `Presentation`...)                                        |
 | `subtype`</br> _string_     | optional | Return records of the specified subtype. (`Journal article`, `Preprint`, `Proposal`...)                                   |
+| `bounds`</br> _string_      | optional | Return records filtered by a geolocation bounding box. (Format `bounds=143.37158,-38.99357,146.90918,-37.35269`)                               |
 | `custom`</br> _string_      | optional | Return records containing the specified custom keywords. (Format `custom=[field_name]:field_value`)                               |
 
 #### Header
