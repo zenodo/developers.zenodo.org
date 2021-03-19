@@ -27,6 +27,7 @@ curl -i /api/deposit/depositions/?access_token=ACCESS_TOKEN
 | `sort`</br>_string_ | optional | Sort order (``bestmatch`` or ``mostrecent``). Prefix with minus to change form ascending to descending (e.g. ``-mostrecent``). |
 | `page`</br>_integer_ | optional | Page number for pagination. |
 | `size`</br>_integer_ | optional | Number of results to return per page. |
+| `all_versions`</br>_integer/string_ | optional | Show (`true` or `1`) or hide (`false` or `0`) all versions of deposits. |
 
 #### Success Response
 
