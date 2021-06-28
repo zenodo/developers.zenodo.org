@@ -45,5 +45,6 @@ includes:
   - resources/licenses/retrieve
   - resources/changes
   - oai-pmh/root
+  - github/root
 search: true
 ---
