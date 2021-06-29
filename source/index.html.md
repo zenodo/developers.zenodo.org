@@ -46,5 +46,6 @@ includes:
   - resources/changes
   - oai-pmh/root
   - github/root
+  - rate-limit/root
 search: true
 ---
