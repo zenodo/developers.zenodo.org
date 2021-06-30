@@ -58,6 +58,6 @@ In the example shown, we add metadata regarding:
 }
 ```
 
-## How to verify your `.zenodo.json`?
+## How to verify your ".zenodo.json" file?
 
 After creating your `.zenodo.json` file you should validate it to make sure that it contains valid JSON. You can use a tool like the [JSON Formatter & Validator](https://jsonformatter.curiousconcept.com), or load it via your favorite programming language.
