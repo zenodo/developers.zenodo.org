@@ -2115,6 +2115,68 @@ v3.0.</li>
 
 <p>Initial release of OAI-PMH API.</p>
 
+            <h1 id="github">GitHub</h1>
+
+<h2 id="add-metadata-to-your-github-repository-release">Add metadata to your GitHub repository release</h2>
+
+<p>We automatically extract metadata about your release from GitHub APIs. For example, the authors are determined from the repository&rsquo;s contributor statistics. To overwrite some of the default metadata that would come from a regular GitHub release you can include a <code class="prettyprint">.zenodo.json</code> file at the root of your GitHub repository.</p>
+
+<p>The contents of the <code class="prettyprint">.zenodo.json</code> file are based on our <a href="https://developers.zenodo.org/#deposit-metadata">deposit metadata documentation</a> and can be structurally validated by our <a href="https://zenodo.org/schemas/deposits/records/legacyrecord.json">deposit JSON Schema</a>. </p>
+
+<p>In the example shown, we add metadata regarding:</p>
+
+<ul>
+<li>software authorship and ORCiDs, via the <code class="prettyprint">creators</code> field</li>
+<li>Apache-2.0 licensing, via the <code class="prettyprint">license</code> field</li>
+<li>a custom title, via the <code class="prettyprint">title</code> field</li>
+<li>a related identifier to the software paper, via the <code class="prettyprint">related_identifiers</code> field</li>
+<li>keywords, via the <code class="prettyprint">keywords</code> field</li>
+<li>Zenodo communities, via the <code class="prettyprint">communities</code> field</li>
+<li>funding information, via the <code class="prettyprint">grants</code> field</li>
+</ul>
+<pre class="highlight python"><code><span class="p">{</span>
+    <span class="s">"creators"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>   
+            <span class="s">"orcid"</span><span class="p">:</span> <span class="s">"0000-0002-1825-0097"</span><span class="p">,</span>
+            <span class="s">"affiliation"</span><span class="p">:</span> <span class="s">"Feline reasearch institute"</span><span class="p">,</span>
+            <span class="s">"name"</span><span class="p">:</span> <span class="s">"Field, Gar"</span>
+        <span class="p">},</span>
+        <span class="p">{</span>   
+            <span class="s">"orcid"</span><span class="p">:</span> <span class="s">"0000-0002-1825-0097"</span><span class="p">,</span>
+            <span class="s">"affiliation"</span><span class="p">:</span> <span class="s">"Feline reasearch institute"</span><span class="p">,</span>
+            <span class="s">"name"</span><span class="p">:</span> <span class="s">"Cat, Felix"</span>
+        <span class="p">}</span>
+    <span class="p">],</span>    
+
+    <span class="s">"license"</span><span class="p">:</span> <span class="s">"Apache-2.0"</span><span class="p">,</span>
+
+    <span class="s">"title"</span><span class="p">:</span> <span class="s">"Red-Dot: ML-powered laser vector detection"</span><span class="p">,</span>
+
+    <span class="s">"related_identifiers"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s">"scheme"</span><span class="p">:</span> <span class="s">"doi"</span><span class="p">,</span>
+            <span class="s">"identifier"</span><span class="p">:</span> <span class="s">"10.1234/software.paper.5678"</span><span class="p">,</span>
+            <span class="s">"relation"</span><span class="p">:</span> <span class="s">"isDocumentedBy"</span><span class="p">,</span>
+            <span class="s">"resource_type"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">"type"</span><span class="p">:</span> <span class="s">"publication"</span><span class="p">,</span>
+                <span class="s">"subtype"</span><span class="p">:</span> <span class="s">"article"</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+
+    <span class="s">"keywords"</span><span class="p">:</span> <span class="p">[</span><span class="s">"Cats"</span><span class="p">,</span> <span class="s">"Laser"</span><span class="p">,</span> <span class="s">"Behavior"</span><span class="p">],</span>
+
+    <span class="s">"communities"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s">"identifier"</span><span class="p">:</span> <span class="s">"software-cats"</span><span class="p">}</span>
+    <span class="p">],</span>
+
+    <span class="s">"grants"</span><span class="p">:</span> <span class="p">[{</span><span class="s">"id"</span><span class="p">:</span><span class="s">"777541"</span><span class="p">}]</span>
+<span class="p">}</span>
+</code></pre>
+<h2 id="how-to-verify-your-zenodo-json">How to verify your <code class="prettyprint">.zenodo.json</code>?</h2>
+
+<p>After creating your <code class="prettyprint">.zenodo.json</code> file you should validate it to make sure that it contains valid JSON. You can use a tool like the <a href="https://jsonformatter.curiousconcept.com">JSON Formatter &amp; Validator</a>, or load it via your favorite programming language.</p>
+
         </div>
         <div class="dark-box">
             <div class="lang-selector">
