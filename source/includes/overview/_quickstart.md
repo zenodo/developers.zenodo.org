@@ -3,6 +3,8 @@
 This short guide will give a quick overview of how to upload and publish on
 Zenodo, and will be using Python together with the
 [Requests](http://www.python-requests.org/en/latest/user/install/) package.
+We suggest to use our testing instance for the following example, to avoid
+creating test records in our production one.
 
 ```terminal
 $ pip install requests
@@ -35,7 +37,7 @@ import requests
 
 ```python
 >>> import requests
->>> r = requests.get("https://zenodo.org/api/deposit/depositions")
+>>> r = requests.get("https://sandbox.zenodo.org/api/deposit/depositions")
 >>> r.status_code
 401
 >>> r.json()
@@ -55,14 +57,15 @@ import requests
 
 <div class="align-columns"></div>
 
-- All API access requires an access token, so
-[create](https://zenodo.org/account/settings/applications/tokens/new/) one.
+- Some API access, e.g. listing your deposits, requires an access token, you can
+create one
+[here](https://sandbox.zenodo.org/account/settings/applications/tokens/new/).
 
 <div class="align-columns"></div>
 
 ```python
 >>> ACCESS_TOKEN = 'ChangeMe'
->>> r = requests.get('https://zenodo.org/api/deposit/depositions',
+>>> r = requests.get('https://sandbox.zenodo.org/api/deposit/depositions',
 ...                  params={'access_token': ACCESS_TOKEN})
 >>> r.status_code
 200
@@ -101,15 +104,15 @@ access token):
     "files": [],
     "id": 542201,
     "links": {
-        "bucket": "https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b",
-        "discard": "https://zenodo.org/api/deposit/depositions/542201/actions/discard",
-        "edit": "https://zenodo.org/api/deposit/depositions/542201/actions/edit",
-        "files": "https://zenodo.org/api/deposit/depositions/542201/files",
-        "html": "https://zenodo.org/deposit/542201",
-        "latest_draft": "https://zenodo.org/api/deposit/depositions/542201",
-        "latest_draft_html": "https://zenodo.org/deposit/542201",
-        "publish": "https://zenodo.org/api/deposit/depositions/542201/actions/publish",
-        "self": "https://zenodo.org/api/deposit/depositions/542201"
+        "bucket": "https://sandbox.zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b",
+        "discard": "https://sandbox.zenodo.org/api/deposit/depositions/542201/actions/discard",
+        "edit": "https://sandbox.zenodo.org/api/deposit/depositions/542201/actions/edit",
+        "files": "https://sandbox.zenodo.org/api/deposit/depositions/542201/files",
+        "html": "https://sandbox.zenodo.org/deposit/542201",
+        "latest_draft": "https://sandbox.zenodo.org/api/deposit/depositions/542201",
+        "latest_draft_html": "https://sandbox.zenodo.org/deposit/542201",
+        "publish": "https://sandbox.zenodo.org/api/deposit/depositions/542201/actions/publish",
+        "self": "https://sandbox.zenodo.org/api/deposit/depositions/542201"
     },
     "metadata": {
         "prereserve_doi": {
@@ -139,22 +142,22 @@ bucket_url = r.json()["links"]["bucket"]
 ```
 
 ```shell
-$ curl https://zenodo.org/api/deposit/depositions/222761?access_token=$ACCESS_TOKEN
+$ curl https://sandbox.zenodo.org/api/deposit/depositions/222761?access_token=$ACCESS_TOKEN
 { ...
   "links": {
-    "bucket": "https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b",
+    "bucket": "https://sandbox.zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b",
     ...,
   },
 ... }
 ```
 
-- To use the **new files API** we will do a PUT request to the `bucket` link. The bucket is a folder-like object storing the files of our record. Our bucket URL will look like this: `https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b` and can be found under the `links` key in our records metadata.
+- To use the **new files API** we will do a PUT request to the `bucket` link. The bucket is a folder-like object storing the files of our record. Our bucket URL will look like this: `https://sandbox.zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b` and can be found under the `links` key in our records metadata.
 
 ```shell
 # This will stream the file located in '/path/to/your/file.dat' and store it in our bucket.
 # The uploaded file will be named according to the last argument in the upload URL,
 # 'file.dat' in our case.
-$ curl --upload-file /path/to/your/file.dat https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b/file.dat?access_token=$ACCES_TOKEN
+$ curl --upload-file /path/to/your/file.dat https://sandbox.zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b/file.dat?access_token=$ACCES_TOKEN
 { ... }
 ```
 
@@ -184,9 +187,9 @@ r.json()
   "created": "2020-02-26T14:20:53.805734+00:00",
   "updated": "2020-02-26T14:20:53.811817+00:00",
   "links": {
-    "self": "https://zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf",
-    "version": "https://zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf?versionId=38a724d3-40f1-4b27-b236-ed2e43200f85",
-    "uploads": "https://zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf?uploads"
+    "self": "https://sandbox.zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf",
+    "version": "https://sandbox.zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf?versionId=38a724d3-40f1-4b27-b236-ed2e43200f85",
+    "uploads": "https://sandbox.zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf?uploads"
   },
   "is_head": true,
   "delete_marker": false
@@ -201,7 +204,7 @@ r.json()
 >>> deposition_id = r.json()['id']
 >>> data = {'name': 'myfirstfile.csv'}
 >>> files = {'file': open('/path/to/myfirstfile.csv', 'rb')}
->>> r = requests.post('https://zenodo.org/api/deposit/depositions/%s/files' % deposition_id,
+>>> r = requests.post('https://sandbox.zenodo.org/api/deposit/depositions/%s/files' % deposition_id,
 ...                   params={'access_token': ACCESS_TOKEN}, data=data,
 ...                   files=files)
 >>> r.status_code
@@ -232,7 +235,7 @@ r.json()
 ...                       'affiliation': 'Zenodo'}]
 ...     }
 ... }
->>> r = requests.put('https://zenodo.org/api/deposit/depositions/%s' % deposition_id,
+>>> r = requests.put('https://sandbox.zenodo.org/api/deposit/depositions/%s' % deposition_id,
 ...                  params={'access_token': ACCESS_TOKEN}, data=json.dumps(data),
 ...                  headers=headers)
 >>> r.status_code
@@ -245,7 +248,7 @@ r.json()
 
 
 ```python
->>> r = requests.post('https://zenodo.org/api/deposit/depositions/%s/actions/publish' % deposition_id,
+>>> r = requests.post('https://sandbox.zenodo.org/api/deposit/depositions/%s/actions/publish' % deposition_id,
                       params={'access_token': ACCESS_TOKEN} )
 >>> r.status_code
 202
