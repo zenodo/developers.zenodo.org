@@ -2,27 +2,28 @@
 
 This short guide will give a quick overview of how to upload and publish on
 Zenodo, and will be using Python together with the
-[Requests](http://www.python-requests.org/en/latest/user/install/) package.
+[Requests](http://www.python-requests.org/en/latest/user/install/) package or
+alternatively .
 We suggest to use our testing instance for the following example, to avoid
 creating test records in our production one.
 
-```terminal
+```python
 $ pip install requests
 ```
 
 - First, make sure you have the
 [Requests](http://www.python-requests.org/en/latest/user/install/) module
-installed:
+installed unless you are going to be using the curl section of the docs:
 
 <div class="align-columns"></div>
 
-```terminal
+```python
 $ python
 Python 3.6.5
 [GCC 4.8.1] on linux2
 Type "help", "copyright", "credits" or "license" for more information.
 ```
-- Next, fire up a Python command prompt:
+- Next, if you are using the python section fire up a Python command prompt:
 
 <div class="align-columns"></div>
 
@@ -30,7 +31,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 import requests
 ```
 
-- Import the `requests` module:
+- and import the `requests` module:
 
 
 <div class="align-columns"></div>
@@ -43,7 +44,21 @@ import requests
 >>> r.json()
 ```
 
-```json
+```shell
+  curl https://sandbox.zenodo.org/api/deposit/depositions
+```
+
+```python
+{
+  "message": "The server could not verify that you are authorized to access
+  the URL requested. You either supplied the wrong credentials (e.g. a bad
+  password), or your browser doesn't understand how to supply the credentials
+  required.",
+  "status": 401
+}
+```
+
+```shell
 {
   "message": "The server could not verify that you are authorized to access
   the URL requested. You either supplied the wrong credentials (e.g. a bad
@@ -73,6 +88,15 @@ create one
 []
 ```
 
+```shell
+  ACCESS_TOKEN=ChangeMe
+  curl -X GET "https://sandbox.zenodo.org/api/deposit/depositions?access_token=$ACCESS_TOKEN"
+```
+
+```shell
+ []
+```
+
 - Let's try again (replace `ACCESS_TOKEN` with your newly created personal
 access token):
 
@@ -97,6 +121,11 @@ access token):
 201
 >>> r.json()
 ```
+
+```shell
+curl -X POST  --header "Content-Type: application/json" "https://sandbox.zenodo.org/api/deposit/depositions?access_token=$ACCESS_TOKEN" --data {}
+```
+
 ```json
 {
     "conceptrecid": "542200",
@@ -142,7 +171,7 @@ bucket_url = r.json()["links"]["bucket"]
 ```
 
 ```shell
-$ curl https://sandbox.zenodo.org/api/deposit/depositions/222761?access_token=$ACCESS_TOKEN
+$ curl "https://sandbox.zenodo.org/api/deposit/depositions/542201?access_token=$ACCESS_TOKEN"
 { ...
   "links": {
     "bucket": "https://sandbox.zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b",
@@ -151,13 +180,13 @@ $ curl https://sandbox.zenodo.org/api/deposit/depositions/222761?access_token=$A
 ... }
 ```
 
-- To use the **new files API** we will do a PUT request to the `bucket` link. The bucket is a folder-like object storing the files of our record. Our bucket URL will look like this: `https://sandbox.zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b` and can be found under the `links` key in our records metadata.
+- To use the **new files API** we will do a PUT request to the `bucket` link. The bucket is a folder-like object storing the files of our record. Our bucket URL will look like this: `https://sandbox.zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b` and can be found under the `links` key in our deposit metadata.
 
 ```shell
 # This will stream the file located in '/path/to/your/file.dat' and store it in our bucket.
 # The uploaded file will be named according to the last argument in the upload URL,
 # 'file.dat' in our case.
-$ curl --upload-file /path/to/your/file.dat https://sandbox.zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b/file.dat?access_token=$ACCES_TOKEN
+$ curl --upload-file /path/to/your/file.dat "https://sandbox.zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b/file.dat?access_token=$ACCESS_TOKEN"
 { ... }
 ```
 
@@ -212,6 +241,11 @@ r.json()
 >>> r.json()
 ```
 
+```shell
+# Get the deposit id from the response of the request creating our deposit
+curl -X POST "https://sandbox.zenodo.org/api/deposit/depositions/542201/files?access_token=$ACCESS_TOKEN" -F 'file=@myfirstfile.csv'
+```
+
 ```json
 {
   "checksum": "2b70e04bb31f2656ce967dc07103297f",
@@ -221,7 +255,7 @@ r.json()
 }
 ```
 
-- Here are the instructions for the **old files API**:
+- Alternatively you can still use the  **old files API**:
 
 <div class="align-columns"></div>
 
@@ -242,7 +276,22 @@ r.json()
 200
 ```
 
-- Last thing missing, is just to add some metadata:
+```shell
+# Get the deposit id from the response of the request creating our deposit
+curl -X PUT --header "Content-Type: application/json"
+ "https://sandbox.zenodo.org/api/deposit/depositions/542201?access_token=$ACCESS_TOKEN" --data '{
+     "metadata": {
+         "title": "My first upload",
+         "upload_type": "poster",
+         "description": "This is my first upload",
+         "creators": [{"name": "Doe, John",
+                       "affiliation": "Zenodo"}]
+     }
+ }'
+ # You should receive in the response the updated metadata of the deposit
+```
+
+- Finally we can proceed to add metadata to our deposit:
 
 <div class="align-columns"></div>
 
@@ -254,8 +303,14 @@ r.json()
 202
 ```
 
+```shell
+curl -X POST "https://sandbox.zenodo.org/api/deposit/depositions/542201/actions/publish?access_token=$ACCESS_TOKEN"
+
+```
+
 - And we're ready to publish:
 
 <aside class="warning">
-  Don't execute this last step - it will put your test upload straight online.
+  Before executing this last step please make sure that you are using our 
+  test infrastructure as instructed at the start of the example.
 </aside>
