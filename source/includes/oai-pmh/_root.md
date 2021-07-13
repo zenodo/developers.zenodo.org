@@ -16,6 +16,33 @@ not available for download.
 
 `https://zenodo.org/oai2d`
 
+
+## First steps with Sickle
+
+```python
+# Install the Sickle package using pip
+pip install Sickle
+```
+
+```python
+# Import Sickle and initialize the client by passing the base URL
+>>> from sickle import Sickle
+>>> sickle = Sickle('https://zenodo.org/oai2d')
+```
+
+## Get information about the OAI-PMH API
+
+```python
+# Get information on the OAI-PMH API by using "Identify"
+>>> identity = sickle.Identify()
+>>> identity.granularity
+'YYYY-MM-DDThh:mm:ssZ'
+
+>>> identity.earliestDatestamp
+'2014-02-03T14:41:33Z'
+```
+
+
 ## Resumption tokens
 
 Resumption tokens are only valid for **2 minutes**. In case a token expired, you will receive a ``422 Unprocessable Entity`` HTTP error.
@@ -32,8 +59,14 @@ a ``429 Too Many Requests`` HTTP error if you exceed the limit.
 
 ## Metadata formats
 
-Metadata for each record is available in several formats. The available formats
-include:
+```python
+# Metadata for each record is available in several formats
+>>> metadataFormats = sickle.ListMetadataFormats()
+>>> list(metadataFormats)
+[<MetadataFormat marcxml>, <MetadataFormat oai_datacite4>, ...] 
+```
+
+### The available formats include:
 
 **`oai_datacite`**
 
@@ -124,14 +157,25 @@ We support both harvesting of the _entire repository_ as well as _selective
 harvesting_ of communities.
 
 
-**Entire repository**
-
-In order to harvest the entire repository you make an OAI-PMH request without
-passing any set specification.
+### Entire repository
 
 [See example](https://zenodo.org/oai2d?verb=ListRecords&
 metadataPrefix=oai_datacite)
 
+```python
+# Harvest the entire repository making an OAI-PMH request
+>>> records = sickle.ListRecords(metadataPrefix='oai_dc')
+>>> record = records.next()
+<Record oai:zenodo.org:3442216>
+
+# ...<access some attributes>
+>>> record.id
+...
+>>> record.title  # not sure if this attribute exists
+...
+```
+
+### Selective harvesting
 
 **`user-<identifier>`**
 
@@ -143,6 +187,39 @@ correct community identifier.
 [See example](https://zenodo.org/oai2d?verb=ListRecords&
 metadataPrefix=oai_datacite&set=user-cfa)
 
+
+```python
+# Fetch a couple of records from the OAI Set of the "cfa" community
+>>> records = sickle.ListRecords(metadataPrefix='oai_dc', set='user-cfa')
+>>> record = records.next()
+>>> record.sets  # ...or whatever one can do to inspect what sets a record is in
+```
+
+### Harvesting with a different metadata format
+
+```python
+# Community harvest using "marc21" metadata format
+>>> records = sickle.ListRecords(metadataPrefix='marc21', set='user-cfa')
+>>> record = records.next()
+>>> record.raw  # ...or whatever showcases the metadata format
+<...>
+```
+
+
+### Even more selective harvesting
+
+```python
+# Selecting harvesting using "from"
+records = sickle.ListRecords(**{'metadataPrefix': 'oai_dc', 'set': 'user-cfa', 'from': '2019-01-01' })
+
+records.next()
+<Record oai:zenodo.org:7661>
+
+records.next()
+<Record oai:zenodo.org:6738>
+```
+
+### Other questions on harvesting
 If you need selective harvesting and your use case is not supported by above
 sets, please [contact us](http://about.zenodo.org/contact/) and we may possible
 create a specific set for you.
