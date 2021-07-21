@@ -2206,6 +2206,28 @@ To achieve this, we have rate-limiting measures in place which limit the number 
 </tr>
 </tbody></table>
 
+<p>When you are making requests to any of our endpoints, you can inspect the following HTTP response headers for more information of your current rate-limit status:</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">HTTP header</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">X-RateLimit-Limit</code></td>
+<td style="text-align: left">Current rate-limit policy, i.e. maximum number of requests per minute</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">X-RateLimit-Remaining</code></td>
+<td style="text-align: left">Number of requests remaining in the current rate limit</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">X-RateLimit-Reset</code></td>
+<td style="text-align: left">Reset time of the current rate limit</td>
+</tr>
+</tbody></table>
+
         </div>
         <div class="dark-box">
             <div class="lang-selector">
