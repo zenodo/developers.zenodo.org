@@ -80,6 +80,7 @@ The Deposition resource is used for uploading and editing records on Zenodo.
   <code>blockquote</code>,
   <code>br</code>,
   <code>code</code>,
+  <code>caption</code>,
   <code>div</code>,
   <code>em</code>,
   <code>i</code>,
@@ -91,7 +92,13 @@ The Deposition resource is used for uploading and editing records on Zenodo.
   <code>strike</code>,
   <code>strong</code>,
   <code>sub</code>,
-  <code>sup</code>,
+  <code>table</code>,
+  <code>caption</code>,
+  <code>tbody</code>,
+  <code>thead</code>,
+  <code>th</code>,
+  <code>td</code>,
+  <code>tr</code>,
   <code>u</code>,
   <code>ul</code>.
 </aside>
