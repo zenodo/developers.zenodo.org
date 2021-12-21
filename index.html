@@ -1966,8 +1966,28 @@ not available for download.</p>
 
 <h2 id="base-url">Base URL</h2>
 
-<p><code class="prettyprint">https://zenodo.org/oai2d</code></p>
+<p>Our OAI-PMH base endpoint is at <code class="prettyprint">https://zenodo.org/oai2d</code>.</p>
 
+<h2 id="installing-prerequisites-for-our-example">Installing prerequisites for our example</h2>
+
+<p>For this example, we are going to be using Sickle since it simplifies our workflow and supports XML parsing.</p>
+<pre class="highlight python"><code><span class="c"># Install the Sickle package using pip</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">Sickle</span>
+</code></pre><pre class="highlight python"><code><span class="c"># Import Sickle and initialize the client by passing the base URL</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">sickle</span> <span class="kn">import</span> <span class="n">Sickle</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sickle</span> <span class="o">=</span> <span class="n">Sickle</span><span class="p">(</span><span class="s">'https://zenodo.org/oai2d'</span><span class="p">)</span>
+</code></pre>
+<h2 id="get-information-about-the-oai-pmh-api">Get information about the OAI-PMH API</h2>
+
+<p>To get some general information about the OAI-PMH capabilities we can use the <code class="prettyprint">Identify</code> verb.</p>
+<pre class="highlight python"><code><span class="c"># Get information on the OAI-PMH API by using "Identify"</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="n">sickle</span><span class="o">.</span><span class="n">Identify</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span><span class="o">.</span><span class="n">granularity</span>
+<span class="s">'YYYY-MM-DDThh:mm:ssZ'</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span><span class="o">.</span><span class="n">earliestDatestamp</span>
+<span class="s">'2014-02-03T14:41:33Z'</span>
+</code></pre>
 <h2 id="resumption-tokens">Resumption tokens</h2>
 
 <p>Resumption tokens are only valid for <strong>2 minutes</strong>. In case a token expired, you will receive a <code class="prettyprint">422 Unprocessable Entity</code> HTTP error.</p>
@@ -1980,12 +2000,18 @@ not available for download.</p>
 <h2 id="rate-limit">Rate limit</h2>
 
 <p>The OAI-PMH API is rated limited like the REST API - i.e. you will receive
-a <code class="prettyprint">429 Too Many Requests</code> HTTP error if you exceed the limit.</p>
+a <code class="prettyprint">429 Too Many Requests</code> HTTP error if you exceed the limit.
+For more information please take a look at the <a href="#rate-limiting">rate limiting documentation</a>.</p>
 
 <h2 id="metadata-formats">Metadata formats</h2>
 
-<p>Metadata for each record is available in several formats. The available formats
-include:</p>
+<p>To list the available records metadata formats we can use <code class="prettyprint">ListMetadataFormats</code>.</p>
+<pre class="highlight python"><code><span class="c"># Metadata for each record is available in several formats</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">metadataFormats</span> <span class="o">=</span> <span class="n">sickle</span><span class="o">.</span><span class="n">ListMetadataFormats</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="n">metadataFormats</span><span class="p">)</span>
+<span class="p">[</span><span class="o">&lt;</span><span class="n">MetadataFormat</span> <span class="n">marcxml</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">MetadataFormat</span> <span class="n">oai_datacite4</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+</code></pre>
+<h3 id="available-metadata-formats">Available metadata formats</h3>
 
 <p><strong><code class="prettyprint">oai_datacite</code></strong></p>
 
@@ -2074,13 +2100,18 @@ using one of the other export formats as we may discontinue support for MARC21.<
 <p>We support both harvesting of the <em>entire repository</em> as well as <em>selective
 harvesting</em> of communities.</p>
 
-<p><strong>Entire repository</strong></p>
+<h3 id="entire-repository">Entire repository</h3>
 
-<p>In order to harvest the entire repository you make an OAI-PMH request without
-passing any set specification.</p>
+<p>To harvest the entire repository, entirely skip the <code class="prettyprint">set</code> parameter (you still need to pass the required <code class="prettyprint">metadataPrefix</code> parameter).</p>
 
 <p><a href="https://zenodo.org/oai2d?verb=ListRecords&amp;
 metadataPrefix=oai_datacite">See example</a></p>
+<pre class="highlight python"><code><span class="c"># Harvest the entire repository</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">records</span> <span class="o">=</span> <span class="n">sickle</span><span class="o">.</span><span class="n">ListRecords</span><span class="p">(</span><span class="n">metadataPrefix</span><span class="o">=</span><span class="s">'oai_dc'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">record</span> <span class="o">=</span> <span class="n">records</span><span class="o">.</span><span class="nb">next</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">Record</span> <span class="n">oai</span><span class="p">:</span><span class="n">zenodo</span><span class="o">.</span><span class="n">org</span><span class="p">:</span><span class="mi">3442216</span><span class="o">&gt;</span>
+</code></pre>
+<h3 id="selective-harvesting">Selective harvesting</h3>
 
 <p><strong><code class="prettyprint">user-&lt;identifier&gt;</code></strong></p>
 
@@ -2091,36 +2122,61 @@ correct community identifier.</p>
 
 <p><a href="https://zenodo.org/oai2d?verb=ListRecords&amp;
 metadataPrefix=oai_datacite&amp;set=user-cfa">See example</a></p>
+<pre class="highlight python"><code><span class="c"># Fetch a couple of records from the OAI Set of the "cfa" community</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">records</span> <span class="o">=</span> <span class="n">sickle</span><span class="o">.</span><span class="n">ListRecords</span><span class="p">(</span><span class="n">metadataPrefix</span><span class="o">=</span><span class="s">'oai_dc'</span><span class="p">,</span> <span class="nb">set</span><span class="o">=</span><span class="s">'user-cfa'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">record</span> <span class="o">=</span> <span class="n">records</span><span class="o">.</span><span class="nb">next</span><span class="p">()</span>
+
+<span class="c"># To inspect on what sets a record is in</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">record</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">setSpecs</span>
+<span class="p">[</span><span class="s">'openaire_data'</span><span class="p">,</span> <span class="s">'user-cfa'</span><span class="p">]</span>
+</code></pre>
+<h3 id="harvesting-with-a-different-metadata-format">Harvesting with a different metadata format</h3>
+
+<p>There is also the possibility of using different metadata formats. For that, we only need to replace the <code class="prettyprint">metadataPrefix</code> argument.</p>
+
+<p><a href="https://zenodo.org/oai2d?verb=ListRecords&amp;
+metadataPrefix=oai_datacite&amp;set=user-cfa">See example</a></p>
+<pre class="highlight python"><code><span class="c"># Community harvest using "oai_datacite" metadata format</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">records</span> <span class="o">=</span> <span class="n">sickle</span><span class="o">.</span><span class="n">ListRecords</span><span class="p">(</span><span class="n">metadataPrefix</span><span class="o">=</span><span class="s">'oai_datacite'</span><span class="p">,</span> <span class="nb">set</span><span class="o">=</span><span class="s">'user-cfa'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">record</span> <span class="o">=</span> <span class="n">records</span><span class="o">.</span><span class="nb">next</span><span class="p">()</span>
+
+<span class="c"># Retrieving metadata from the record</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">record</span><span class="o">.</span><span class="n">metadata</span>
+<span class="p">{</span>
+    <span class="s">"title"</span><span class="p">:</span> <span class="p">[</span><span class="s">"Computing and Using Metrics in ADS"</span><span class="p">],</span>
+    <span class="s">"creatorName"</span><span class="p">:</span> <span class="p">[</span><span class="s">"Henneken, Edwin"</span><span class="p">],</span>
+    <span class="s">"identifier"</span><span class="p">:</span> <span class="p">[</span><span class="s">"10.5281/zenodo.10897"</span><span class="p">],</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id="harvesting-with-multiple-filters">Harvesting with multiple filters</h3>
+
+<p>Using multiple filters to harvest records enables a higher level of granularity, allowing us to retrieve specific groups of records.</p>
+
+<p><a href="https://zenodo.org/oai2d?verb=ListRecords&amp;
+metadataPrefix=oai_datacite&amp;set=user-cfa&amp;from=%272019-01-01%27">See example</a></p>
+<pre class="highlight python"><code><span class="c"># Selecting harvesting using "from"</span>
+<span class="n">records</span> <span class="o">=</span> <span class="n">sickle</span><span class="o">.</span><span class="n">ListRecords</span><span class="p">(</span><span class="o">**</span><span class="p">{</span>
+    <span class="s">'metadataPrefix'</span><span class="p">:</span> <span class="s">'oai_dc'</span><span class="p">,</span>
+    <span class="s">'set'</span><span class="p">:</span> <span class="s">'user-cfa'</span><span class="p">,</span>
+    <span class="s">'from'</span><span class="p">:</span> <span class="s">'2019-01-01'</span><span class="p">,</span>
+<span class="p">})</span>
+
+<span class="n">records</span><span class="o">.</span><span class="nb">next</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">Record</span> <span class="n">oai</span><span class="p">:</span><span class="n">zenodo</span><span class="o">.</span><span class="n">org</span><span class="p">:</span><span class="mi">7661</span><span class="o">&gt;</span>
+
+<span class="n">records</span><span class="o">.</span><span class="nb">next</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">Record</span> <span class="n">oai</span><span class="p">:</span><span class="n">zenodo</span><span class="o">.</span><span class="n">org</span><span class="p">:</span><span class="mi">6738</span><span class="o">&gt;</span>
+</code></pre>
+<h3 id="other-questions-on-harvesting">Other questions on harvesting</h3>
 
 <p>If you need selective harvesting and your use case is not supported by above
-sets, please <a href="http://about.zenodo.org/contact/">contact us</a> and we may possible
+sets, you can <a href="https://zenodo.org/support">contact us</a> and we can try
 create a specific set for you.</p>
 
 <h2 id="update-schedule">Update schedule</h2>
 
 <p>Most updates are available immediately, some few updates are only reflected in the OAI sets once an hour.</p>
-
-<h2 id="changes">Changes</h2>
-
-<p><strong>2016-09-12</strong></p>
-
-<ul>
-<li>Deprecated metadata formats <code class="prettyprint">datacite3</code> and <code class="prettyprint">oai_datacite3</code>. End of life is February 2018.</li>
-<li>Removed rate limit of 0.5 requests/second.</li>
-<li>Changed resumption token expiry to two minutes due to major update of our
-underlying repository software.</li>
-</ul>
-
-<p><strong>2014-03-10</strong></p>
-
-<ul>
-<li>Added metadata formats <code class="prettyprint">datacite3</code> and <code class="prettyprint">oai_datacite3</code> to support DataCite
-v3.0.</li>
-</ul>
-
-<p><strong>2013-05-08</strong></p>
-
-<p>Initial release of OAI-PMH API.</p>
 
             <h1 id="github">GitHub</h1>
 
