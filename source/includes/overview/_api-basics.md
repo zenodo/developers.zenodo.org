@@ -149,8 +149,12 @@ possibly an attribute `errors` with a list of more detailed errors.
 }
 ```
 
-Example of a simple error message without further detailed errors:
+For more complex errors, we include the attribute `errors`, a JSON array of
+objects, each with the attributes `message` (with a human-readable explanation
+of the error), and possibly `field` (with the "path" to field that contains
+the error).
 
+Example of an error message with detailed errors:
 
 <div class="align-columns"></div>
 
@@ -159,12 +163,9 @@ Example of a simple error message without further detailed errors:
     "message": "Validation error",
     "status": 400,
     "errors": [
-        {"code": 10, "message":"Not a valid choice", "field": "access_right"}
+        {"field": "metadata.access_right", "message": "Not a valid choice"},
+        {"field": "metadata.creators.0.name", "message": "Name is required."},
+        {"field": "non_existent", "message": "Unknown field name."}
     ]
 }
 ```
-
-Example of an error message with additional detailed error messages:
-
-The attribute `errors` is a JSON array of objects, with the attributes `message`
-and `code`, and possibly `field` for validation errors.
