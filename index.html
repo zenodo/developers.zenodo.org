@@ -600,22 +600,24 @@ possibly an attribute <code class="prettyprint">errors</code> with a list of mor
     </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">404</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>Example of a simple error message without further detailed errors:</p>
+<p>For more complex errors, we include the attribute <code class="prettyprint">errors</code>, a JSON array of
+objects, each with the attributes <code class="prettyprint">message</code> (with a human-readable explanation
+of the error), and possibly <code class="prettyprint">field</code> (with the &ldquo;path&rdquo; to field that contains
+the error).</p>
+
+<p>Example of an error message with detailed errors:</p>
 
 <div class="align-columns"></div>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Validation error"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span><span class="w">
     </span><span class="nt">"errors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="s2">"Not a valid choice"</span><span class="p">,</span><span class="w"> </span><span class="nt">"field"</span><span class="p">:</span><span class="w"> </span><span class="s2">"access_right"</span><span class="p">}</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"field"</span><span class="p">:</span><span class="w"> </span><span class="s2">"metadata.access_right"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not a valid choice"</span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"field"</span><span class="p">:</span><span class="w"> </span><span class="s2">"metadata.creators.0.name"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Name is required."</span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="nt">"field"</span><span class="p">:</span><span class="w"> </span><span class="s2">"non_existent"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Unknown field name."</span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>Example of an error message with additional detailed error messages:</p>
-
-<p>The attribute <code class="prettyprint">errors</code> is a JSON array of objects, with the attributes <code class="prettyprint">message</code>
-and <code class="prettyprint">code</code>, and possibly <code class="prettyprint">field</code> for validation errors.</p>
-
             <h1 id="entities">Entities</h1>
 
             <h2 id="depositions">Depositions</h2>
