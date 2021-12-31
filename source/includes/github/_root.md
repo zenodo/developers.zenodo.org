@@ -2,21 +2,6 @@
 
 ## Add metadata to your GitHub repository release
 
-We automatically extract metadata about your release from GitHub APIs. For example, the authors are determined from the repository's contributor statistics. To overwrite some of the default metadata that would come from a regular GitHub release you can include a `.zenodo.json` file at the root of your GitHub repository.
-
-The contents of the `.zenodo.json` file are based on our [deposit metadata documentation](https://developers.zenodo.org/#deposit-metadata) and can be structurally validated by our [deposit JSON Schema](https://zenodo.org/schemas/deposits/records/legacyrecord.json).
-
-In the example shown, we add metadata regarding:
-
-- software authorship and ORCiDs, via the `creators` field
-- Apache-2.0 licensing, via the `license` field
-- a custom title, via the `title` field
-- a related identifier to the software paper, via the `related_identifiers` field
-- keywords, via the `keywords` field
-- Zenodo communities, via the `communities` field
-- funding information, via the `grants` field
-
-
 ```python
 {
     "creators": [
@@ -54,6 +39,20 @@ In the example shown, we add metadata regarding:
     "grants": [{"id":"777541"}]
 }
 ```
+
+We automatically extract metadata about your release from GitHub APIs. For example, the authors are determined from the repository's contributor statistics. To overwrite some of the default metadata that would come from a regular GitHub release you can include a `.zenodo.json` file at the root of your GitHub repository.
+
+The contents of the `.zenodo.json` file are based on our [deposit metadata documentation](https://developers.zenodo.org/#deposit-metadata) and can be structurally validated by our [deposit JSON Schema](https://zenodo.org/schemas/deposits/records/legacyrecord.json).
+
+In the example shown, we add metadata regarding:
+
+- software authorship and ORCiDs, via the `creators` field
+- Apache-2.0 licensing, via the `license` field
+- a custom title, via the `title` field
+- a related identifier to the software paper, via the `related_identifiers` field
+- keywords, via the `keywords` field
+- Zenodo communities, via the `communities` field
+- funding information, via the `grants` field
 
 ## How to verify your ".zenodo.json" file?
 
