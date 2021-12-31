@@ -2186,7 +2186,7 @@ create a specific set for you.</p>
 
 <p>We automatically extract metadata about your release from GitHub APIs. For example, the authors are determined from the repository&rsquo;s contributor statistics. To overwrite some of the default metadata that would come from a regular GitHub release you can include a <code class="prettyprint">.zenodo.json</code> file at the root of your GitHub repository.</p>
 
-<p>The contents of the <code class="prettyprint">.zenodo.json</code> file are based on our <a href="https://developers.zenodo.org/#deposit-metadata">deposit metadata documentation</a> and can be structurally validated by our <a href="https://zenodo.org/schemas/deposits/records/legacyrecord.json">deposit JSON Schema</a>. </p>
+<p>The contents of the <code class="prettyprint">.zenodo.json</code> file are based on our <a href="https://developers.zenodo.org/#deposit-metadata">deposit metadata documentation</a> and can be structurally validated by our <a href="https://zenodo.org/schemas/deposits/records/legacyrecord.json">deposit JSON Schema</a>.</p>
 
 <p>In the example shown, we add metadata regarding:</p>
 
@@ -2201,17 +2201,17 @@ create a specific set for you.</p>
 </ul>
 <pre class="highlight python"><code><span class="p">{</span>
     <span class="s">"creators"</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>   
+        <span class="p">{</span>
             <span class="s">"orcid"</span><span class="p">:</span> <span class="s">"0000-0002-1825-0097"</span><span class="p">,</span>
             <span class="s">"affiliation"</span><span class="p">:</span> <span class="s">"Feline reasearch institute"</span><span class="p">,</span>
             <span class="s">"name"</span><span class="p">:</span> <span class="s">"Field, Gar"</span>
         <span class="p">},</span>
-        <span class="p">{</span>   
+        <span class="p">{</span>
             <span class="s">"orcid"</span><span class="p">:</span> <span class="s">"0000-0002-1825-0097"</span><span class="p">,</span>
             <span class="s">"affiliation"</span><span class="p">:</span> <span class="s">"Feline reasearch institute"</span><span class="p">,</span>
             <span class="s">"name"</span><span class="p">:</span> <span class="s">"Cat, Felix"</span>
         <span class="p">}</span>
-    <span class="p">],</span>    
+    <span class="p">],</span>
 
     <span class="s">"license"</span><span class="p">:</span> <span class="s">"Apache-2.0"</span><span class="p">,</span>
 
@@ -2222,10 +2222,7 @@ create a specific set for you.</p>
             <span class="s">"scheme"</span><span class="p">:</span> <span class="s">"doi"</span><span class="p">,</span>
             <span class="s">"identifier"</span><span class="p">:</span> <span class="s">"10.1234/software.paper.5678"</span><span class="p">,</span>
             <span class="s">"relation"</span><span class="p">:</span> <span class="s">"isDocumentedBy"</span><span class="p">,</span>
-            <span class="s">"resource_type"</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s">"type"</span><span class="p">:</span> <span class="s">"publication"</span><span class="p">,</span>
-                <span class="s">"subtype"</span><span class="p">:</span> <span class="s">"article"</span>
-            <span class="p">}</span>
+            <span class="s">"resource_type"</span><span class="p">:</span> <span class="s">"publication-article"</span>
         <span class="p">}</span>
     <span class="p">],</span>
 
