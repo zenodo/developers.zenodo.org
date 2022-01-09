@@ -22,17 +22,17 @@ curl -i /api/records/?access_token=ACCESS_TOKEN
 
 | Parameter                   | Required | Description                                                                                                                    |
 |:----------------------------|:---------|:-------------------------------------------------------------------------------------------------------------------------------|
-| `q`</br>_string_            | optional | Search query (using Elasticsearch query string syntax).                                                                        |
-| `status`</br>_string_       | optional | Filter result based on the deposit status (either ``draft`` or ``published``)                                                      |
+| `q`</br>_string_            | optional | Search query (using [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html) query string syntax - note that some characters have special meaning here, including ``/``, which is also present in full DOIs). |
+| `status`</br>_string_       | optional | Filter result based on the deposit status (either ``draft`` or ``published``)                                                  |
 | `sort`</br>_string_         | optional | Sort order (``bestmatch`` or ``mostrecent``). Prefix with minus to change form ascending to descending (e.g. ``-mostrecent``). |
 | `page`</br>_integer_        | optional | Page number for pagination.                                                                                                    |
 | `size`</br>_integer_        | optional | Number of results to return per page.                                                                                          |
 | `all_versions`</br>_integer/string_ | optional | Show (`true` or `1`) or hide (`false` or `0`) all versions of records. |
-| `communities`</br> _string_ | optional | Return records that are part of the specified communities. (Use of `community identifier`)                                              |
-| `type`</br> _string_        | optional | Return records of the specified type. (`Publication`, `Poster`, `Presentation`...)                                        |
-| `subtype`</br> _string_     | optional | Return records of the specified subtype. (`Journal article`, `Preprint`, `Proposal`...)                                   |
-| `bounds`</br> _string_      | optional | Return records filtered by a geolocation bounding box. (Format `bounds=143.37158,-38.99357,146.90918,-37.35269`)                               |
-| `custom`</br> _string_      | optional | Return records containing the specified custom keywords. (Format `custom=[field_name]:field_value`)                               |
+| `communities`</br> _string_ | optional | Return records that are part of the specified communities. (Use of `community identifier`)                                     |
+| `type`</br> _string_        | optional | Return records of the specified type. (`Publication`, `Poster`, `Presentation`...)                                             |
+| `subtype`</br> _string_     | optional | Return records of the specified subtype. (`Journal article`, `Preprint`, `Proposal`...)                                        |
+| `bounds`</br> _string_      | optional | Return records filtered by a geolocation bounding box. (Format `bounds=143.37158,-38.99357,146.90918,-37.35269`)               |
+| `custom`</br> _string_      | optional | Return records containing the specified custom keywords. (Format `custom=[field_name]:field_value`)                            |
 
 #### Header
 
