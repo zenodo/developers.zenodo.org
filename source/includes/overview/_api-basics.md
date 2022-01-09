@@ -2,10 +2,13 @@
 
 We provide a sandbox environment where you can test your API integration
 during development. The sandbox environment is available at
-[http://sandbox.zenodo.org](https://sandbox.zenodo.org).
+[https://sandbox.zenodo.org](https://sandbox.zenodo.org).
 
-Please note that the sandbox environment can be **cleaned at anytime**.
-Also, the sandbox environment will issue test DOIs using the 10.5072 prefix
+Please note the following:
+
+- The sandbox environment can be **cleaned at anytime**.
+- The sandbox environment requires a separate registration and separate access token from the ones used on [https://zenodo.org](https://zenodo.org).
+- The sandbox environment will issue test DOIs using the 10.5072 prefix
 instead of Zenodo's normal prefix (10.5281).
 
 ## Versioning
