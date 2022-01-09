@@ -126,7 +126,7 @@ access token):
 ```python
 headers = {"Content-Type": "application/json"}
 params = {'access_token': ACCESS_TOKEN}
-r = requests.post('https://sandbox.zenodo.org/api/deposit/depositions',
+r = requests.post('https://zenodo.org/api/deposit/depositions',
                    params=params,
                    json={},
                    '''
