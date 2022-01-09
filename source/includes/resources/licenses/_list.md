@@ -20,7 +20,7 @@ curl /api/licenses/
 
 | Parameter            | Required | Description                                             |
 | :------------------- | :------- | :------------------------------------------------------ |
-| `q`</br>_string_     | optional | Search query (using Elasticsearch query string syntax). |
+| `q`</br>_string_     | optional | Search query (using [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html) query string syntax - note that some characters have special meaning here, including ``/``, which is also present in full DOIs). |
 | `page`</br>_integer_ | optional | Page number for pagination.                             |
 | `size`</br>_integer_ | optional | Number of results to return per page.                   |
 
