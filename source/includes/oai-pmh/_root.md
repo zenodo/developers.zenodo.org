@@ -25,9 +25,9 @@ pip install Sickle
 ```
 
 ```python
-# Import Sickle and initialize the client by passing the base URL
->>> from sickle import Sickle
->>> sickle = Sickle('https://zenodo.org/oai2d')
+'''Import Sickle and initialize the client by passing the base URL'''
+from sickle import Sickle
+sickle = Sickle('https://zenodo.org/oai2d')
 ```
 
 ## Get information about the OAI-PMH API
@@ -35,13 +35,13 @@ pip install Sickle
 To get some general information about the OAI-PMH capabilities we can use the `Identify` verb.
 
 ```python
-# Get information on the OAI-PMH API by using "Identify"
->>> info = sickle.Identify()
->>> info.granularity
-'YYYY-MM-DDThh:mm:ssZ'
+'''Get information on the OAI-PMH API by using "Identify"'''
+info = sickle.Identify()
+info.granularity
+# 'YYYY-MM-DDThh:mm:ssZ'
 
->>> info.earliestDatestamp
-'2014-02-03T14:41:33Z'
+info.earliestDatestamp
+# '2014-02-03T14:41:33Z'
 ```
 
 ## Resumption tokens
@@ -64,10 +64,10 @@ For more information please take a look at the [rate limiting documentation](#ra
 To list the available records metadata formats we can use `ListMetadataFormats`.
 
 ```python
-# Metadata for each record is available in several formats
->>> metadataFormats = sickle.ListMetadataFormats()
->>> list(metadataFormats)
-[<MetadataFormat marcxml>, <MetadataFormat oai_datacite4>, ...]
+'''Metadata for each record is available in several formats'''
+metadataFormats = sickle.ListMetadataFormats()
+list(metadataFormats)
+# [<MetadataFormat marcxml>, <MetadataFormat oai_datacite4>, ...]
 ```
 
 ### Available metadata formats
@@ -167,10 +167,10 @@ To harvest the entire repository, entirely skip the `set` parameter (you still n
 metadataPrefix=oai_datacite)
 
 ```python
-# Harvest the entire repository
->>> records = sickle.ListRecords(metadataPrefix='oai_dc')
->>> record = records.next()
-<Record oai:zenodo.org:3442216>
+''' Harvest the entire repository '''
+records = sickle.ListRecords(metadataPrefix='oai_dc')
+record = records.next()
+# <Record oai:zenodo.org:3442216>
 ```
 
 ### Selective harvesting
@@ -186,13 +186,13 @@ correct community identifier.
 metadataPrefix=oai_datacite&set=user-cfa)
 
 ```python
-# Fetch a couple of records from the OAI Set of the "cfa" community
->>> records = sickle.ListRecords(metadataPrefix='oai_dc', set='user-cfa')
->>> record = records.next()
+''' Fetch a couple of records from the OAI Set of the "cfa" community '''
+records = sickle.ListRecords(metadataPrefix='oai_dc', set='user-cfa')
+record = records.next()
 
-# To inspect on what sets a record is in
->>> record.header.setSpecs
-['openaire_data', 'user-cfa']
+''' To inspect on what sets a record is in '''
+record.header.setSpecs
+# ['openaire_data', 'user-cfa']
 ```
 
 ### Harvesting with a different metadata format
@@ -203,18 +203,18 @@ There is also the possibility of using different metadata formats. For that, we 
 metadataPrefix=oai_datacite&set=user-cfa)
 
 ```python
-# Community harvest using "oai_datacite" metadata format
->>> records = sickle.ListRecords(metadataPrefix='oai_datacite', set='user-cfa')
->>> record = records.next()
+''' Community harvest using "oai_datacite" metadata format '''
+records = sickle.ListRecords(metadataPrefix='oai_datacite', set='user-cfa')
+record = records.next()
 
-# Retrieving metadata from the record
->>> record.metadata
-{
-    "title": ["Computing and Using Metrics in ADS"],
-    "creatorName": ["Henneken, Edwin"],
-    "identifier": ["10.5281/zenodo.10897"],
-    ...
-}
+''' Retrieving metadata from the record '''
+record.metadata
+# {
+#    "title": ["Computing and Using Metrics in ADS"],
+#    "creatorName": ["Henneken, Edwin"],
+#    "identifier": ["10.5281/zenodo.10897"],
+#    ...
+# }
 ```
 
 ### Harvesting with multiple filters
@@ -225,7 +225,7 @@ Using multiple filters to harvest records enables a higher level of granularity,
 metadataPrefix=oai_datacite&set=user-cfa&from=%272019-01-01%27)
 
 ```python
-# Selecting harvesting using "from"
+''' Selecting harvesting using "from" '''
 records = sickle.ListRecords(**{
     'metadataPrefix': 'oai_dc',
     'set': 'user-cfa',
@@ -233,10 +233,10 @@ records = sickle.ListRecords(**{
 })
 
 records.next()
-<Record oai:zenodo.org:7661>
+# <Record oai:zenodo.org:7661>
 
 records.next()
-<Record oai:zenodo.org:6738>
+# <Record oai:zenodo.org:6738>
 ```
 
 ### Other questions on harvesting

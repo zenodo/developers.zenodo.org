@@ -4,6 +4,7 @@ title: Developers | Zenodo
 language_tabs:
   - python: Python
   - shell: cURL
+  - javascript: NodeJS
 
 toc_footers:
   - <a href="https://zenodo.org/privacy-policy">Privacy policy</a>
