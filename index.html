@@ -92,7 +92,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,100,italic" rel="stylesheet">
   </head>
 
-  <body class="index" data-languages="[&quot;python&quot;,&quot;shell&quot;]">
+  <body class="index" data-languages="[&quot;python&quot;,&quot;shell&quot;,&quot;javascript&quot;]">
     <div class="header">
       <a class="logo-container" href="https://zenodo.org">
         <img src="images/zenodo.svg" alt="Zenodo" />
@@ -117,6 +117,7 @@
         <div class="lang-selector">
               <a href="#" data-language-name="python">Python</a>
               <a href="#" data-language-name="shell">cURL</a>
+              <a href="#" data-language-name="javascript">NodeJS</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -166,39 +167,58 @@ programmatically upload and publish your research outputs.</p>
             <h2 id="quickstart-upload">Quickstart - Upload</h2>
 
 <p>This short guide will give a quick overview of how to upload and publish on
-Zenodo, and will be using Python together with the
-<a href="http://www.python-requests.org/en/latest/user/install/">Requests</a> package.</p>
-<pre class="highlight shell_session"><code><span class="w">$ </span><span class="nc">pip</span><span class="kv"> install requests
-</span></code></pre>
+Zenodo, and will be using either:</p>
+
+<ol>
+<li>Python together with the <a href="http://www.python-requests.org/en/latest/user/install/">Requests</a> package.</li>
+<li>Javascript together with the <a href="https://github.com/axios/axios">axios</a> package.</li>
+</ol>
+<pre class="highlight shell_session"><code><span class="ni"># </span><span class="nc">Install</span><span class="kv"> 'requests' module for python
+</span>pip install requests
+
+<span class="ni"># </span><span class="nc">Install</span><span class="kv"> 'axios' module for nodejs 
+</span>npm install axios
+</code></pre>
 <ul>
 <li>First, make sure you have the
 <a href="http://www.python-requests.org/en/latest/user/install/">Requests</a> module
-installed:</li>
+installed for python or <a href="https://github.com/axios/axios">axios</a> for nodeJS:</li>
 </ul>
 
 <div class="align-columns"></div>
-<pre class="highlight shell_session"><code><span class="w">$ </span><span class="nc">python</span><span class="kv">
-</span>Python 3.6.5
-[GCC 4.8.1] on linux2
-Type "help", "copyright", "credits" or "license" for more information.
+<pre class="highlight python"><code><span class="n">python</span>
+<span class="c"># Python 3.6.5</span>
+<span class="c"># [GCC 4.8.1] on linux2</span>
+<span class="c"># Type "help", "copyright", "credits" or "license" for more information.</span>
+</code></pre><pre class="highlight javascript"><code><span class="nx">node</span>
+<span class="c1">// Welcome to Node.js v14.19.0.</span>
+<span class="c1">// Type ".help" for more information.</span>
 </code></pre>
 <ul>
-<li>Next, fire up a Python command prompt:</li>
+<li>Next, fire up a command prompt:</li>
 </ul>
 
 <div class="align-columns"></div>
 <pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
+</code></pre><pre class="highlight javascript"><code><span class="kr">const</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'axios'</span><span class="p">);</span>
 </code></pre>
 <ul>
-<li>Import the <code class="prettyprint">requests</code> module:</li>
+<li>Import the module to handle requests:</li>
 </ul>
 
 <div class="align-columns"></div>
-<pre class="highlight python"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">requests</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"https://zenodo.org/api/deposit/depositions"</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
-<span class="mi">401</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"https://zenodo.org/api/deposit/depositions"</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+<span class="c"># 401</span>
+<span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre><pre class="highlight javascript"><code><span class="kr">const</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'axios'</span><span class="p">);</span>
+
+<span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"https://zenodo.org/api/deposit/depositions"</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
 </code></pre><pre class="highlight json"><code><span class="p">{</span><span class="w">
   </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The server could not verify that you are authorized to access
   the URL requested. You either supplied the wrong credentials (e.g. a bad
@@ -219,13 +239,28 @@ Type "help", "copyright", "credits" or "license" for more information.
 </ul>
 
 <div class="align-columns"></div>
-<pre class="highlight python"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">ACCESS_TOKEN</span> <span class="o">=</span> <span class="s">'ChangeMe'</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions'</span><span class="p">,</span>
-<span class="o">...</span>                  <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">})</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
-<span class="mi">200</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-<span class="p">[]</span>
+<pre class="highlight python"><code><span class="n">ACCESS_TOKEN</span> <span class="o">=</span> <span class="s">'ChangeMe'</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions'</span><span class="p">,</span>
+                  <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">})</span>
+<span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+<span class="c"># 200</span>
+<span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="c"># []</span>
+</code></pre><pre class="highlight javascript"><code><span class="kr">const</span> <span class="nx">ACCESS_TOKEN</span> <span class="o">=</span> <span class="s1">'ChangeMe'</span>
+
+<span class="kr">const</span> <span class="nx">requestParams</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">params</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'access_token'</span><span class="p">:</span> <span class="nx">ACCESS_TOKEN</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"https://zenodo.org/api/deposit/depositions"</span><span class="p">,</span> <span class="nx">requestParams</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+  <span class="c1">// &gt; 200</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>  
+  <span class="c1">// &gt; []</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
 </code></pre>
 <ul>
 <li>Let&rsquo;s try again (replace <code class="prettyprint">ACCESS_TOKEN</code> with your newly created personal
@@ -237,19 +272,38 @@ access token):</li>
 </aside>
 
 <div class="align-columns"></div>
-<pre class="highlight python"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://sandbox.zenodo.org/api/deposit/depositions'</span><span class="p">,</span>
+<pre class="highlight python"><code><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">}</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">}</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://sandbox.zenodo.org/api/deposit/depositions'</span><span class="p">,</span>
                    <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
                    <span class="n">json</span><span class="o">=</span><span class="p">{},</span>
-                   <span class="c"># Headers are not necessary here since "requests" automatically</span>
-                   <span class="c"># adds "Content-Type: application/json", because we're using</span>
-                   <span class="c"># the "json=" keyword argument</span>
-                   <span class="c"># headers=headers,</span>
+                   <span class="s">'''
+                   Headers are not necessary here since "requests" automatically
+                   adds "Content-Type: application/json", because we're using
+                   the "json=" keyword argument
+                   headers=headers, 
+                   '''</span>
                    <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
-<span class="mi">201</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+<span class="c"># 201</span>
+<span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre><pre class="highlight javascript"><code><span class="kr">const</span> <span class="nx">requestParams</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">params</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'access_token'</span><span class="p">:</span> <span class="nx">ACCESS_TOKEN</span>
+  <span class="p">},</span>
+  <span class="na">headers</span> <span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"application/json"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">axios</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s2">"https://zenodo.org/api/deposit/depositions"</span><span class="p">,</span> <span class="nx">requestParams</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+  <span class="c1">// 201</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>  
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+
 </code></pre><pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"conceptrecid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"542200"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-05-19T11:58:41.606998+00:00"</span><span class="p">,</span><span class="w">
@@ -292,7 +346,7 @@ access token):</li>
 
 <div class="align-columns"></div>
 <pre class="highlight python"><code><span class="n">bucket_url</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">"links"</span><span class="p">][</span><span class="s">"bucket"</span><span class="p">]</span>
-</code></pre><pre class="highlight shell"><code><span class="gp">$ </span>curl https://zenodo.org/api/deposit/depositions/222761?access_token<span class="o">=</span><span class="nv">$ACCESS_TOKEN</span>
+</code></pre><pre class="highlight shell"><code>curl https://zenodo.org/api/deposit/depositions/222761?access_token<span class="o">=</span><span class="nv">$ACCESS_TOKEN</span>
 <span class="o">{</span> ...
   <span class="s2">"links"</span>: <span class="o">{</span>
     <span class="s2">"bucket"</span>: <span class="s2">"https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b"</span>,
@@ -303,17 +357,21 @@ access token):</li>
 <ul>
 <li>To use the <strong>new files API</strong> we will do a PUT request to the <code class="prettyprint">bucket</code> link. The bucket is a folder-like object storing the files of our record. Our bucket URL will look like this: <code class="prettyprint">https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b</code> and can be found under the <code class="prettyprint">links</code> key in our records metadata.</li>
 </ul>
-<pre class="highlight shell"><code><span class="c"># This will stream the file located in '/path/to/your/file.dat' and store it in our bucket.</span>
-<span class="c"># The uploaded file will be named according to the last argument in the upload URL,</span>
-<span class="c"># 'file.dat' in our case.</span>
+<pre class="highlight shell"><code><span class="s1">''' 
+This will stream the file located in '</span>/path/to/your/file.dat<span class="s1">' and store it in our bucket.
+The uploaded file will be named according to the last argument in the upload URL,
+'</span>file.dat<span class="s1">' in our case. 
+'''</span>
 <span class="gp">$ </span>curl --upload-file /path/to/your/file.dat https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b/file.dat?access_token<span class="o">=</span><span class="nv">$ACCES_TOKEN</span>
 <span class="o">{</span> ... <span class="o">}</span>
-</code></pre><pre class="highlight python"><code><span class="c"># New API</span>
+</code></pre><pre class="highlight python"><code><span class="s">''' New API '''</span>
 <span class="n">filename</span> <span class="o">=</span> <span class="s">"my-file.zip"</span>
 <span class="n">path</span> <span class="o">=</span> <span class="s">"/path/to/</span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="n">filename</span>
 
-<span class="c"># The target URL is a combination of the bucket link with the desired filename</span>
-<span class="c"># seperated by a slash.</span>
+<span class="s">''' 
+The target URL is a combination of the bucket link with the desired filename
+seperated by a slash.
+'''</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
         <span class="s">"</span><span class="si">%</span><span class="s">s/</span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">bucket_url</span><span class="p">,</span> <span class="n">filename</span><span class="p">),</span>
@@ -321,6 +379,44 @@ access token):</li>
         <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
     <span class="p">)</span>
 <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre><pre class="highlight javascript"><code><span class="kr">const</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'fs'</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'axios'</span><span class="p">);</span>
+
+<span class="kr">const</span> <span class="nx">filePath</span> <span class="o">=</span> <span class="s1">'&lt;FILE_PATH&gt;'</span><span class="p">;</span> <span class="c1">// Replace with file path</span>
+<span class="kr">const</span> <span class="nx">bucketURL</span> <span class="o">=</span> <span class="s1">'&lt;BUCKET_URL&gt;'</span><span class="p">;</span> <span class="c1">// Replace with bucket url</span>
+<span class="kr">const</span> <span class="nx">fileName</span> <span class="o">=</span> <span class="s1">'&lt;FILE_NAME&gt;'</span><span class="p">;</span> <span class="c1">// Replace with file name</span>
+<span class="kr">const</span> <span class="nx">token</span> <span class="o">=</span> <span class="s1">'TOKEN'</span><span class="p">;</span> <span class="c1">// Replace with token value</span>
+
+<span class="c1">// Create a form</span>
+<span class="kr">const</span> <span class="nx">form</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FormData</span><span class="p">();</span>
+
+<span class="c1">// Read file as a stream</span>
+<span class="kr">const</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">createReadStream</span><span class="p">(</span><span class="nx">filePath</span><span class="p">);</span>
+<span class="nx">form</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">'file'</span><span class="p">,</span> <span class="nx">stream</span><span class="p">);</span>
+
+<span class="c1">// Create request</span>
+<span class="kd">let</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">bucketURL</span><span class="p">}</span><span class="s2">/</span><span class="p">${</span><span class="nx">fileName</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+
+<span class="kd">let</span> <span class="nx">params</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">'access_token'</span><span class="p">:</span> <span class="nx">token</span> <span class="p">}</span>
+
+<span class="kd">let</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'Content-type'</span><span class="p">:</span> <span class="s1">'application/zip'</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">requestConfig</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">name</span><span class="p">:</span> <span class="nx">fileName</span><span class="p">,</span>
+      <span class="p">...</span><span class="nx">form</span>
+    <span class="p">},</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="nx">headers</span><span class="p">,</span>
+    <span class="na">params</span><span class="p">:</span> <span class="nx">params</span>
+<span class="p">}</span>
+
+<span class="nx">axios</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">requestConfig</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
 </code></pre><pre class="highlight json"><code><span class="p">{</span><span class="w">
   </span><span class="nt">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-file.zip"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"mimetype"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/zip"</span><span class="p">,</span><span class="w">
@@ -339,17 +435,20 @@ access token):</li>
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <div class="align-columns"></div>
-<pre class="highlight python"><code><span class="c"># Old API</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="c"># Get the deposition id from the previous response</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">deposition_id</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">'id'</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'myfirstfile.csv'</span><span class="p">}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">files</span> <span class="o">=</span> <span class="p">{</span><span class="s">'file'</span><span class="p">:</span> <span class="nb">open</span><span class="p">(</span><span class="s">'/path/to/myfirstfile.csv'</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/</span><span class="si">%</span><span class="s">s/files'</span> <span class="o">%</span> <span class="n">deposition_id</span><span class="p">,</span>
-<span class="o">...</span>                   <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">},</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
-<span class="o">...</span>                   <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
-<span class="mi">201</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<pre class="highlight python"><code><span class="s">'''
+Old API
+Get the deposition id from the previous response
+'''</span>
+<span class="n">deposition_id</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">'id'</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'myfirstfile.csv'</span><span class="p">}</span>
+<span class="n">files</span> <span class="o">=</span> <span class="p">{</span><span class="s">'file'</span><span class="p">:</span> <span class="nb">open</span><span class="p">(</span><span class="s">'/path/to/myfirstfile.csv'</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)}</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/</span><span class="si">%</span><span class="s">s/files'</span> <span class="o">%</span> <span class="n">deposition_id</span><span class="p">,</span>
+                   <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">},</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+                   <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+<span class="c"># 201</span>
+<span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre><pre class="highlight javascript"><code><span class="c1">// Old API documentation not available for javascript / NodeJS</span>
 </code></pre><pre class="highlight json"><code><span class="p">{</span><span class="w">
   </span><span class="nt">"checksum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2b70e04bb31f2656ce967dc07103297f"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"myfirstfile.csv"</span><span class="p">,</span><span class="w">
@@ -362,30 +461,32 @@ access token):</li>
 </ul>
 
 <div class="align-columns"></div>
-<pre class="highlight python"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-<span class="o">...</span>     <span class="s">'metadata'</span><span class="p">:</span> <span class="p">{</span>
-<span class="o">...</span>         <span class="s">'title'</span><span class="p">:</span> <span class="s">'My first upload'</span><span class="p">,</span>
-<span class="o">...</span>         <span class="s">'upload_type'</span><span class="p">:</span> <span class="s">'poster'</span><span class="p">,</span>
-<span class="o">...</span>         <span class="s">'description'</span><span class="p">:</span> <span class="s">'This is my first upload'</span><span class="p">,</span>
-<span class="o">...</span>         <span class="s">'creators'</span><span class="p">:</span> <span class="p">[{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'Doe, John'</span><span class="p">,</span>
-<span class="o">...</span>                       <span class="s">'affiliation'</span><span class="p">:</span> <span class="s">'Zenodo'</span><span class="p">}]</span>
-<span class="o">...</span>     <span class="p">}</span>
-<span class="o">...</span> <span class="p">}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/</span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="n">deposition_id</span><span class="p">,</span>
-<span class="o">...</span>                  <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">},</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
-<span class="o">...</span>                  <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
-<span class="mi">200</span>
+<pre class="highlight python"><code><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s">'metadata'</span><span class="p">:</span> <span class="p">{</span>
+         <span class="s">'title'</span><span class="p">:</span> <span class="s">'My first upload'</span><span class="p">,</span>
+         <span class="s">'upload_type'</span><span class="p">:</span> <span class="s">'poster'</span><span class="p">,</span>
+         <span class="s">'description'</span><span class="p">:</span> <span class="s">'This is my first upload'</span><span class="p">,</span>
+         <span class="s">'creators'</span><span class="p">:</span> <span class="p">[{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'Doe, John'</span><span class="p">,</span>
+                       <span class="s">'affiliation'</span><span class="p">:</span> <span class="s">'Zenodo'</span><span class="p">}]</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/</span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="n">deposition_id</span><span class="p">,</span>
+                  <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">},</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+                  <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+<span class="c"># 200</span>
+</code></pre><pre class="highlight javascript"><code><span class="c1">// Old API documentation not available for javascript / NodeJS</span>
 </code></pre>
 <ul>
 <li>Last thing missing, is just to add some metadata:</li>
 </ul>
 
 <div class="align-columns"></div>
-<pre class="highlight python"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/</span><span class="si">%</span><span class="s">s/actions/publish'</span> <span class="o">%</span> <span class="n">deposition_id</span><span class="p">,</span>
+<pre class="highlight python"><code><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/</span><span class="si">%</span><span class="s">s/actions/publish'</span> <span class="o">%</span> <span class="n">deposition_id</span><span class="p">,</span>
                       <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">}</span> <span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
-<span class="mi">202</span>
+<span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+<span class="c"># 202</span>
+</code></pre><pre class="highlight javascript"><code><span class="c1">// Old API documentation not available for javascript / NodeJS</span>
 </code></pre>
 <ul>
 <li>And we&rsquo;re ready to publish:</li>
@@ -1975,20 +2076,20 @@ not available for download.</p>
 <p>For this example, we are going to be using Sickle since it simplifies our workflow and supports XML parsing.</p>
 <pre class="highlight python"><code><span class="c"># Install the Sickle package using pip</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="n">Sickle</span>
-</code></pre><pre class="highlight python"><code><span class="c"># Import Sickle and initialize the client by passing the base URL</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">sickle</span> <span class="kn">import</span> <span class="n">Sickle</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">sickle</span> <span class="o">=</span> <span class="n">Sickle</span><span class="p">(</span><span class="s">'https://zenodo.org/oai2d'</span><span class="p">)</span>
+</code></pre><pre class="highlight python"><code><span class="s">'''Import Sickle and initialize the client by passing the base URL'''</span>
+<span class="kn">from</span> <span class="nn">sickle</span> <span class="kn">import</span> <span class="n">Sickle</span>
+<span class="n">sickle</span> <span class="o">=</span> <span class="n">Sickle</span><span class="p">(</span><span class="s">'https://zenodo.org/oai2d'</span><span class="p">)</span>
 </code></pre>
 <h2 id="get-information-about-the-oai-pmh-api">Get information about the OAI-PMH API</h2>
 
 <p>To get some general information about the OAI-PMH capabilities we can use the <code class="prettyprint">Identify</code> verb.</p>
-<pre class="highlight python"><code><span class="c"># Get information on the OAI-PMH API by using "Identify"</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="n">sickle</span><span class="o">.</span><span class="n">Identify</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span><span class="o">.</span><span class="n">granularity</span>
-<span class="s">'YYYY-MM-DDThh:mm:ssZ'</span>
+<pre class="highlight python"><code><span class="s">'''Get information on the OAI-PMH API by using "Identify"'''</span>
+<span class="n">info</span> <span class="o">=</span> <span class="n">sickle</span><span class="o">.</span><span class="n">Identify</span><span class="p">()</span>
+<span class="n">info</span><span class="o">.</span><span class="n">granularity</span>
+<span class="c"># 'YYYY-MM-DDThh:mm:ssZ'</span>
 
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span><span class="o">.</span><span class="n">earliestDatestamp</span>
-<span class="s">'2014-02-03T14:41:33Z'</span>
+<span class="n">info</span><span class="o">.</span><span class="n">earliestDatestamp</span>
+<span class="c"># '2014-02-03T14:41:33Z'</span>
 </code></pre>
 <h2 id="resumption-tokens">Resumption tokens</h2>
 
@@ -2008,10 +2109,10 @@ For more information please take a look at the <a href="#rate-limiting">rate lim
 <h2 id="metadata-formats">Metadata formats</h2>
 
 <p>To list the available records metadata formats we can use <code class="prettyprint">ListMetadataFormats</code>.</p>
-<pre class="highlight python"><code><span class="c"># Metadata for each record is available in several formats</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">metadataFormats</span> <span class="o">=</span> <span class="n">sickle</span><span class="o">.</span><span class="n">ListMetadataFormats</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="n">metadataFormats</span><span class="p">)</span>
-<span class="p">[</span><span class="o">&lt;</span><span class="n">MetadataFormat</span> <span class="n">marcxml</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">MetadataFormat</span> <span class="n">oai_datacite4</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+<pre class="highlight python"><code><span class="s">'''Metadata for each record is available in several formats'''</span>
+<span class="n">metadataFormats</span> <span class="o">=</span> <span class="n">sickle</span><span class="o">.</span><span class="n">ListMetadataFormats</span><span class="p">()</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">metadataFormats</span><span class="p">)</span>
+<span class="c"># [&lt;MetadataFormat marcxml&gt;, &lt;MetadataFormat oai_datacite4&gt;, ...]</span>
 </code></pre>
 <h3 id="available-metadata-formats">Available metadata formats</h3>
 
@@ -2108,10 +2209,10 @@ harvesting</em> of communities.</p>
 
 <p><a href="https://zenodo.org/oai2d?verb=ListRecords&amp;
 metadataPrefix=oai_datacite">See example</a></p>
-<pre class="highlight python"><code><span class="c"># Harvest the entire repository</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">records</span> <span class="o">=</span> <span class="n">sickle</span><span class="o">.</span><span class="n">ListRecords</span><span class="p">(</span><span class="n">metadataPrefix</span><span class="o">=</span><span class="s">'oai_dc'</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">record</span> <span class="o">=</span> <span class="n">records</span><span class="o">.</span><span class="nb">next</span><span class="p">()</span>
-<span class="o">&lt;</span><span class="n">Record</span> <span class="n">oai</span><span class="p">:</span><span class="n">zenodo</span><span class="o">.</span><span class="n">org</span><span class="p">:</span><span class="mi">3442216</span><span class="o">&gt;</span>
+<pre class="highlight python"><code><span class="s">''' Harvest the entire repository '''</span>
+<span class="n">records</span> <span class="o">=</span> <span class="n">sickle</span><span class="o">.</span><span class="n">ListRecords</span><span class="p">(</span><span class="n">metadataPrefix</span><span class="o">=</span><span class="s">'oai_dc'</span><span class="p">)</span>
+<span class="n">record</span> <span class="o">=</span> <span class="n">records</span><span class="o">.</span><span class="nb">next</span><span class="p">()</span>
+<span class="c"># &lt;Record oai:zenodo.org:3442216&gt;</span>
 </code></pre>
 <h3 id="selective-harvesting">Selective harvesting</h3>
 
@@ -2124,13 +2225,13 @@ correct community identifier.</p>
 
 <p><a href="https://zenodo.org/oai2d?verb=ListRecords&amp;
 metadataPrefix=oai_datacite&amp;set=user-cfa">See example</a></p>
-<pre class="highlight python"><code><span class="c"># Fetch a couple of records from the OAI Set of the "cfa" community</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">records</span> <span class="o">=</span> <span class="n">sickle</span><span class="o">.</span><span class="n">ListRecords</span><span class="p">(</span><span class="n">metadataPrefix</span><span class="o">=</span><span class="s">'oai_dc'</span><span class="p">,</span> <span class="nb">set</span><span class="o">=</span><span class="s">'user-cfa'</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">record</span> <span class="o">=</span> <span class="n">records</span><span class="o">.</span><span class="nb">next</span><span class="p">()</span>
+<pre class="highlight python"><code><span class="s">''' Fetch a couple of records from the OAI Set of the "cfa" community '''</span>
+<span class="n">records</span> <span class="o">=</span> <span class="n">sickle</span><span class="o">.</span><span class="n">ListRecords</span><span class="p">(</span><span class="n">metadataPrefix</span><span class="o">=</span><span class="s">'oai_dc'</span><span class="p">,</span> <span class="nb">set</span><span class="o">=</span><span class="s">'user-cfa'</span><span class="p">)</span>
+<span class="n">record</span> <span class="o">=</span> <span class="n">records</span><span class="o">.</span><span class="nb">next</span><span class="p">()</span>
 
-<span class="c"># To inspect on what sets a record is in</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">record</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">setSpecs</span>
-<span class="p">[</span><span class="s">'openaire_data'</span><span class="p">,</span> <span class="s">'user-cfa'</span><span class="p">]</span>
+<span class="s">''' To inspect on what sets a record is in '''</span>
+<span class="n">record</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">setSpecs</span>
+<span class="c"># ['openaire_data', 'user-cfa']</span>
 </code></pre>
 <h3 id="harvesting-with-a-different-metadata-format">Harvesting with a different metadata format</h3>
 
@@ -2138,18 +2239,18 @@ metadataPrefix=oai_datacite&amp;set=user-cfa">See example</a></p>
 
 <p><a href="https://zenodo.org/oai2d?verb=ListRecords&amp;
 metadataPrefix=oai_datacite&amp;set=user-cfa">See example</a></p>
-<pre class="highlight python"><code><span class="c"># Community harvest using "oai_datacite" metadata format</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">records</span> <span class="o">=</span> <span class="n">sickle</span><span class="o">.</span><span class="n">ListRecords</span><span class="p">(</span><span class="n">metadataPrefix</span><span class="o">=</span><span class="s">'oai_datacite'</span><span class="p">,</span> <span class="nb">set</span><span class="o">=</span><span class="s">'user-cfa'</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">record</span> <span class="o">=</span> <span class="n">records</span><span class="o">.</span><span class="nb">next</span><span class="p">()</span>
+<pre class="highlight python"><code><span class="s">''' Community harvest using "oai_datacite" metadata format '''</span>
+<span class="n">records</span> <span class="o">=</span> <span class="n">sickle</span><span class="o">.</span><span class="n">ListRecords</span><span class="p">(</span><span class="n">metadataPrefix</span><span class="o">=</span><span class="s">'oai_datacite'</span><span class="p">,</span> <span class="nb">set</span><span class="o">=</span><span class="s">'user-cfa'</span><span class="p">)</span>
+<span class="n">record</span> <span class="o">=</span> <span class="n">records</span><span class="o">.</span><span class="nb">next</span><span class="p">()</span>
 
-<span class="c"># Retrieving metadata from the record</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">record</span><span class="o">.</span><span class="n">metadata</span>
-<span class="p">{</span>
-    <span class="s">"title"</span><span class="p">:</span> <span class="p">[</span><span class="s">"Computing and Using Metrics in ADS"</span><span class="p">],</span>
-    <span class="s">"creatorName"</span><span class="p">:</span> <span class="p">[</span><span class="s">"Henneken, Edwin"</span><span class="p">],</span>
-    <span class="s">"identifier"</span><span class="p">:</span> <span class="p">[</span><span class="s">"10.5281/zenodo.10897"</span><span class="p">],</span>
-    <span class="o">...</span>
-<span class="p">}</span>
+<span class="s">''' Retrieving metadata from the record '''</span>
+<span class="n">record</span><span class="o">.</span><span class="n">metadata</span>
+<span class="c"># {</span>
+<span class="c">#    "title": ["Computing and Using Metrics in ADS"],</span>
+<span class="c">#    "creatorName": ["Henneken, Edwin"],</span>
+<span class="c">#    "identifier": ["10.5281/zenodo.10897"],</span>
+<span class="c">#    ...</span>
+<span class="c"># }</span>
 </code></pre>
 <h3 id="harvesting-with-multiple-filters">Harvesting with multiple filters</h3>
 
@@ -2157,7 +2258,7 @@ metadataPrefix=oai_datacite&amp;set=user-cfa">See example</a></p>
 
 <p><a href="https://zenodo.org/oai2d?verb=ListRecords&amp;
 metadataPrefix=oai_datacite&amp;set=user-cfa&amp;from=%272019-01-01%27">See example</a></p>
-<pre class="highlight python"><code><span class="c"># Selecting harvesting using "from"</span>
+<pre class="highlight python"><code><span class="s">''' Selecting harvesting using "from" '''</span>
 <span class="n">records</span> <span class="o">=</span> <span class="n">sickle</span><span class="o">.</span><span class="n">ListRecords</span><span class="p">(</span><span class="o">**</span><span class="p">{</span>
     <span class="s">'metadataPrefix'</span><span class="p">:</span> <span class="s">'oai_dc'</span><span class="p">,</span>
     <span class="s">'set'</span><span class="p">:</span> <span class="s">'user-cfa'</span><span class="p">,</span>
@@ -2165,10 +2266,10 @@ metadataPrefix=oai_datacite&amp;set=user-cfa&amp;from=%272019-01-01%27">See exam
 <span class="p">})</span>
 
 <span class="n">records</span><span class="o">.</span><span class="nb">next</span><span class="p">()</span>
-<span class="o">&lt;</span><span class="n">Record</span> <span class="n">oai</span><span class="p">:</span><span class="n">zenodo</span><span class="o">.</span><span class="n">org</span><span class="p">:</span><span class="mi">7661</span><span class="o">&gt;</span>
+<span class="c"># &lt;Record oai:zenodo.org:7661&gt;</span>
 
 <span class="n">records</span><span class="o">.</span><span class="nb">next</span><span class="p">()</span>
-<span class="o">&lt;</span><span class="n">Record</span> <span class="n">oai</span><span class="p">:</span><span class="n">zenodo</span><span class="o">.</span><span class="n">org</span><span class="p">:</span><span class="mi">6738</span><span class="o">&gt;</span>
+<span class="c"># &lt;Record oai:zenodo.org:6738&gt;</span>
 </code></pre>
 <h3 id="other-questions-on-harvesting">Other questions on harvesting</h3>
 
@@ -2295,6 +2396,7 @@ To achieve this, we have rate-limiting measures in place which limit the number 
             <div class="lang-selector">
                   <a href="#" data-language-name="python">Python</a>
                   <a href="#" data-language-name="shell">cURL</a>
+                  <a href="#" data-language-name="javascript">NodeJS</a>
             </div>
         </div>
       </div>
