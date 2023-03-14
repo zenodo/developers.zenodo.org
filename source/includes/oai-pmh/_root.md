@@ -98,26 +98,6 @@ available DataCite schema version.
     export format.
 </aside>
 
-**`oai_datacite3`**
-
-OAI DataCite — This metadata format has been specifically established for the
-dissemination of DataCite records using OAI-PMH. In addition to the original
-DataCite v3.0 metadata, this format contains several other elements describing
-the version of the metadata, whether it is of reference quality, and the
-registering datacentre. For more information about this format and its schema
-please see the [DataCite OAI schema](http://oai.datacite.org/) web site.
-
-<aside class="notice">
-    Heads up! We will be upgrading to <a
-    href="http://schema.datacite.org/meta/kernel-4/index.html">DataCite
-    Metadata Schema v4.0</a> and discontinue support for DataCite v3.0 by end
-    February 2018, hence please ensure your OAI-PMH client are capable of
-    reading both versions. There are only few backwards incompatible changes
-    between v4.0 and v3.0.
-</aside>
-
-[See example](https://zenodo.org/oai2d?verb=ListRecords&metadataPrefix=oai_datacite3&set=openaire_data)
-
 **`datacite`**
 
 DataCite (latest version) — This metadata format contains only the original
@@ -126,20 +106,6 @@ DataCite schema. Please note that this format is not OAI-PMH  version 2.0
 compliant.
 
 [See example](https://zenodo.org/oai2d?verb=ListRecords&metadataPrefix=datacite&set=openaire_data)
-
-**`datacite3`**
-
-DataCite v3.0 — This metadata format contains only the original DataCite
-metadata without additions or alterations. The schema for this format does
-not exist and metadata will not validate against it. Please note that this
-format is not OAI-PMH version 2.0 compliant.
-
-<aside class="notice">
-    Heads up! We will discontinue support for DataCite v3.0 by end
-    February 2018.
-</aside>
-
-[See example](https://zenodo.org/oai2d?verb=ListRecords&metadataPrefix=datacite3&set=openaire_data)
 
 **`oai_dc`**
 
