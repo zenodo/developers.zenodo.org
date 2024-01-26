@@ -197,7 +197,7 @@ axios.post("https://zenodo.org/api/deposit/depositions", requestParams).then(res
 
 <div class="align-columns"></div>
 
-- Now, let's upload a new file. We have recently released a new API, which is significantly more perfomant and supports much larger file sizes. While the older API supports 100MB per file, the new one has no size limitation.
+- Now, let's upload a new file. We have recently released a new API, which is significantly more perfomant and supports much larger file sizes. While the older API supports 100MB per file, the new one has a limit of 50GB total in the record (and any given file), and up to 100 files in the record.
 
 <div class="align-columns"></div>
 
