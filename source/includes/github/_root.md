@@ -42,7 +42,7 @@
 
 We automatically extract metadata about your release from GitHub APIs. For example, the authors are determined from the repository's contributor statistics. To overwrite some of the default metadata that would come from a regular GitHub release you can include a `.zenodo.json` file at the root of your GitHub repository.
 
-The contents of the `.zenodo.json` file are based on our [deposit metadata documentation](https://developers.zenodo.org/#deposit-metadata) and can be structurally validated by our [deposit JSON Schema](https://zenodo.org/schemas/deposits/records/legacyrecord.json).
+The contents of the `.zenodo.json` file are based on our [deposit metadata documentation](https://developers.zenodo.org/#deposit-metadata) and can be structurally validated by our [deposit JSON Schema](https://github.com/zenodo/zenodo/blob/master/zenodo/modules/deposit/jsonschemas/deposits/records/legacyrecord.json).
 
 In the example shown, we add metadata regarding:
 
