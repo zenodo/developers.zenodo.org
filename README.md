@@ -1,10 +1,6 @@
 <p align="center">
-  <a href="https://zenodo.org">
+  <a href="https://developers.zenodo.org">
     <img src="https://github.com/zenodo/developers.zenodo.org/raw/master/source/images/zenodo-black-200.png">
-  </a>
-  <br>
-  <a href="https://travis-ci.org/zenodo/developers.zenodo.org">
-    <img src="https://travis-ci.org/zenodo/developers.zenodo.org.svg?branch=master" alt="Build Status">
   </a>
 </p>
 
@@ -45,12 +41,12 @@ vagrant up
 ```
 
 You can now see the docs rendered at http://localhost:4567. Any modification
-you make on the Slate markdown files will be automatically applied and visible
+you make on the Slate Markdown files will be automatically applied and visible
 after refreshing the webpage on the browser.
 
 Now that Slate is all set up on your machine, you'll probably want to learn
 more about [editing Slate
-markdown](https://github.com/lord/slate/wiki/Markdown- Syntax).
+Markdown](https://github.com/lord/slate/wiki/Markdown-Syntax).
 
 
 ### Contributing
