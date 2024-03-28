@@ -7,9 +7,10 @@ language_tabs:
   - javascript: NodeJS
 
 toc_footers:
-  - <a href="https://zenodo.org/privacy-policy">Privacy policy</a>
-  - <a href='https://zenodo.org/terms'>Terms of Use</a>
-  - <a href='https://zenodo.org/contact'>Contact</a>
+  - <a href="https://about.zenodo.org/privacy-policy">Privacy policy</a>
+  - <a href="https://about.zenodo.org/cookie-policy">Cookie policy</a>
+  - <a href='https://about.zenodo.org/terms'>Terms of Use</a>
+  - <a href='https://about.zenodo.org/contact'>Contact</a>
 
 includes:
   - overview/introduction
