@@ -40,22 +40,22 @@ HTTP will fail. We support authentication with via OAuth 2.0.
 
 ### Using access tokens
 
-An access token must be included in all requests as either:
-
-```
-GET /api/deposit/depositions?access_token=<ACCESS_TOKEN>
-```
-
-- an URL parameter (named ``access_token``):
-
-<div class="align-columns"></div>
+An access token must be included in all requests. The recommended and more secure method is using HTTP headers:
 
 ```
 GET /api/deposit/depositions
 Authorization: Bearer <ACCESS_TOKEN>
 ```
 
-- or as HTTP request header (``Authorization``):
+- **Recommended:** as HTTP request header (``Authorization``):
+
+<div class="align-columns"></div>
+
+```
+GET /api/deposit/depositions?access_token=<ACCESS_TOKEN>
+```
+
+- or as URL parameter (named ``access_token``), though this is less secure:
 
 <div class="align-columns"></div>
 

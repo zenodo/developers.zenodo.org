@@ -88,8 +88,9 @@ axios.get("https://zenodo.org/api/deposit/depositions").then(response => {
 
 ```python
 ACCESS_TOKEN = 'ChangeMe'
+headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
 r = requests.get('https://zenodo.org/api/deposit/depositions',
-                  params={'access_token': ACCESS_TOKEN})
+                  headers=headers)
 r.status_code
 # 200
 r.json()
@@ -99,12 +100,12 @@ r.json()
 ```javascript
 const ACCESS_TOKEN = 'ChangeMe'
 
-const requestParams = {
-  params: {
-    'access_token': ACCESS_TOKEN
+const requestConfig = {
+  headers: {
+    'Authorization': `Bearer ${ACCESS_TOKEN}`
   }
 }
-axios.get("https://zenodo.org/api/deposit/depositions", requestParams).then(response => {
+axios.get("https://zenodo.org/api/deposit/depositions", requestConfig).then(response => {
   console.log(response.status);
   // > 200
   console.log(response.data);  
@@ -124,17 +125,12 @@ access token):
 <div class="align-columns"></div>
 
 ```python
-headers = {"Content-Type": "application/json"}
-params = {'access_token': ACCESS_TOKEN}
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": f"Bearer {ACCESS_TOKEN}"
+}
 r = requests.post('https://sandbox.zenodo.org/api/deposit/depositions',
-                   params=params,
                    json={},
-                   '''
-                   Headers are not necessary here since "requests" automatically
-                   adds "Content-Type: application/json", because we're using
-                   the "json=" keyword argument
-                   headers=headers, 
-                   '''
                    headers=headers)
 r.status_code
 # 201
@@ -142,16 +138,14 @@ r.json()
 ```
 
 ```javascript
-const requestParams = {
-  params: {
-    'access_token': ACCESS_TOKEN
-  },
-  headers : {
-    "Content-Type": "application/json"
+const requestConfig = {
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${ACCESS_TOKEN}`
   }
 }
 
-axios.post("https://zenodo.org/api/deposit/depositions", requestParams).then(response => {
+axios.post("https://zenodo.org/api/deposit/depositions", {}, requestConfig).then(response => {
   console.log(response.status);
   // 201
   console.log(response.data);  
@@ -206,7 +200,8 @@ bucket_url = r.json()["links"]["bucket"]
 ```
 
 ```shell
-curl https://zenodo.org/api/deposit/depositions/222761?access_token=$ACCESS_TOKEN
+curl -H "Authorization: Bearer $ACCESS_TOKEN" \
+  https://zenodo.org/api/deposit/depositions/222761
 { ...
   "links": {
     "bucket": "https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b",
@@ -223,7 +218,9 @@ This will stream the file located in '/path/to/your/file.dat' and store it in ou
 The uploaded file will be named according to the last argument in the upload URL,
 'file.dat' in our case. 
 '''
-$ curl --upload-file /path/to/your/file.dat https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b/file.dat?access_token=$ACCES_TOKEN
+$ curl --upload-file /path/to/your/file.dat \
+  -H "Authorization: Bearer $ACCESS_TOKEN" \
+  https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b/file.dat
 { ... }
 ```
 
@@ -231,6 +228,7 @@ $ curl --upload-file /path/to/your/file.dat https://zenodo.org/api/files/568377d
 ''' New API '''
 filename = "my-file.zip"
 path = "/path/to/%s" % filename
+headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
 
 ''' 
 The target URL is a combination of the bucket link with the desired filename
@@ -240,7 +238,7 @@ with open(path, "rb") as fp:
     r = requests.put(
         "%s/%s" % (bucket_url, filename),
         data=fp,
-        params=params,
+        headers=headers,
     )
 r.json()
 ```
@@ -264,10 +262,9 @@ form.append('file', stream);
 // Create request
 let url = `${bucketURL}/${fileName}`;
 
-let params = { 'access_token': token }
-
 let headers = {
-    'Content-type': 'application/zip'
+    'Content-type': 'application/zip',
+    'Authorization': `Bearer ${token}`
 }
 
 const requestConfig = {
@@ -275,8 +272,7 @@ const requestConfig = {
       name: fileName,
       ...form
     },
-    headers: headers,
-    params: params
+    headers: headers
 }
 
 axios.put(url, requestConfig).then(response => {
@@ -315,8 +311,9 @@ Get the deposition id from the previous response
 deposition_id = r.json()['id']
 data = {'name': 'myfirstfile.csv'}
 files = {'file': open('/path/to/myfirstfile.csv', 'rb')}
+headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
 r = requests.post('https://zenodo.org/api/deposit/depositions/%s/files' % deposition_id,
-                   params={'access_token': ACCESS_TOKEN}, data=data,
+                   headers=headers, data=data,
                    files=files)
 r.status_code
 # 201
@@ -350,8 +347,12 @@ data = {
                        'affiliation': 'Zenodo'}]
      }
  }
+headers = {
+    'Content-Type': 'application/json',
+    'Authorization': f'Bearer {ACCESS_TOKEN}'
+}
 r = requests.put('https://zenodo.org/api/deposit/depositions/%s' % deposition_id,
-                  params={'access_token': ACCESS_TOKEN}, data=json.dumps(data),
+                  data=json.dumps(data),
                   headers=headers)
 r.status_code
 # 200
@@ -366,8 +367,9 @@ r.status_code
 <div class="align-columns"></div>
 
 ```python
+headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
 r = requests.post('https://zenodo.org/api/deposit/depositions/%s/actions/publish' % deposition_id,
-                      params={'access_token': ACCESS_TOKEN} )
+                      headers=headers)
 r.status_code
 # 202
 ```

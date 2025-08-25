@@ -4,8 +4,8 @@ Update an existing deposition resource.
 
 
 ```shell
-curl -i -H "Content-Type: application/json" -X PUT
-     --data '{"metadata": {"title": "My first upload", "upload_type": "poster", "description": "This is my first upload", "creators": [{"name": "Doe, John", "affiliation": "Zenodo"}]}}' https://zenodo.org/api/deposit/depositions/1234?access_token=ACCESS_TOKEN
+curl -i -H "Content-Type: application/json" -H "Authorization: Bearer ACCESS_TOKEN" -X PUT
+     --data '{"metadata": {"title": "My first upload", "upload_type": "poster", "description": "This is my first upload", "creators": [{"name": "Doe, John", "affiliation": "Zenodo"}]}}' https://zenodo.org/api/deposit/depositions/1234
 ```
 
 ```python
@@ -22,8 +22,8 @@ data = {
         ]
     }
 }
-url = "https://zenodo.org/api/deposit/depositions/1234?access_token=ACCESS_TOKEN"
-headers = {"Content-Type": "application/json"}
+url = "https://zenodo.org/api/deposit/depositions/1234"
+headers = {"Content-Type": "application/json", "Authorization": f"Bearer {ACCESS_TOKEN}"}
 
 r = requests.put(url, data=json.dumps(data), headers=headers)
 ```

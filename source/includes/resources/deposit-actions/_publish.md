@@ -4,13 +4,15 @@ Publish a deposition. Note, once a deposition is published, you can no longer
 delete it.
 
 ```shell
-curl -i -X POST https://zenodo.org/api/deposit/depositions/1234/actions/publish?access_token=ACCESS_TOKEN
+curl -i -X POST -H "Authorization: Bearer ACCESS_TOKEN" \
+  https://zenodo.org/api/deposit/depositions/1234/actions/publish
 ```
 
 ```python
 import requests
+headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
 r = requests.post('https://zenodo.org/api/deposit/depositions/1234/actions/publish',
-                  params={'access_token': ACCESS_TOKEN})
+                  headers=headers)
 ```
 
 #### HTTP Request

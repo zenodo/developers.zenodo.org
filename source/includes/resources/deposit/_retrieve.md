@@ -3,12 +3,12 @@
 Retrieve a single deposition resource.
 
 ```shell
-curl -i /api/deposit/depositions/1234?access_token=ACCESS_TOKEN
+curl -i -H "Authorization: Bearer ACCESS_TOKEN" /api/deposit/depositions/1234
 ```
 
 ```python
 import requests
-r = requests.get("/api/deposit/depositions/1234?access_token=ACCESS_TOKEN")
+r = requests.get("/api/deposit/depositions/1234", headers={'Authorization': f'Bearer {ACCESS_TOKEN}'})
 ```
 
 #### HTTP Request

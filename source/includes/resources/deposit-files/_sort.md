@@ -4,7 +4,7 @@ Sort the files for a deposition. By default, the first file is shown in the file
 preview.
 
 ```shell
-curl -i https://zenodo.org/api/deposit/depositions/1234/files?access_token=ACCESS_TOKEN -X PUT
+curl -i -H "Authorization: Bearer ACCESS_TOKEN" https://zenodo.org/api/deposit/depositions/1234/files -X PUT
      -H "Content-Type: application/json"
      --data '[{"id":"21fedcba-9876-5432-1fed-cba987654321"}, {"id":"12345678-9abc-def1-2345-6789abcdef12"}]'
 ```
@@ -13,8 +13,8 @@ curl -i https://zenodo.org/api/deposit/depositions/1234/files?access_token=ACCES
 import json
 import requests
 
-url = 'https://zenodo.org/api/deposit/depositions/1234/files?access_token=ACCESS_TOKEN'
-headers = {"Content-Type": "application/json"}
+url = 'https://zenodo.org/api/deposit/depositions/1234/files'
+headers = {"Content-Type": "application/json", "Authorization": f"Bearer {ACCESS_TOKEN}"}
 data = [{'id': '21fedcba-9876-5432-1fed-cba987654321'},
         {'id': '12345678-9abc-def1-2345-6789abcdef12'}]
 r = requests.put(url, data=json.dumps(data), headers=headers)

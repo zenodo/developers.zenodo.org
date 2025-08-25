@@ -3,13 +3,15 @@
 Discard changes in the current editing session.
 
 ```shell
-curl -i -X POST https://zenodo.org/api/deposit/depositions/1234/actions/discard?access_token=ACCESS_TOKEN
+curl -i -X POST -H "Authorization: Bearer ACCESS_TOKEN" \
+  https://zenodo.org/api/deposit/depositions/1234/actions/discard
 ```
 
 ```python
 import requests
+headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
 r = requests.post('https://zenodo.org/api/deposit/depositions/1234/actions/discard',
-                  params={'access_token': ACCESS_TOKEN})
+                  headers=headers)
 ```
 
 #### HTTP Request
