@@ -13,13 +13,15 @@ The new version deposition can be accessed through the ``"latest_draft"`` under 
 - The ``id`` used to create this new version has to be the ``id`` of the latest version. It is not possible to use the global id that references all the versions.
 
 ```shell
-curl -i -X POST https://zenodo.org/api/deposit/depositions/1234/actions/newversion?access_token=ACCESS_TOKEN
+curl -i -X POST -H "Authorization: Bearer ACCESS_TOKEN" \
+  https://zenodo.org/api/deposit/depositions/1234/actions/newversion
 ```
 
 ```python
 import requests
+headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
 r = requests.post('https://zenodo.org/api/deposit/depositions/1234/actions/newversion',
-                  params={'access_token': ACCESS_TOKEN})
+                  headers=headers)
 ```
 
 #### HTTP Request

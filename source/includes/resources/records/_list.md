@@ -5,13 +5,13 @@ List all open access records.
 ```python
 import requests
 response = requests.get('https://zenodo.org/api/records',
-                        params={'q': 'my title',
-                                'access_token': ACCESS_TOKEN})
+                        params={'q': 'my title'},
+                        headers={'Authorization': f'Bearer {ACCESS_TOKEN}'})
 print(response.json())
 ```
 
 ```shell
-curl -i /api/records/?access_token=ACCESS_TOKEN
+curl -i -H "Authorization: Bearer ACCESS_TOKEN" /api/records/
 ```
 
 #### HTTP Request

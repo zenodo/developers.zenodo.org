@@ -5,13 +5,13 @@ List all depositions for the currently authenticated user.
 ```python
 import requests
 response = requests.get('/api/deposit/depositions',
-                        params={'q': 'my title',
-                                'access_token': ACCESS_TOKEN})
+                        params={'q': 'my title'},
+                        headers={'Authorization': f'Bearer {ACCESS_TOKEN}'})
 print(response.json())
 ```
 
 ```shell
-curl -i /api/deposit/depositions/?access_token=ACCESS_TOKEN
+curl -i -H "Authorization: Bearer ACCESS_TOKEN" /api/deposit/depositions/
 ```
 
 #### HTTP Request

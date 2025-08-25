@@ -3,14 +3,14 @@
 Retrieve a single deposition file.
 
 ```shell
-curl -i https://zenodo.org/api/deposit/depositions/1234/files/12345678-9abc-def1-2345-6789abcdef12?access_token=ACCESS_TOKEN
+curl -i -H "Authorization: Bearer ACCESS_TOKEN" https://zenodo.org/api/deposit/depositions/1234/files/12345678-9abc-def1-2345-6789abcdef12
 
 ```
 
 ```python
 import requests
 r = requests.get('https://zenodo.org/api/deposit/depositions/1234/files/12345678-9abc-def1-2345-6789abcdef12',
-                 params={'access_token': ACCESS_TOKEN})
+                 headers={'Authorization': f'Bearer {ACCESS_TOKEN}'})
 ```
 
 #### HTTP Request

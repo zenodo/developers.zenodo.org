@@ -5,7 +5,7 @@ uploaded file. If you one to replace the actual file, please delete the file and
 upload a new file.
 
 ```shell
-curl -i https://zenodo.org/api/deposit/depositions/1234/files/21fedcba-9876-5432-1fed-cba987654321?access_token=ACCESS_TOKEN -X PUT
+curl -i -H "Authorization: Bearer ACCESS_TOKEN" https://zenodo.org/api/deposit/depositions/1234/files/21fedcba-9876-5432-1fed-cba987654321 -X PUT
      -H "Content-Type: application/json"
      --data '{"filename": "someothername.csv"}'
 ```
@@ -14,8 +14,8 @@ curl -i https://zenodo.org/api/deposit/depositions/1234/files/21fedcba-9876-5432
 import json
 import requests
 
-url = 'https://zenodo.org/api/deposit/depositions/1234/files/21fedcba-9876-5432-1fed-cba987654321?access_token=ACCESS_TOKEN'
-headers = {"Content-Type": "application/json"}
+url = 'https://zenodo.org/api/deposit/depositions/1234/files/21fedcba-9876-5432-1fed-cba987654321'
+headers = {"Content-Type": "application/json", "Authorization": f"Bearer {ACCESS_TOKEN}"}
 data = {"name": "someothername.csv"}
 r = requests.put(url, data=json.dumps(data), headers=headers)
 ```

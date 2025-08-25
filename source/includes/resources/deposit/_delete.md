@@ -5,13 +5,13 @@ Delete an existing deposition resource. Note, only unpublished depositions may
 be deleted.
 
 ```shell
-curl -i https://zenodo.org/api/deposit/depositions/1234?access_token=ACCESS_TOKEN -X DELETE
+curl -i -H "Authorization: Bearer ACCESS_TOKEN" https://zenodo.org/api/deposit/depositions/1234 -X DELETE
 ```
 
 ```python
 import requests
 r = requests.delete('https://zenodo.org/api/deposit/depositions/1234',
-                    params={'access_token': ACCESS_TOKEN})
+                    headers={'Authorization': f'Bearer {ACCESS_TOKEN}'})
 ```
 
 #### HTTP Request

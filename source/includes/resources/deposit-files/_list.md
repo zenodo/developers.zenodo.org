@@ -3,13 +3,13 @@
 List all deposition files for a given deposition.
 
 ```shell
-curl -i https://zenodo.org/api/deposit/depositions/1234/files?access_token=ACCESS_TOKEN
+curl -i -H "Authorization: Bearer ACCESS_TOKEN" https://zenodo.org/api/deposit/depositions/1234/files
 ```
 
 ```python
 import requests
 r = requests.get('https://zenodo.org/api/deposit/depositions/1234/files',
-                 params={'access_token': ACCESS_TOKEN})
+                 headers={'Authorization': f'Bearer {ACCESS_TOKEN}'})
 ```
 
 #### HTTP Request
