@@ -24,8 +24,7 @@ order set things up locally you're going to need:
 
 1. `git clone git@github.com:zenodo/developers.zenodo.org.git`
 2. `cd developers.zenodo.org`
-3. Initialize and start Slate. You can either do this locally, with Docker or
-   with Vagrant:
+3. Initialize and start Slate. You can either do this locally or with Docker:
 
 ```shell
 # either run this to run locally
@@ -34,10 +33,6 @@ bundle exec middleman server
 
 # OR using Docker
 docker-compose up
-
-# OR run this to run with vagrant
-vagrant up
-# (you might need to try ``vagrant provision`` first if the service doesn't start)
 ```
 
 You can now see the docs rendered at http://localhost:4567. Any modification
