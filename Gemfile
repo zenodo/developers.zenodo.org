@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.6.10'
+
 # Middleman
 gem 'middleman', '~>4.1.0'
 gem 'middleman-syntax', '~> 3.0.0'
