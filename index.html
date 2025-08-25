@@ -241,20 +241,21 @@ installed for python or <a href="https://github.com/axios/axios">axios</a> for n
 
 <div class="align-columns"></div>
 <pre class="highlight python"><code><span class="n">ACCESS_TOKEN</span> <span class="o">=</span> <span class="s">'ChangeMe'</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {ACCESS_TOKEN}'</span><span class="p">}</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions'</span><span class="p">,</span>
-                  <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">})</span>
+                  <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
 <span class="c"># 200</span>
 <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 <span class="c"># []</span>
 </code></pre><pre class="highlight javascript"><code><span class="kr">const</span> <span class="nx">ACCESS_TOKEN</span> <span class="o">=</span> <span class="s1">'ChangeMe'</span>
 
-<span class="kr">const</span> <span class="nx">requestParams</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">params</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s1">'access_token'</span><span class="p">:</span> <span class="nx">ACCESS_TOKEN</span>
+<span class="kr">const</span> <span class="nx">requestConfig</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'Authorization'</span><span class="p">:</span> <span class="s2">`Bearer </span><span class="p">${</span><span class="nx">ACCESS_TOKEN</span><span class="p">}</span><span class="s2">`</span>
   <span class="p">}</span>
 <span class="p">}</span>
-<span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"https://zenodo.org/api/deposit/depositions"</span><span class="p">,</span> <span class="nx">requestParams</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"https://zenodo.org/api/deposit/depositions"</span><span class="p">,</span> <span class="nx">requestConfig</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
   <span class="c1">// &gt; 200</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>  
@@ -273,31 +274,24 @@ access token):</li>
 </aside>
 
 <div class="align-columns"></div>
-<pre class="highlight python"><code><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">}</span>
-<span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">}</span>
+<pre class="highlight python"><code><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">,</span>
+    <span class="s">"Authorization"</span><span class="p">:</span> <span class="n">f</span><span class="s">"Bearer {ACCESS_TOKEN}"</span>
+<span class="p">}</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://sandbox.zenodo.org/api/deposit/depositions'</span><span class="p">,</span>
-                   <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
                    <span class="n">json</span><span class="o">=</span><span class="p">{},</span>
-                   <span class="s">'''
-                   Headers are not necessary here since "requests" automatically
-                   adds "Content-Type: application/json", because we're using
-                   the "json=" keyword argument
-                   headers=headers, 
-                   '''</span>
                    <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
 <span class="c"># 201</span>
 <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-</code></pre><pre class="highlight javascript"><code><span class="kr">const</span> <span class="nx">requestParams</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">params</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s1">'access_token'</span><span class="p">:</span> <span class="nx">ACCESS_TOKEN</span>
-  <span class="p">},</span>
-  <span class="na">headers</span> <span class="p">:</span> <span class="p">{</span>
-    <span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"application/json"</span>
+</code></pre><pre class="highlight javascript"><code><span class="kr">const</span> <span class="nx">requestConfig</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
+    <span class="s2">"Authorization"</span><span class="p">:</span> <span class="s2">`Bearer </span><span class="p">${</span><span class="nx">ACCESS_TOKEN</span><span class="p">}</span><span class="s2">`</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="nx">axios</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s2">"https://zenodo.org/api/deposit/depositions"</span><span class="p">,</span> <span class="nx">requestParams</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">axios</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s2">"https://zenodo.org/api/deposit/depositions"</span><span class="p">,</span> <span class="p">{},</span> <span class="nx">requestConfig</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
   <span class="c1">// 201</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>  
@@ -347,7 +341,8 @@ access token):</li>
 
 <div class="align-columns"></div>
 <pre class="highlight python"><code><span class="n">bucket_url</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">"links"</span><span class="p">][</span><span class="s">"bucket"</span><span class="p">]</span>
-</code></pre><pre class="highlight shell"><code>curl https://zenodo.org/api/deposit/depositions/222761?access_token<span class="o">=</span><span class="nv">$ACCESS_TOKEN</span>
+</code></pre><pre class="highlight shell"><code>curl -H <span class="s2">"Authorization: Bearer </span><span class="nv">$ACCESS_TOKEN</span><span class="s2">"</span> <span class="se">\</span>
+  https://zenodo.org/api/deposit/depositions/222761
 <span class="o">{</span> ...
   <span class="s2">"links"</span>: <span class="o">{</span>
     <span class="s2">"bucket"</span>: <span class="s2">"https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b"</span>,
@@ -363,11 +358,14 @@ This will stream the file located in '</span>/path/to/your/file.dat<span class="
 The uploaded file will be named according to the last argument in the upload URL,
 '</span>file.dat<span class="s1">' in our case. 
 '''</span>
-<span class="gp">$ </span>curl --upload-file /path/to/your/file.dat https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b/file.dat?access_token<span class="o">=</span><span class="nv">$ACCES_TOKEN</span>
+<span class="gp">$ </span>curl --upload-file /path/to/your/file.dat <span class="se">\</span>
+  -H <span class="s2">"Authorization: Bearer </span><span class="nv">$ACCESS_TOKEN</span><span class="s2">"</span> <span class="se">\</span>
+  https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b/file.dat
 <span class="o">{</span> ... <span class="o">}</span>
 </code></pre><pre class="highlight python"><code><span class="s">''' New API '''</span>
 <span class="n">filename</span> <span class="o">=</span> <span class="s">"my-file.zip"</span>
 <span class="n">path</span> <span class="o">=</span> <span class="s">"/path/to/</span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="n">filename</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {ACCESS_TOKEN}'</span><span class="p">}</span>
 
 <span class="s">''' 
 The target URL is a combination of the bucket link with the desired filename
@@ -377,7 +375,7 @@ seperated by a slash.
     <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
         <span class="s">"</span><span class="si">%</span><span class="s">s/</span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">bucket_url</span><span class="p">,</span> <span class="n">filename</span><span class="p">),</span>
         <span class="n">data</span><span class="o">=</span><span class="n">fp</span><span class="p">,</span>
-        <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
     <span class="p">)</span>
 <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre><pre class="highlight javascript"><code><span class="kr">const</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'fs'</span><span class="p">);</span>
@@ -398,10 +396,9 @@ seperated by a slash.
 <span class="c1">// Create request</span>
 <span class="kd">let</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">bucketURL</span><span class="p">}</span><span class="s2">/</span><span class="p">${</span><span class="nx">fileName</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
 
-<span class="kd">let</span> <span class="nx">params</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">'access_token'</span><span class="p">:</span> <span class="nx">token</span> <span class="p">}</span>
-
 <span class="kd">let</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">'Content-type'</span><span class="p">:</span> <span class="s1">'application/zip'</span>
+    <span class="s1">'Content-type'</span><span class="p">:</span> <span class="s1">'application/zip'</span><span class="p">,</span>
+    <span class="s1">'Authorization'</span><span class="p">:</span> <span class="s2">`Bearer </span><span class="p">${</span><span class="nx">token</span><span class="p">}</span><span class="s2">`</span>
 <span class="p">}</span>
 
 <span class="kr">const</span> <span class="nx">requestConfig</span> <span class="o">=</span> <span class="p">{</span>
@@ -409,8 +406,7 @@ seperated by a slash.
       <span class="na">name</span><span class="p">:</span> <span class="nx">fileName</span><span class="p">,</span>
       <span class="p">...</span><span class="nx">form</span>
     <span class="p">},</span>
-    <span class="na">headers</span><span class="p">:</span> <span class="nx">headers</span><span class="p">,</span>
-    <span class="na">params</span><span class="p">:</span> <span class="nx">params</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="nx">headers</span>
 <span class="p">}</span>
 
 <span class="nx">axios</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">requestConfig</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -443,8 +439,9 @@ Get the deposition id from the previous response
 <span class="n">deposition_id</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">'id'</span><span class="p">]</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'myfirstfile.csv'</span><span class="p">}</span>
 <span class="n">files</span> <span class="o">=</span> <span class="p">{</span><span class="s">'file'</span><span class="p">:</span> <span class="nb">open</span><span class="p">(</span><span class="s">'/path/to/myfirstfile.csv'</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)}</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {ACCESS_TOKEN}'</span><span class="p">}</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/</span><span class="si">%</span><span class="s">s/files'</span> <span class="o">%</span> <span class="n">deposition_id</span><span class="p">,</span>
-                   <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">},</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+                   <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
                    <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">)</span>
 <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
 <span class="c"># 201</span>
@@ -471,8 +468,12 @@ Get the deposition id from the previous response
                        <span class="s">'affiliation'</span><span class="p">:</span> <span class="s">'Zenodo'</span><span class="p">}]</span>
      <span class="p">}</span>
  <span class="p">}</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+    <span class="s">'Authorization'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {ACCESS_TOKEN}'</span>
+<span class="p">}</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/</span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="n">deposition_id</span><span class="p">,</span>
-                  <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">},</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+                  <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
                   <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
 <span class="c"># 200</span>
@@ -483,8 +484,9 @@ Get the deposition id from the previous response
 </ul>
 
 <div class="align-columns"></div>
-<pre class="highlight python"><code><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/</span><span class="si">%</span><span class="s">s/actions/publish'</span> <span class="o">%</span> <span class="n">deposition_id</span><span class="p">,</span>
-                      <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">}</span> <span class="p">)</span>
+<pre class="highlight python"><code><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {ACCESS_TOKEN}'</span><span class="p">}</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/</span><span class="si">%</span><span class="s">s/actions/publish'</span> <span class="o">%</span> <span class="n">deposition_id</span><span class="p">,</span>
+                      <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
 <span class="c"># 202</span>
 </code></pre><pre class="highlight javascript"><code><span class="c1">// Old API documentation not available for javascript / NodeJS</span>
@@ -542,19 +544,19 @@ to <a href="https://zenodo.org/account/settings/applications/tokens/new/">create
 
 <h3 id="using-access-tokens">Using access tokens</h3>
 
-<p>An access token must be included in all requests as either:</p>
-<pre class="highlight plaintext"><code>GET /api/deposit/depositions?access_token=&lt;ACCESS_TOKEN&gt;
-</code></pre>
-<ul>
-<li>an URL parameter (named <code class="prettyprint">access_token</code>):</li>
-</ul>
-
-<div class="align-columns"></div>
+<p>An access token must be included in all requests. The recommended and more secure method is using HTTP headers:</p>
 <pre class="highlight plaintext"><code>GET /api/deposit/depositions
 Authorization: Bearer &lt;ACCESS_TOKEN&gt;
 </code></pre>
 <ul>
-<li>or as HTTP request header (<code class="prettyprint">Authorization</code>):</li>
+<li><strong>Recommended:</strong> as HTTP request header (<code class="prettyprint">Authorization</code>):</li>
+</ul>
+
+<div class="align-columns"></div>
+<pre class="highlight plaintext"><code>GET /api/deposit/depositions?access_token=&lt;ACCESS_TOKEN&gt;
+</code></pre>
+<ul>
+<li>or as URL parameter (named <code class="prettyprint">access_token</code>), though this is less secure:</li>
 </ul>
 
 <div class="align-columns"></div>
@@ -1063,10 +1065,10 @@ the error).</p>
 <p>List all depositions for the currently authenticated user.</p>
 <pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'/api/deposit/depositions'</span><span class="p">,</span>
-                        <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'q'</span><span class="p">:</span> <span class="s">'my title'</span><span class="p">,</span>
-                                <span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">})</span>
+                        <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'q'</span><span class="p">:</span> <span class="s">'my title'</span><span class="p">},</span>
+                        <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {ACCESS_TOKEN}'</span><span class="p">})</span>
 <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
-</code></pre><pre class="highlight shell"><code>curl -i /api/deposit/depositions/?access_token<span class="o">=</span>ACCESS_TOKEN
+</code></pre><pre class="highlight shell"><code>curl -i -H <span class="s2">"Authorization: Bearer ACCESS_TOKEN"</span> /api/deposit/depositions/
 </code></pre>
 <h4 id="http-request">HTTP Request</h4>
 
@@ -1128,18 +1130,18 @@ the error).</p>
             <h3 id="create">Create</h3>
 
 <p>Create a new deposition resource.</p>
-<pre class="highlight shell"><code>curl -i -H <span class="s2">"Content-Type: application/json"</span> -X POST
-     --data <span class="s1">'{}'</span> /api/deposit/depositions/?access_token<span class="o">=</span>ACCESS_TOKEN
+<pre class="highlight shell"><code>curl -i -H <span class="s2">"Content-Type: application/json"</span> -H <span class="s2">"Authorization: Bearer ACCESS_TOKEN"</span> -X POST
+     --data <span class="s1">'{}'</span> /api/deposit/depositions/
 
 <span class="c"># or</span>
 
-curl -i -H <span class="s2">"Content-Type: application/json"</span> -X POST
-     --data <span class="s1">'{"metadata": {"title": "My first upload", "upload_type": "poster", "description": "This is my first upload", "creators": [{"name": "Doe, John", "affiliation": "Zenodo"}]}}'</span> /api/deposit/depositions/?access_token<span class="o">=</span>ACCESS_TOKEN
+curl -i -H <span class="s2">"Content-Type: application/json"</span> -H <span class="s2">"Authorization: Bearer ACCESS_TOKEN"</span> -X POST
+     --data <span class="s1">'{"metadata": {"title": "My first upload", "upload_type": "poster", "description": "This is my first upload", "creators": [{"name": "Doe, John", "affiliation": "Zenodo"}]}}'</span> /api/deposit/depositions/
 </code></pre><pre class="highlight python"><code><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"/api/deposit/depositions/?access_token=ACCESS_TOKEN"</span>
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">}</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"/api/deposit/depositions/"</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">,</span> <span class="s">"Authorization"</span><span class="p">:</span> <span class="n">f</span><span class="s">"Bearer {ACCESS_TOKEN}"</span><span class="p">}</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 </code></pre>
 <h4 id="http-request">HTTP Request</h4>
@@ -1174,9 +1176,9 @@ resource. Example: <code class="prettyprint">{&quot;metadata&quot;: {&quot;uploa
             <h3 id="retrieve">Retrieve</h3>
 
 <p>Retrieve a single deposition resource.</p>
-<pre class="highlight shell"><code>curl -i /api/deposit/depositions/1234?access_token<span class="o">=</span>ACCESS_TOKEN
+<pre class="highlight shell"><code>curl -i -H <span class="s2">"Authorization: Bearer ACCESS_TOKEN"</span> /api/deposit/depositions/1234
 </code></pre><pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
-<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"/api/deposit/depositions/1234?access_token=ACCESS_TOKEN"</span><span class="p">)</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"/api/deposit/depositions/1234"</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {ACCESS_TOKEN}'</span><span class="p">})</span>
 </code></pre>
 <h4 id="http-request">HTTP Request</h4>
 
@@ -1197,8 +1199,8 @@ resource. Example: <code class="prettyprint">{&quot;metadata&quot;: {&quot;uploa
             <h3 id="update">Update</h3>
 
 <p>Update an existing deposition resource.</p>
-<pre class="highlight shell"><code>curl -i -H <span class="s2">"Content-Type: application/json"</span> -X PUT
-     --data <span class="s1">'{"metadata": {"title": "My first upload", "upload_type": "poster", "description": "This is my first upload", "creators": [{"name": "Doe, John", "affiliation": "Zenodo"}]}}'</span> https://zenodo.org/api/deposit/depositions/1234?access_token<span class="o">=</span>ACCESS_TOKEN
+<pre class="highlight shell"><code>curl -i -H <span class="s2">"Content-Type: application/json"</span> -H <span class="s2">"Authorization: Bearer ACCESS_TOKEN"</span> -X PUT
+     --data <span class="s1">'{"metadata": {"title": "My first upload", "upload_type": "poster", "description": "This is my first upload", "creators": [{"name": "Doe, John", "affiliation": "Zenodo"}]}}'</span> https://zenodo.org/api/deposit/depositions/1234
 </code></pre><pre class="highlight python"><code><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
@@ -1212,8 +1214,8 @@ resource. Example: <code class="prettyprint">{&quot;metadata&quot;: {&quot;uploa
         <span class="p">]</span>
     <span class="p">}</span>
 <span class="p">}</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://zenodo.org/api/deposit/depositions/1234?access_token=ACCESS_TOKEN"</span>
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">}</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://zenodo.org/api/deposit/depositions/1234"</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">,</span> <span class="s">"Authorization"</span><span class="p">:</span> <span class="n">f</span><span class="s">"Bearer {ACCESS_TOKEN}"</span><span class="p">}</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 </code></pre>
@@ -1257,10 +1259,10 @@ resource. Example: <code class="prettyprint">{&quot;metadata&quot;: {&quot;uploa
 
 <p>Delete an existing deposition resource. Note, only unpublished depositions may
 be deleted.</p>
-<pre class="highlight shell"><code>curl -i https://zenodo.org/api/deposit/depositions/1234?access_token<span class="o">=</span>ACCESS_TOKEN -X DELETE
+<pre class="highlight shell"><code>curl -i -H <span class="s2">"Authorization: Bearer ACCESS_TOKEN"</span> https://zenodo.org/api/deposit/depositions/1234 -X DELETE
 </code></pre><pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/1234'</span><span class="p">,</span>
-                    <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">})</span>
+                    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {ACCESS_TOKEN}'</span><span class="p">})</span>
 </code></pre>
 <h4 id="http-request">HTTP Request</h4>
 
@@ -1329,10 +1331,10 @@ deposition on Zenodo.</p>
             <h3 id="list">List</h3>
 
 <p>List all deposition files for a given deposition.</p>
-<pre class="highlight shell"><code>curl -i https://zenodo.org/api/deposit/depositions/1234/files?access_token<span class="o">=</span>ACCESS_TOKEN
+<pre class="highlight shell"><code>curl -i -H <span class="s2">"Authorization: Bearer ACCESS_TOKEN"</span> https://zenodo.org/api/deposit/depositions/1234/files
 </code></pre><pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/1234/files'</span><span class="p">,</span>
-                 <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">})</span>
+                 <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {ACCESS_TOKEN}'</span><span class="p">})</span>
 </code></pre>
 <h4 id="http-request">HTTP Request</h4>
 
@@ -1353,17 +1355,18 @@ deposition on Zenodo.</p>
             <h3 id="create">Create</h3>
 
 <p>Upload a new file.</p>
-<pre class="highlight shell"><code>curl -i https://zenodo.org/api/deposit/depositions/1234/files?access_token<span class="o">=</span>ACCESS_TOKEN
+<pre class="highlight shell"><code>curl -i -H <span class="s2">"Authorization: Bearer ACCESS_TOKEN"</span> https://zenodo.org/api/deposit/depositions/1234/files
      -F <span class="nv">name</span><span class="o">=</span>myfirstfile.csv
      -F <span class="nv">file</span><span class="o">=</span>@path/to/local_file.csv
 
 </code></pre><pre class="highlight python"><code><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">'https://zenodo.org/api/deposit/depositions/1234/files?access_token=ACCESS_TOKEN'</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">'https://zenodo.org/api/deposit/depositions/1234/files'</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {ACCESS_TOKEN}'</span><span class="p">}</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'myfirstfile.csv'</span><span class="p">}</span>
 <span class="n">files</span> <span class="o">=</span> <span class="p">{</span><span class="s">'file'</span><span class="p">:</span> <span class="nb">open</span><span class="p">(</span><span class="s">'path/to/local_file.csv'</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)}</span>
-<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">)</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 </code></pre>
 <h4 id="http-request">HTTP Request</h4>
 
@@ -1393,14 +1396,14 @@ deposition on Zenodo.</p>
 
 <p>Sort the files for a deposition. By default, the first file is shown in the file
 preview.</p>
-<pre class="highlight shell"><code>curl -i https://zenodo.org/api/deposit/depositions/1234/files?access_token<span class="o">=</span>ACCESS_TOKEN -X PUT
+<pre class="highlight shell"><code>curl -i -H <span class="s2">"Authorization: Bearer ACCESS_TOKEN"</span> https://zenodo.org/api/deposit/depositions/1234/files -X PUT
      -H <span class="s2">"Content-Type: application/json"</span>
      --data <span class="s1">'[{"id":"21fedcba-9876-5432-1fed-cba987654321"}, {"id":"12345678-9abc-def1-2345-6789abcdef12"}]'</span>
 </code></pre><pre class="highlight python"><code><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">'https://zenodo.org/api/deposit/depositions/1234/files?access_token=ACCESS_TOKEN'</span>
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">}</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">'https://zenodo.org/api/deposit/depositions/1234/files'</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">,</span> <span class="s">"Authorization"</span><span class="p">:</span> <span class="n">f</span><span class="s">"Bearer {ACCESS_TOKEN}"</span><span class="p">}</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">[{</span><span class="s">'id'</span><span class="p">:</span> <span class="s">'21fedcba-9876-5432-1fed-cba987654321'</span><span class="p">},</span>
         <span class="p">{</span><span class="s">'id'</span><span class="p">:</span> <span class="s">'12345678-9abc-def1-2345-6789abcdef12'</span><span class="p">}]</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
@@ -1442,11 +1445,11 @@ the <code class="prettyprint">id</code> attribute. Example:</p>
             <h3 id="retrieve">Retrieve</h3>
 
 <p>Retrieve a single deposition file.</p>
-<pre class="highlight shell"><code>curl -i https://zenodo.org/api/deposit/depositions/1234/files/12345678-9abc-def1-2345-6789abcdef12?access_token<span class="o">=</span>ACCESS_TOKEN
+<pre class="highlight shell"><code>curl -i -H <span class="s2">"Authorization: Bearer ACCESS_TOKEN"</span> https://zenodo.org/api/deposit/depositions/1234/files/12345678-9abc-def1-2345-6789abcdef12
 
 </code></pre><pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/1234/files/12345678-9abc-def1-2345-6789abcdef12'</span><span class="p">,</span>
-                 <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">})</span>
+                 <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {ACCESS_TOKEN}'</span><span class="p">})</span>
 </code></pre>
 <h4 id="http-request">HTTP Request</h4>
 
@@ -1469,14 +1472,14 @@ the <code class="prettyprint">id</code> attribute. Example:</p>
 <p>Update a deposition file resource. Currently the only use is renaming an already
 uploaded file. If you one to replace the actual file, please delete the file and
 upload a new file.</p>
-<pre class="highlight shell"><code>curl -i https://zenodo.org/api/deposit/depositions/1234/files/21fedcba-9876-5432-1fed-cba987654321?access_token<span class="o">=</span>ACCESS_TOKEN -X PUT
+<pre class="highlight shell"><code>curl -i -H <span class="s2">"Authorization: Bearer ACCESS_TOKEN"</span> https://zenodo.org/api/deposit/depositions/1234/files/21fedcba-9876-5432-1fed-cba987654321 -X PUT
      -H <span class="s2">"Content-Type: application/json"</span>
      --data <span class="s1">'{"filename": "someothername.csv"}'</span>
 </code></pre><pre class="highlight python"><code><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">'https://zenodo.org/api/deposit/depositions/1234/files/21fedcba-9876-5432-1fed-cba987654321?access_token=ACCESS_TOKEN'</span>
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">}</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">'https://zenodo.org/api/deposit/depositions/1234/files/21fedcba-9876-5432-1fed-cba987654321'</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">,</span> <span class="s">"Authorization"</span><span class="p">:</span> <span class="n">f</span><span class="s">"Bearer {ACCESS_TOKEN}"</span><span class="p">}</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">"name"</span><span class="p">:</span> <span class="s">"someothername.csv"</span><span class="p">}</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 </code></pre>
@@ -1516,10 +1519,10 @@ upload a new file.</p>
 
 <p>Delete an existing deposition file resource. Note, only deposition files for
 unpublished depositions may be deleted.</p>
-<pre class="highlight shell"><code>curl -i -X DELETE https://zenodo.org/api/deposit/depositions/1234/files/21fedcba-9876-5432-1fed-cba987654321?access_token<span class="o">=</span>ACCESS_TOKEN
+<pre class="highlight shell"><code>curl -i -H <span class="s2">"Authorization: Bearer ACCESS_TOKEN"</span> -X DELETE https://zenodo.org/api/deposit/depositions/1234/files/21fedcba-9876-5432-1fed-cba987654321
 </code></pre><pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/1234/files/21fedcba-9876-5432-1fed-cba987654321'</span><span class="p">,</span>
-                    <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">})</span>
+                    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {ACCESS_TOKEN}'</span><span class="p">})</span>
 </code></pre>
 <h4 id="http-request">HTTP Request</h4>
 
@@ -1552,10 +1555,12 @@ unpublished depositions may be deleted.</p>
 
 <p>Publish a deposition. Note, once a deposition is published, you can no longer
 delete it.</p>
-<pre class="highlight shell"><code>curl -i -X POST https://zenodo.org/api/deposit/depositions/1234/actions/publish?access_token<span class="o">=</span>ACCESS_TOKEN
+<pre class="highlight shell"><code>curl -i -X POST -H <span class="s2">"Authorization: Bearer ACCESS_TOKEN"</span> <span class="se">\</span>
+  https://zenodo.org/api/deposit/depositions/1234/actions/publish
 </code></pre><pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {ACCESS_TOKEN}'</span><span class="p">}</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/1234/actions/publish'</span><span class="p">,</span>
-                  <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">})</span>
+                  <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 </code></pre>
 <h4 id="http-request">HTTP Request</h4>
 
@@ -1580,10 +1585,10 @@ delete it.</p>
             <h3 id="edit">Edit</h3>
 
 <p>Unlock already submitted deposition for editing.</p>
-<pre class="highlight shell"><code>curl -i -X POST https://zenodo.org/api/deposit/depositions/1234/actions/edit?access_token<span class="o">=</span>ACCESS_TOKEN
+<pre class="highlight shell"><code>curl -i -H <span class="s2">"Authorization: Bearer ACCESS_TOKEN"</span> -X POST https://zenodo.org/api/deposit/depositions/1234/actions/edit
 </code></pre><pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/1234/actions/edit'</span><span class="p">,</span>
-                  <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">})</span>
+                  <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {ACCESS_TOKEN}'</span><span class="p">})</span>
 </code></pre>
 <h4 id="http-request">HTTP Request</h4>
 
@@ -1615,10 +1620,12 @@ depositions in state <code class="prettyprint">inprogress</code>).</li>
             <h3 id="discard">Discard</h3>
 
 <p>Discard changes in the current editing session.</p>
-<pre class="highlight shell"><code>curl -i -X POST https://zenodo.org/api/deposit/depositions/1234/actions/discard?access_token<span class="o">=</span>ACCESS_TOKEN
+<pre class="highlight shell"><code>curl -i -X POST -H <span class="s2">"Authorization: Bearer ACCESS_TOKEN"</span> <span class="se">\</span>
+  https://zenodo.org/api/deposit/depositions/1234/actions/discard
 </code></pre><pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {ACCESS_TOKEN}'</span><span class="p">}</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/1234/actions/discard'</span><span class="p">,</span>
-                  <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">})</span>
+                  <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 </code></pre>
 <h4 id="http-request">HTTP Request</h4>
 
@@ -1657,10 +1664,12 @@ The new version deposit will have a state similar to a new, unpublished deposit,
 - The response body of this action is NOT the new version deposit, but the original resource.
 The new version deposition can be accessed through the <code class="prettyprint">&quot;latest_draft&quot;</code> under <code class="prettyprint">&quot;links&quot;</code> in the response body.
 - The <code class="prettyprint">id</code> used to create this new version has to be the <code class="prettyprint">id</code> of the latest version. It is not possible to use the global id that references all the versions.</p>
-<pre class="highlight shell"><code>curl -i -X POST https://zenodo.org/api/deposit/depositions/1234/actions/newversion?access_token<span class="o">=</span>ACCESS_TOKEN
+<pre class="highlight shell"><code>curl -i -X POST -H <span class="s2">"Authorization: Bearer ACCESS_TOKEN"</span> <span class="se">\</span>
+  https://zenodo.org/api/deposit/depositions/1234/actions/newversion
 </code></pre><pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {ACCESS_TOKEN}'</span><span class="p">}</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://zenodo.org/api/deposit/depositions/1234/actions/newversion'</span><span class="p">,</span>
-                  <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">})</span>
+                  <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 </code></pre>
 <h4 id="http-request">HTTP Request</h4>
 
@@ -1693,10 +1702,10 @@ The new version deposition can be accessed through the <code class="prettyprint"
 <p>List all open access records.</p>
 <pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://zenodo.org/api/records'</span><span class="p">,</span>
-                        <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'q'</span><span class="p">:</span> <span class="s">'my title'</span><span class="p">,</span>
-                                <span class="s">'access_token'</span><span class="p">:</span> <span class="n">ACCESS_TOKEN</span><span class="p">})</span>
+                        <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'q'</span><span class="p">:</span> <span class="s">'my title'</span><span class="p">},</span>
+                        <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="n">f</span><span class="s">'Bearer {ACCESS_TOKEN}'</span><span class="p">})</span>
 <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
-</code></pre><pre class="highlight shell"><code>curl -i /api/records/?access_token<span class="o">=</span>ACCESS_TOKEN
+</code></pre><pre class="highlight shell"><code>curl -i -H <span class="s2">"Authorization: Bearer ACCESS_TOKEN"</span> /api/records/
 </code></pre>
 <h4 id="http-request">HTTP Request</h4>
 
