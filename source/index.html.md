@@ -47,6 +47,7 @@ includes:
   - resources/licenses/retrieve
   - resources/changes
   - oai-pmh/root
+  - metadata-dumps/root
   - github/root
   - rate-limit/root
 search: true
