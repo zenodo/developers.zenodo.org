@@ -2270,6 +2270,243 @@ create a specific set for you.</p>
 
 <p>Most updates are available immediately, some few updates are only reflected in the OAI sets once an hour.</p>
 
+            <h1 id="metadata-dumps">Metadata Dumps</h1>
+
+<p>For users who need to download large subsets of Zenodo records, making individual API calls for each record can be inefficient.
+To address this, we provide bulk metadata dumps that contain exports of Zenodo record metadata in DataCite XML and JSON formats, as well as a CSV list of deleted records.</p>
+
+<p>These dumps are generated <strong>monthly</strong> at the beginning of each month and are available via the <code class="prettyprint">/api/exporter</code> endpoint.
+We maintain the latest 3 snapshots of each dump variant, including creation timestamp, version ID, file size, checksum, and download links.</p>
+
+<h2 id="list-available-dumps">List available dumps</h2>
+
+<p>List all available metadata dumps with their version history.</p>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://zenodo.org/api/exporter'</span><span class="p">)</span>
+</code></pre><pre class="highlight shell"><code>curl https://zenodo.org/api/exporter
+</code></pre><pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"records-xml.tar.gz"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"version_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a1b2c3d4-e5f6-7890-abcd-ef1234567890"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-09-13T06:25:32.054451+00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"is_head"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">3970234567</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"checksum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"md5:1c1fd4ab805d52729cdee94d199f7729"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/exporter/records-xml.tar.gz/a1b2c3d4-e5f6-7890-abcd-ef1234567890"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"self_head"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/exporter/records-xml.tar.gz"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nt">"records-deleted.csv.gz"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"version_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e2d16608-5d00-41ae-905e-11aa44643228"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-09-01T23:24:03.867786+00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"is_head"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">26820485</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"checksum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"md5:4605fbea12cab96f3a79d91a9f69f286"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/exporter/records-deleted.csv.gz/e2d16608-5d00-41ae-905e-11aa44643228"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"self_head"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://zenodo.org/api/exporter/records-deleted.csv.gz"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">GET /api/exporter</code></p>
+
+<h4 id="success-response">Success Response</h4>
+
+<ul>
+<li><strong>Code:</strong> <code class="prettyprint">200 OK</code></li>
+<li><strong>Body</strong>: JSON object where each key represents a dump variant, and the value is an array of the 3 most recent versions.</li>
+</ul>
+
+<h4 id="response-format">Response format</h4>
+
+<p>Each dump variant includes an array of versions with:</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Field</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">version_id</code></td>
+<td style="text-align: left">Unique identifier for this version</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">created</code></td>
+<td style="text-align: left">ISO 8601 timestamp of when the dump was created</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_head</code></td>
+<td style="text-align: left">Boolean indicating if this is the latest version</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">size</code></td>
+<td style="text-align: left">File size in bytes</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">checksum</code></td>
+<td style="text-align: left">File checksum for verification</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">links.self</code></td>
+<td style="text-align: left">URL to download this specific version</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">links.self_head</code></td>
+<td style="text-align: left">URL to download the latest version (only present for <code class="prettyprint">is_head: true</code>)</td>
+</tr>
+</tbody></table>
+
+<h2 id="download-a-dump">Download a dump</h2>
+
+<p>Download the latest version of a specific metadata dump.</p>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="c"># Download latest version</span>
+<span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://zenodo.org/api/exporter/records-xml.tar.gz'</span><span class="p">)</span>
+
+<span class="c"># Download specific version</span>
+<span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://zenodo.org/api/exporter/records-xml.tar.gz/a1b2c3d4-e5f6-7890-abcd-ef1234567890'</span><span class="p">)</span>
+</code></pre><pre class="highlight shell"><code><span class="c"># Download latest version</span>
+curl -O https://zenodo.org/api/exporter/records-xml.tar.gz
+
+<span class="c"># Download specific version</span>
+curl -O https://zenodo.org/api/exporter/records-xml.tar.gz/a1b2c3d4-e5f6-7890-abcd-ef1234567890
+</code></pre>
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">GET /api/exporter/:key</code></p>
+
+<p><code class="prettyprint">GET /api/exporter/:key/:version_id</code></p>
+
+<h4 id="url-parameters">URL Parameters</h4>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">key</code></td>
+<td style="text-align: left">required</td>
+<td style="text-align: left">The dump variant key (e.g., <code class="prettyprint">records-xml.tar.gz</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">version_id</code></td>
+<td style="text-align: left">optional</td>
+<td style="text-align: left">Specific version UUID. If omitted, returns the latest version.</td>
+</tr>
+</tbody></table>
+
+<h4 id="success-response">Success Response</h4>
+
+<ul>
+<li><strong>Code:</strong> <code class="prettyprint">200 OK</code></li>
+<li><strong>Body</strong>: Binary file content (typically <code class="prettyprint">.tar.gz</code> archive)</li>
+</ul>
+
+<h4 id="archive-structure">Archive structure</h4>
+
+<p><strong>Metadata dumps</strong> (<code class="prettyprint">.tar.gz</code> archives) contain one file per record:</p>
+
+<ul>
+<li>Filename format: <code class="prettyprint">&lt;record_id&gt;.&lt;extension&gt;</code> (e.g., <code class="prettyprint">8435696.xml</code>)</li>
+<li>Each file contains the complete metadata for that record in the specified format</li>
+</ul>
+
+<p><strong>Deleted records dump</strong> (<code class="prettyprint">records-deleted.csv.gz</code>) is a gzip-compressed CSV file with the following columns:</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Column</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">record_id</code></td>
+<td style="text-align: left">Zenodo record ID</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">doi</code></td>
+<td style="text-align: left">Record DOI</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">parent_id</code></td>
+<td style="text-align: left">Parent record ID (concept record)</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">parent_doi</code></td>
+<td style="text-align: left">Parent record DOI</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">removal_note</code></td>
+<td style="text-align: left">Reason for removal</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">removal_reason</code></td>
+<td style="text-align: left">Category (e.g., &ldquo;spam&rdquo;)</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">removal_date</code></td>
+<td style="text-align: left">Date the record was removed</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">citation_text</code></td>
+<td style="text-align: left">Citation text (if available)</td>
+</tr>
+</tbody></table>
+
+<h2 id="streaming-processing-example">Streaming processing example</h2>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">tarfile</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">as</span> <span class="nn">ET</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://zenodo.org/api/exporter/records-xml.tar.gz"</span>
+<span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">resp</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">decode_content</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="n">namespaces</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'datacite'</span><span class="p">:</span> <span class="s">'http://datacite.org/schema/kernel-4'</span><span class="p">,</span>
+    <span class="s">'oai_datacite'</span><span class="p">:</span> <span class="s">'http://schema.datacite.org/oai/oai-1.1/'</span>
+<span class="p">}</span>
+
+<span class="k">with</span> <span class="n">tarfile</span><span class="o">.</span><span class="nb">open</span><span class="p">(</span><span class="n">fileobj</span><span class="o">=</span><span class="n">resp</span><span class="o">.</span><span class="n">raw</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">"r|gz"</span><span class="p">)</span> <span class="k">as</span> <span class="n">tar</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="n">tar</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">member</span><span class="o">.</span><span class="n">isfile</span><span class="p">():</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">tar</span><span class="o">.</span><span class="n">extractfile</span><span class="p">(</span><span class="n">member</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+
+            <span class="c"># Extract DOI and title from DataCite XML</span>
+            <span class="n">resource</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">'.//datacite:resource'</span><span class="p">,</span> <span class="n">namespaces</span><span class="p">)</span>
+            <span class="n">doi</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">'datacite:identifier'</span><span class="p">,</span> <span class="n">namespaces</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">'datacite:titles/datacite:title'</span><span class="p">,</span> <span class="n">namespaces</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+
+            <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">"{member.name}: {doi} - {title}"</span><span class="p">)</span>
+
+<span class="c"># Outputs:</span>
+<span class="c"># 12345.xml: 10.5281/zenodo.12345 - Dataset for XYZ</span>
+<span class="c"># ...</span>
+</code></pre><pre class="highlight shell"><code><span class="c"># List files without extracting</span>
+curl -s https://zenodo.org/api/exporter/records-xml.tar.gz | tar -tzf - | head -10
+
+<span class="c"># Outputs:</span>
+<span class="c"># 12345.xml</span>
+<span class="c"># 12346.xml</span>
+<span class="c"># ...</span>
+</code></pre>
+<p>For large dumps, use streaming to avoid loading the entire file into memory.
+This example shows how to download and process a metadata dump by streaming the <code class="prettyprint">tar.gz</code> archive and extracting individual record files on-the-fly.</p>
+
             <h1 id="github">GitHub</h1>
 
 <h2 id="add-metadata-to-your-github-repository-release">Add metadata to your GitHub repository release</h2>
