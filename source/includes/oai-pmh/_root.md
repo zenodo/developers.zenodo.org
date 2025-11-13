@@ -46,7 +46,7 @@ info.earliestDatestamp
 
 ## Resumption tokens
 
-Resumption tokens are only valid for **2 minutes**. In case a token expired, you will receive a ``422 Unprocessable Entity`` HTTP error.
+The OAI-PMH API returns **50 records per page**. Resumption tokens are only valid for **2 minutes**. In case a token expired, you will receive a ``422 Unprocessable Entity`` HTTP error.
 
 <aside class="notice">
   This means that you must execute the next HTTP request using the

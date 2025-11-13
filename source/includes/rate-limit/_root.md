@@ -7,7 +7,8 @@ To achieve this, we have rate-limiting measures in place which limit the number 
 |:------------------|:------------------------------------------------------------------------------|
 | Global limit for guest users | 60 requests per minute, 2000 requests per hour |
 | Global limit for [authenticated users](#authentication) | 100 requests per minute, 5000 requests per hour |
-| OAI-PMH API harvesting | 120 requests per minute |
+| Search REST API endpoints | 30 requests per minute |
+| OAI-PMH API harvesting | 30 requests per minute |
 | Thumbnails for image records  | 20 requests per minute |
 
 When you are making requests to any of our endpoints, you can inspect the following HTTP response headers for more information of your current rate-limit status:

@@ -26,7 +26,7 @@ curl -i -H "Authorization: Bearer ACCESS_TOKEN" /api/records/
 | `status`</br>_string_       | optional | Filter result based on the deposit status (either ``draft`` or ``published``)                                                  |
 | `sort`</br>_string_         | optional | Sort order (``bestmatch`` or ``mostrecent``). Prefix with minus to change form ascending to descending (e.g. ``-mostrecent``). |
 | `page`</br>_integer_        | optional | Page number for pagination.                                                                                                    |
-| `size`</br>_integer_        | optional | Number of results to return per page.                                                                                          |
+| `size`</br>_integer_        | optional | Number of results to return per page. Maximum 25 for anonymous requests, 100 for authenticated requests.                       |
 | `all_versions`</br>_integer/string_ | optional | Show (`true` or `1`) or hide (`false` or `0`) all versions of records. |
 | `communities`</br> _string_ | optional | Return records that are part of the specified communities. (Use of `community identifier`)                                     |
 | `type`</br> _string_        | optional | Return records of the specified type. (`Publication`, `Poster`, `Presentation`...)                                             |
@@ -61,3 +61,7 @@ See [HTTP status codes](#http-status-codes) (400 and 500 series errors) and
 #### Search guide
 
 Advanced search queries can as well be performed on Zenodo website through the search box. This is documented in the [search guide](https://help.zenodo.org/guides/search/)
+
+<aside class="notice">
+  <strong>For bulk data access:</strong> If you need to download or process large numbers of records, we recommend using <a href="#oai-pmh">OAI-PMH harvesting</a> or <a href="#metadata-dumps">metadata dumps</a> instead of the search API. These methods are specifically designed for bulk access and will be more efficient for your use case.
+</aside>
