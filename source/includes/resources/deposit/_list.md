@@ -26,7 +26,7 @@ curl -i -H "Authorization: Bearer ACCESS_TOKEN" /api/deposit/depositions/
 | `status`</br>_string_ | optional | Filter result based on deposit status (either ``draft`` or ``published``) |
 | `sort`</br>_string_ | optional | Sort order (``bestmatch`` or ``mostrecent``). Prefix with minus to change form ascending to descending (e.g. ``-mostrecent``). |
 | `page`</br>_integer_ | optional | Page number for pagination. |
-| `size`</br>_integer_ | optional | Number of results to return per page. |
+| `size`</br>_integer_ | optional | Number of results to return per page. Maximum 100. |
 | `all_versions`</br>_integer/string_ | optional | Show (`true` or `1`) or hide (`false` or `0`) all versions of deposits. |
 
 #### Success Response
