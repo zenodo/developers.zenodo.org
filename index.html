@@ -1106,7 +1106,7 @@ the error).</p>
 <tr>
 <td style="text-align: left"><code class="prettyprint">size</code></br><em>integer</em></td>
 <td style="text-align: left">optional</td>
-<td style="text-align: left">Number of results to return per page.</td>
+<td style="text-align: left">Number of results to return per page. Maximum 100.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">all_versions</code></br><em>integer/string</em></td>
@@ -1743,7 +1743,7 @@ The new version deposition can be accessed through the <code class="prettyprint"
 <tr>
 <td style="text-align: left"><code class="prettyprint">size</code></br><em>integer</em></td>
 <td style="text-align: left">optional</td>
-<td style="text-align: left">Number of results to return per page.</td>
+<td style="text-align: left">Number of results to return per page. Maximum 25 for anonymous requests, 100 for authenticated requests.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">all_versions</code></br><em>integer/string</em></td>
@@ -1828,6 +1828,10 @@ The new version deposition can be accessed through the <code class="prettyprint"
 <h4 id="search-guide">Search guide</h4>
 
 <p>Advanced search queries can as well be performed on Zenodo website through the search box. This is documented in the <a href="https://help.zenodo.org/guides/search/">search guide</a></p>
+
+<aside class="notice">
+  <strong>For bulk data access:</strong> If you need to download or process large numbers of records, we recommend using <a href="#oai-pmh">OAI-PMH harvesting</a> or <a href="#metadata-dumps">metadata dumps</a> instead of the search API. These methods are specifically designed for bulk access and will be more efficient for your use case.
+</aside>
 
             <h3 id="retrieve">Retrieve</h3>
 
@@ -2108,7 +2112,7 @@ not available for download.</p>
 </code></pre>
 <h2 id="resumption-tokens">Resumption tokens</h2>
 
-<p>Resumption tokens are only valid for <strong>2 minutes</strong>. In case a token expired, you will receive a <code class="prettyprint">422 Unprocessable Entity</code> HTTP error.</p>
+<p>The OAI-PMH API returns <strong>50 records per page</strong>. Resumption tokens are only valid for <strong>2 minutes</strong>. In case a token expired, you will receive a <code class="prettyprint">422 Unprocessable Entity</code> HTTP error.</p>
 
 <aside class="notice">
   This means that you must execute the next HTTP request using the
@@ -2586,8 +2590,12 @@ To achieve this, we have rate-limiting measures in place which limit the number 
 <td style="text-align: left">100 requests per minute, 5000 requests per hour</td>
 </tr>
 <tr>
+<td style="text-align: left">Search REST API endpoints</td>
+<td style="text-align: left">30 requests per minute</td>
+</tr>
+<tr>
 <td style="text-align: left">OAI-PMH API harvesting</td>
-<td style="text-align: left">120 requests per minute</td>
+<td style="text-align: left">30 requests per minute</td>
 </tr>
 <tr>
 <td style="text-align: left">Thumbnails for image records</td>
