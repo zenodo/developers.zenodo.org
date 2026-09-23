@@ -4,14 +4,18 @@ List all depositions for the currently authenticated user.
 
 ```python
 import requests
+headers = {'Authorization': f'Bearer {ACCESS_TOKEN}',
+           'User-Agent': 'MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)'}
 response = requests.get('/api/deposit/depositions',
                         params={'q': 'my title'},
-                        headers={'Authorization': f'Bearer {ACCESS_TOKEN}'})
+                        headers=headers)
 print(response.json())
 ```
 
 ```shell
-curl -i -H "Authorization: Bearer ACCESS_TOKEN" /api/deposit/depositions/
+curl -i -H "Authorization: Bearer ACCESS_TOKEN" \
+  -H "User-Agent: MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)" \
+  /api/deposit/depositions/
 ```
 
 #### HTTP Request

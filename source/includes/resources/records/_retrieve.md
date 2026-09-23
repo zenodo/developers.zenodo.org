@@ -3,12 +3,14 @@
 Retrieve a single record.
 
 ```shell
-curl -i https://zenodo.org/api/records/1234
+curl -i -H "User-Agent: MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)" \
+  https://zenodo.org/api/records/1234
 ```
 
 ```python
 import requests
-r = requests.get("https://zenodo.org/api/records/1234)
+headers = {'User-Agent': 'MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)'}
+r = requests.get("https://zenodo.org/api/records/1234", headers=headers)
 ```
 
 #### HTTP Request

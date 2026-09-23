@@ -4,13 +4,17 @@ Delete an existing deposition file resource. Note, only deposition files for
 unpublished depositions may be deleted.
 
 ```shell
-curl -i -H "Authorization: Bearer ACCESS_TOKEN" -X DELETE https://zenodo.org/api/deposit/depositions/1234/files/21fedcba-9876-5432-1fed-cba987654321
+curl -i -X DELETE -H "Authorization: Bearer ACCESS_TOKEN" \
+  -H "User-Agent: MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)" \
+  https://zenodo.org/api/deposit/depositions/1234/files/21fedcba-9876-5432-1fed-cba987654321
 ```
 
 ```python
 import requests
+headers = {'Authorization': f'Bearer {ACCESS_TOKEN}',
+           'User-Agent': 'MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)'}
 r = requests.delete('https://zenodo.org/api/deposit/depositions/1234/files/21fedcba-9876-5432-1fed-cba987654321',
-                    headers={'Authorization': f'Bearer {ACCESS_TOKEN}'})
+                    headers=headers)
 ```
 
 #### HTTP Request

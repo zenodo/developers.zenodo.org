@@ -3,13 +3,17 @@
 Unlock already submitted deposition for editing.
 
 ```shell
-curl -i -H "Authorization: Bearer ACCESS_TOKEN" -X POST https://zenodo.org/api/deposit/depositions/1234/actions/edit
+curl -i -X POST -H "Authorization: Bearer ACCESS_TOKEN" \
+  -H "User-Agent: MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)" \
+  https://zenodo.org/api/deposit/depositions/1234/actions/edit
 ```
 
 ```python
 import requests
+headers = {'Authorization': f'Bearer {ACCESS_TOKEN}',
+           'User-Agent': 'MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)'}
 r = requests.post('https://zenodo.org/api/deposit/depositions/1234/actions/edit',
-                  headers={'Authorization': f'Bearer {ACCESS_TOKEN}'})
+                  headers=headers)
 ```
 
 #### HTTP Request

@@ -4,11 +4,13 @@ Retrieve a single license resource.
 
 ```python
 import requests
-r = requests.get("/api/licenses/cc-by-nc-4.0")
+headers = {'User-Agent': 'MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)'}
+r = requests.get("/api/licenses/cc-by-nc-4.0", headers=headers)
 ```
 
 ```shell
-curl /api/licenses/cc-by-nc-4.0
+curl -H "User-Agent: MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)" \
+  /api/licenses/cc-by-nc-4.0
 ```
 
 #### HTTP Request

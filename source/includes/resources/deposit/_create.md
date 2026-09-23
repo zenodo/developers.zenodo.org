@@ -3,12 +3,14 @@
 Create a new deposition resource.
 
 ```shell
-curl -i -H "Content-Type: application/json" -H "Authorization: Bearer ACCESS_TOKEN" -X POST
+curl -i -H "Content-Type: application/json" -H "Authorization: Bearer ACCESS_TOKEN" \
+     -H "User-Agent: MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)" -X POST
      --data '{}' /api/deposit/depositions/
 
 # or
 
-curl -i -H "Content-Type: application/json" -H "Authorization: Bearer ACCESS_TOKEN" -X POST
+curl -i -H "Content-Type: application/json" -H "Authorization: Bearer ACCESS_TOKEN" \
+     -H "User-Agent: MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)" -X POST
      --data '{"metadata": {"title": "My first upload", "upload_type": "poster", "description": "This is my first upload", "creators": [{"name": "Doe, John", "affiliation": "Zenodo"}]}}' /api/deposit/depositions/
 ```
 
@@ -17,7 +19,8 @@ import json
 import requests
 
 url = "/api/deposit/depositions/"
-headers = {"Content-Type": "application/json", "Authorization": f"Bearer {ACCESS_TOKEN}"}
+headers = {"Content-Type": "application/json", "Authorization": f"Bearer {ACCESS_TOKEN}",
+           "User-Agent": "MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)"}
 r = requests.post(url, data="{}", headers=headers)
 ```
 

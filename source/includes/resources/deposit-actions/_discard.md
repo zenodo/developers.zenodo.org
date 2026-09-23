@@ -4,12 +4,14 @@ Discard changes in the current editing session.
 
 ```shell
 curl -i -X POST -H "Authorization: Bearer ACCESS_TOKEN" \
+  -H "User-Agent: MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)" \
   https://zenodo.org/api/deposit/depositions/1234/actions/discard
 ```
 
 ```python
 import requests
-headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
+headers = {'Authorization': f'Bearer {ACCESS_TOKEN}',
+           'User-Agent': 'MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)'}
 r = requests.post('https://zenodo.org/api/deposit/depositions/1234/actions/discard',
                   headers=headers)
 ```

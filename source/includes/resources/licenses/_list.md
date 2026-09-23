@@ -4,12 +4,14 @@ Search through licenses.
 
 ```python
 import requests
-response = requests.get('/api/licenses/')
+headers = {'User-Agent': 'MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)'}
+response = requests.get('/api/licenses/', headers=headers)
 print(response.json())
 ```
 
 ```shell
-curl /api/licenses/
+curl -H "User-Agent: MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)" \
+  /api/licenses/
 ```
 
 #### HTTP Request
