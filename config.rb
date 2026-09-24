@@ -18,7 +18,14 @@ set :fonts_dir, 'fonts'
 # Activate the syntax highlighter
 activate :syntax
 
-activate :sprockets
+activate :sprockets do |s|
+  # CSS is handled by Middleman's own Sass/SassC renderer; only JS needs
+  # Sprockets (for `//= require`). Scoping this avoids a bug in
+  # middleman-sprockets where it looks up assets by their *source* filename
+  # (e.g. "screen.css.scss"), which Sprockets 4.x returns unprocessed instead
+  # of transforming to CSS.
+  s.supported_output_extensions = ['.js']
+end
 
 activate :autoprefixer do |config|
   config.browsers = ['last 2 version', 'Firefox ESR']

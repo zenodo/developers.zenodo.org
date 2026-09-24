@@ -1,4 +1,4 @@
-FROM ruby:2.6.10-alpine
+FROM ruby:3.3.6-alpine
 
 WORKDIR /usr/src/app
 
@@ -9,7 +9,7 @@ RUN apk add --no-cache nodejs npm build-base
 COPY . .
 
 # Install bundler and gems
-RUN gem install bundler:1.17.2 && \
+RUN gem install bundler && \
     BUNDLE_FORCE_RUBY_PLATFORM=true bundle install
 
 VOLUME /usr/src/app/source

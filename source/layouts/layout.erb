@@ -38,7 +38,7 @@ under the License.
   <body class="<%= page_classes %>" data-languages="<%=h language_tabs.map{ |lang| lang.is_a?(Hash) ? lang.keys.first : lang }.to_json %>">
     <div class="header">
       <a class="logo-container" href="https://zenodo.org">
-        <%= image_tag('zenodo.svg') %>
+        <%= image_tag('zenodo.svg', alt: 'Zenodo') %>
       </a>
       <span class="logo-divider"></span>
       <a href="http://developers.zenodo.org"><div class="header-title">Developers</div></a>
@@ -53,7 +53,7 @@ under the License.
     <a href="#" id="nav-button">
       <span>
         NAV
-        <%= image_tag('navbar.png') %>
+        <%= image_tag('navbar.png', alt: 'Navbar') %>
       </span>
     </a>
     <div class="tocify-wrapper">
