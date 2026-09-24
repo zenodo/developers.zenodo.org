@@ -10,7 +10,7 @@ Zenodo, and will be using either:
 # Install 'requests' module for python
 pip install requests
 
-# Install 'axios' module for nodejs 
+# Install 'axios' module for nodejs
 npm install axios
 ```
 
@@ -51,7 +51,9 @@ const axios = require('axios');
 
 ```python
 import requests
-r = requests.get("https://zenodo.org/api/deposit/depositions")
+USER_AGENT = 'MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)'
+r = requests.get("https://zenodo.org/api/deposit/depositions",
+                  headers={'User-Agent': USER_AGENT})
 r.status_code
 # 401
 r.json()
@@ -60,7 +62,14 @@ r.json()
 ```javascript
 const axios = require('axios');
 
-axios.get("https://zenodo.org/api/deposit/depositions").then(response => {
+const USER_AGENT = 'MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)';
+
+const requestConfig = {
+  headers: {
+    'User-Agent': USER_AGENT
+  }
+}
+axios.get("https://zenodo.org/api/deposit/depositions", requestConfig).then(response => {
   console.log(response);
 }).catch(error => {
   console.log(error.response.data);
@@ -77,7 +86,9 @@ axios.get("https://zenodo.org/api/deposit/depositions").then(response => {
 }
 ```
 
-- We will try to access the API without an authentication token:
+- We will try to access the API without an authentication token. Note we're
+already sending a `User-Agent` header identifying our client, which we
+recommend doing on every request (see [Rate Limiting and User-Agent](#rate-limiting-and-user-agent)):
 
 <div class="align-columns"></div>
 
@@ -88,7 +99,10 @@ axios.get("https://zenodo.org/api/deposit/depositions").then(response => {
 
 ```python
 ACCESS_TOKEN = 'ChangeMe'
-headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
+headers = {
+    'Authorization': f'Bearer {ACCESS_TOKEN}',
+    'User-Agent': USER_AGENT
+}
 r = requests.get('https://zenodo.org/api/deposit/depositions',
                   headers=headers)
 r.status_code
@@ -102,13 +116,14 @@ const ACCESS_TOKEN = 'ChangeMe'
 
 const requestConfig = {
   headers: {
-    'Authorization': `Bearer ${ACCESS_TOKEN}`
+    'Authorization': `Bearer ${ACCESS_TOKEN}`,
+    'User-Agent': USER_AGENT
   }
 }
 axios.get("https://zenodo.org/api/deposit/depositions", requestConfig).then(response => {
   console.log(response.status);
   // > 200
-  console.log(response.data);  
+  console.log(response.data);
   // > []
 }).catch(error => {
   console.log(error.response.data);
@@ -127,7 +142,8 @@ access token):
 ```python
 headers = {
     "Content-Type": "application/json",
-    "Authorization": f"Bearer {ACCESS_TOKEN}"
+    "Authorization": f"Bearer {ACCESS_TOKEN}",
+    "User-Agent": USER_AGENT
 }
 r = requests.post('https://sandbox.zenodo.org/api/deposit/depositions',
                    json={},
@@ -141,14 +157,15 @@ r.json()
 const requestConfig = {
   headers: {
     "Content-Type": "application/json",
-    "Authorization": `Bearer ${ACCESS_TOKEN}`
+    "Authorization": `Bearer ${ACCESS_TOKEN}`,
+    "User-Agent": USER_AGENT
   }
 }
 
 axios.post("https://zenodo.org/api/deposit/depositions", {}, requestConfig).then(response => {
   console.log(response.status);
   // 201
-  console.log(response.data);  
+  console.log(response.data);
 }).catch(error => {
   console.log(error.response.data);
 });
@@ -201,6 +218,7 @@ bucket_url = r.json()["links"]["bucket"]
 
 ```shell
 curl -H "Authorization: Bearer $ACCESS_TOKEN" \
+  -H "User-Agent: MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)" \
   https://zenodo.org/api/deposit/depositions/222761
 { ...
   "links": {
@@ -213,13 +231,14 @@ curl -H "Authorization: Bearer $ACCESS_TOKEN" \
 - To use the **new files API** we will do a PUT request to the `bucket` link. The bucket is a folder-like object storing the files of our record. Our bucket URL will look like this: `https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b` and can be found under the `links` key in our records metadata.
 
 ```shell
-''' 
+'''
 This will stream the file located in '/path/to/your/file.dat' and store it in our bucket.
 The uploaded file will be named according to the last argument in the upload URL,
-'file.dat' in our case. 
+'file.dat' in our case.
 '''
 $ curl --upload-file /path/to/your/file.dat \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
+  -H "User-Agent: MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)" \
   https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b/file.dat
 { ... }
 ```
@@ -228,9 +247,12 @@ $ curl --upload-file /path/to/your/file.dat \
 ''' New API '''
 filename = "my-file.zip"
 path = "/path/to/%s" % filename
-headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
+headers = {
+    'Authorization': f'Bearer {ACCESS_TOKEN}',
+    'User-Agent': USER_AGENT
+}
 
-''' 
+'''
 The target URL is a combination of the bucket link with the desired filename
 seperated by a slash.
 '''
@@ -264,7 +286,8 @@ let url = `${bucketURL}/${fileName}`;
 
 let headers = {
     'Content-type': 'application/zip',
-    'Authorization': `Bearer ${token}`
+    'Authorization': `Bearer ${token}`,
+    'User-Agent': USER_AGENT
 }
 
 const requestConfig = {
@@ -311,7 +334,10 @@ Get the deposition id from the previous response
 deposition_id = r.json()['id']
 data = {'name': 'myfirstfile.csv'}
 files = {'file': open('/path/to/myfirstfile.csv', 'rb')}
-headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
+headers = {
+    'Authorization': f'Bearer {ACCESS_TOKEN}',
+    'User-Agent': USER_AGENT
+}
 r = requests.post('https://zenodo.org/api/deposit/depositions/%s/files' % deposition_id,
                    headers=headers, data=data,
                    files=files)
@@ -349,7 +375,8 @@ data = {
  }
 headers = {
     'Content-Type': 'application/json',
-    'Authorization': f'Bearer {ACCESS_TOKEN}'
+    'Authorization': f'Bearer {ACCESS_TOKEN}',
+    'User-Agent': USER_AGENT
 }
 r = requests.put('https://zenodo.org/api/deposit/depositions/%s' % deposition_id,
                   data=json.dumps(data),
@@ -367,7 +394,10 @@ r.status_code
 <div class="align-columns"></div>
 
 ```python
-headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
+headers = {
+    'Authorization': f'Bearer {ACCESS_TOKEN}',
+    'User-Agent': USER_AGENT
+}
 r = requests.post('https://zenodo.org/api/deposit/depositions/%s/actions/publish' % deposition_id,
                       headers=headers)
 r.status_code

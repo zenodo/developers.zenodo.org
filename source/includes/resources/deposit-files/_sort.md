@@ -6,6 +6,7 @@ preview.
 ```shell
 curl -i -H "Authorization: Bearer ACCESS_TOKEN" https://zenodo.org/api/deposit/depositions/1234/files -X PUT
      -H "Content-Type: application/json"
+     -H "User-Agent: MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)"
      --data '[{"id":"21fedcba-9876-5432-1fed-cba987654321"}, {"id":"12345678-9abc-def1-2345-6789abcdef12"}]'
 ```
 
@@ -14,7 +15,8 @@ import json
 import requests
 
 url = 'https://zenodo.org/api/deposit/depositions/1234/files'
-headers = {"Content-Type": "application/json", "Authorization": f"Bearer {ACCESS_TOKEN}"}
+headers = {"Content-Type": "application/json", "Authorization": f"Bearer {ACCESS_TOKEN}",
+           "User-Agent": "MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)"}
 data = [{'id': '21fedcba-9876-5432-1fed-cba987654321'},
         {'id': '12345678-9abc-def1-2345-6789abcdef12'}]
 r = requests.put(url, data=json.dumps(data), headers=headers)

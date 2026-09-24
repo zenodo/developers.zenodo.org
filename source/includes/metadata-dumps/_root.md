@@ -12,11 +12,13 @@ List all available metadata dumps with their version history.
 
 ```python
 import requests
-resp = requests.get('https://zenodo.org/api/exporter')
+headers = {'User-Agent': 'MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)'}
+resp = requests.get('https://zenodo.org/api/exporter', headers=headers)
 ```
 
 ```shell
-curl https://zenodo.org/api/exporter
+curl -H "User-Agent: MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)" \
+  https://zenodo.org/api/exporter
 ```
 
 ```json
@@ -80,19 +82,23 @@ Download the latest version of a specific metadata dump.
 ```python
 import requests
 
+headers = {'User-Agent': 'MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)'}
+
 # Download latest version
-resp = requests.get('https://zenodo.org/api/exporter/records-xml.tar.gz')
+resp = requests.get('https://zenodo.org/api/exporter/records-xml.tar.gz', headers=headers)
 
 # Download specific version
-resp = requests.get('https://zenodo.org/api/exporter/records-xml.tar.gz/a1b2c3d4-e5f6-7890-abcd-ef1234567890')
+resp = requests.get('https://zenodo.org/api/exporter/records-xml.tar.gz/a1b2c3d4-e5f6-7890-abcd-ef1234567890', headers=headers)
 ```
 
 ```shell
 # Download latest version
-curl -O https://zenodo.org/api/exporter/records-xml.tar.gz
+curl -O -H "User-Agent: MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)" \
+  https://zenodo.org/api/exporter/records-xml.tar.gz
 
 # Download specific version
-curl -O https://zenodo.org/api/exporter/records-xml.tar.gz/a1b2c3d4-e5f6-7890-abcd-ef1234567890
+curl -O -H "User-Agent: MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)" \
+  https://zenodo.org/api/exporter/records-xml.tar.gz/a1b2c3d4-e5f6-7890-abcd-ef1234567890
 ```
 
 #### HTTP Request
@@ -142,7 +148,8 @@ import itertools
 import xml.etree.ElementTree as ET
 
 url = "https://zenodo.org/api/exporter/records-xml.tar.gz"
-resp = requests.get(url, stream=True)
+headers = {'User-Agent': 'MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)'}
+resp = requests.get(url, headers=headers, stream=True)
 resp.raw.decode_content = True
 
 namespaces = {
@@ -170,7 +177,8 @@ with tarfile.open(fileobj=resp.raw, mode="r|gz") as tar:
 
 ```shell
 # List files without extracting
-curl -s https://zenodo.org/api/exporter/records-xml.tar.gz | tar -tzf - | head -10
+curl -s -H "User-Agent: MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)" \
+  https://zenodo.org/api/exporter/records-xml.tar.gz | tar -tzf - | head -10
 
 # Outputs:
 # 12345.xml

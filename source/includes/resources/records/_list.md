@@ -4,14 +4,18 @@ List all open access records.
 
 ```python
 import requests
+headers = {'Authorization': f'Bearer {ACCESS_TOKEN}',
+           'User-Agent': 'MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)'}
 response = requests.get('https://zenodo.org/api/records',
                         params={'q': 'my title'},
-                        headers={'Authorization': f'Bearer {ACCESS_TOKEN}'})
+                        headers=headers)
 print(response.json())
 ```
 
 ```shell
-curl -i -H "Authorization: Bearer ACCESS_TOKEN" /api/records/
+curl -i -H "Authorization: Bearer ACCESS_TOKEN" \
+  -H "User-Agent: MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)" \
+  /api/records/
 ```
 
 #### HTTP Request

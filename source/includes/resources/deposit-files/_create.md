@@ -3,7 +3,9 @@
 Upload a new file.
 
 ```shell
-curl -i -H "Authorization: Bearer ACCESS_TOKEN" https://zenodo.org/api/deposit/depositions/1234/files
+curl -i -H "Authorization: Bearer ACCESS_TOKEN" \
+     -H "User-Agent: MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)" \
+     https://zenodo.org/api/deposit/depositions/1234/files
      -F name=myfirstfile.csv
      -F file=@path/to/local_file.csv
 
@@ -14,7 +16,8 @@ import json
 import requests
 
 url = 'https://zenodo.org/api/deposit/depositions/1234/files'
-headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
+headers = {'Authorization': f'Bearer {ACCESS_TOKEN}',
+           'User-Agent': 'MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)'}
 data = {'name': 'myfirstfile.csv'}
 files = {'file': open('path/to/local_file.csv', 'rb')}
 r = requests.post(url, data=data, files=files, headers=headers)

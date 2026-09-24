@@ -27,7 +27,8 @@ pip install Sickle
 ```python
 '''Import Sickle and initialize the client by passing the base URL'''
 from sickle import Sickle
-sickle = Sickle('https://zenodo.org/oai2d')
+sickle = Sickle('https://zenodo.org/oai2d',
+                 headers={'User-Agent': 'MyTooName/1.0 (+https://changeme.com; ChangeMe@changeme.com)'})
 ```
 
 ## Get information about the OAI-PMH API
@@ -115,7 +116,7 @@ Dublin Core — only minimal metadata is included in this format. The format is 
 
 **`dcat`**
 
-DCAT — export format based on the [DCAT Application Profile for data portals in Europe (DCAT-AP)](https://joinup.ec.europa.eu/collection/semic-support-centre/solution/dcat-application-profile-data-portals-europe). 
+DCAT — export format based on the [DCAT Application Profile for data portals in Europe (DCAT-AP)](https://joinup.ec.europa.eu/collection/semic-support-centre/solution/dcat-application-profile-data-portals-europe).
 The format is produced from the DataCite export format using the [DataCite-to-DCAT-AP XSLT](https://github.com/ec-jrc/datacite-to-dcat-ap).
 This is the only OAI-PMH metadata format that currently exposes direct links to each record's files content, via the [`dcat:Distribution` elements](https://www.w3.org/TR/vocab-dcat-3/#Class:Distribution).
 
