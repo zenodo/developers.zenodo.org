@@ -6,6 +6,10 @@ Zenodo, and will be using either:
 1. Python together with the [Requests](http://www.python-requests.org/en/latest/user/install/) package.
 2. Javascript together with the [axios](https://github.com/axios/axios) package.
 
+The examples below use the [Zenodo Sandbox](https://sandbox.zenodo.org) for test uploads.
+Create a Sandbox account and access token; Sandbox and production accounts and tokens are separate (see [Testing](#testing)).
+When adapting these examples for production, use production endpoints and a production token consistently.
+
 ```terminal
 # Install 'requests' module for python
 pip install requests
@@ -51,7 +55,7 @@ const axios = require('axios');
 
 ```python
 import requests
-r = requests.get("https://zenodo.org/api/deposit/depositions")
+r = requests.get("https://sandbox.zenodo.org/api/deposit/depositions")
 r.status_code
 # 401
 r.json()
@@ -60,7 +64,7 @@ r.json()
 ```javascript
 const axios = require('axios');
 
-axios.get("https://zenodo.org/api/deposit/depositions").then(response => {
+axios.get("https://sandbox.zenodo.org/api/deposit/depositions").then(response => {
   console.log(response);
 }).catch(error => {
   console.log(error.response.data);
@@ -82,14 +86,14 @@ axios.get("https://zenodo.org/api/deposit/depositions").then(response => {
 <div class="align-columns"></div>
 
 - All API access requires an access token, so
-[create](https://zenodo.org/account/settings/applications/tokens/new/) one.
+[create](https://sandbox.zenodo.org/account/settings/applications/tokens/new/) one.
 
 <div class="align-columns"></div>
 
 ```python
 ACCESS_TOKEN = 'ChangeMe'
 headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
-r = requests.get('https://zenodo.org/api/deposit/depositions',
+r = requests.get('https://sandbox.zenodo.org/api/deposit/depositions',
                   headers=headers)
 r.status_code
 # 200
@@ -105,7 +109,7 @@ const requestConfig = {
     'Authorization': `Bearer ${ACCESS_TOKEN}`
   }
 }
-axios.get("https://zenodo.org/api/deposit/depositions", requestConfig).then(response => {
+axios.get("https://sandbox.zenodo.org/api/deposit/depositions", requestConfig).then(response => {
   console.log(response.status);
   // > 200
   console.log(response.data);  
@@ -145,7 +149,7 @@ const requestConfig = {
   }
 }
 
-axios.post("https://zenodo.org/api/deposit/depositions", {}, requestConfig).then(response => {
+axios.post("https://sandbox.zenodo.org/api/deposit/depositions", {}, requestConfig).then(response => {
   console.log(response.status);
   // 201
   console.log(response.data);  
@@ -162,15 +166,15 @@ axios.post("https://zenodo.org/api/deposit/depositions", {}, requestConfig).then
     "files": [],
     "id": 542201,
     "links": {
-        "bucket": "https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b",
-        "discard": "https://zenodo.org/api/deposit/depositions/542201/actions/discard",
-        "edit": "https://zenodo.org/api/deposit/depositions/542201/actions/edit",
-        "files": "https://zenodo.org/api/deposit/depositions/542201/files",
-        "html": "https://zenodo.org/deposit/542201",
-        "latest_draft": "https://zenodo.org/api/deposit/depositions/542201",
-        "latest_draft_html": "https://zenodo.org/deposit/542201",
-        "publish": "https://zenodo.org/api/deposit/depositions/542201/actions/publish",
-        "self": "https://zenodo.org/api/deposit/depositions/542201"
+        "bucket": "https://sandbox.zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b",
+        "discard": "https://sandbox.zenodo.org/api/deposit/depositions/542201/actions/discard",
+        "edit": "https://sandbox.zenodo.org/api/deposit/depositions/542201/actions/edit",
+        "files": "https://sandbox.zenodo.org/api/deposit/depositions/542201/files",
+        "html": "https://sandbox.zenodo.org/deposit/542201",
+        "latest_draft": "https://sandbox.zenodo.org/api/deposit/depositions/542201",
+        "latest_draft_html": "https://sandbox.zenodo.org/deposit/542201",
+        "publish": "https://sandbox.zenodo.org/api/deposit/depositions/542201/actions/publish",
+        "self": "https://sandbox.zenodo.org/api/deposit/depositions/542201"
     },
     "metadata": {
         "prereserve_doi": {
@@ -201,16 +205,16 @@ bucket_url = r.json()["links"]["bucket"]
 
 ```shell
 curl -H "Authorization: Bearer $ACCESS_TOKEN" \
-  https://zenodo.org/api/deposit/depositions/222761
+  https://sandbox.zenodo.org/api/deposit/depositions/222761
 { ...
   "links": {
-    "bucket": "https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b",
+    "bucket": "https://sandbox.zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b",
     ...,
   },
 ... }
 ```
 
-- To use the **new files API** we will do a PUT request to the `bucket` link. The bucket is a folder-like object storing the files of our record. Our bucket URL will look like this: `https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b` and can be found under the `links` key in our records metadata.
+- To use the **new files API** we will do a PUT request to the `bucket` link. The bucket is a folder-like object storing the files of our record. Our bucket URL will look like this: `https://sandbox.zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b` and can be found under the `links` key in our records metadata.
 
 ```shell
 ''' 
@@ -220,7 +224,7 @@ The uploaded file will be named according to the last argument in the upload URL
 '''
 $ curl --upload-file /path/to/your/file.dat \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
-  https://zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b/file.dat
+  https://sandbox.zenodo.org/api/files/568377dd-daf8-4235-85e1-a56011ad454b/file.dat
 { ... }
 ```
 
@@ -292,9 +296,9 @@ axios.put(url, requestConfig).then(response => {
   "created": "2020-02-26T14:20:53.805734+00:00",
   "updated": "2020-02-26T14:20:53.811817+00:00",
   "links": {
-    "self": "https://zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf",
-    "version": "https://zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf?versionId=38a724d3-40f1-4b27-b236-ed2e43200f85",
-    "uploads": "https://zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf?uploads"
+    "self": "https://sandbox.zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf",
+    "version": "https://sandbox.zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf?versionId=38a724d3-40f1-4b27-b236-ed2e43200f85",
+    "uploads": "https://sandbox.zenodo.org/api/files/44cc40bc-50fd-4107-b347-00838c79f4c1/dummy_example.pdf?uploads"
   },
   "is_head": true,
   "delete_marker": false
@@ -312,7 +316,7 @@ deposition_id = r.json()['id']
 data = {'name': 'myfirstfile.csv'}
 files = {'file': open('/path/to/myfirstfile.csv', 'rb')}
 headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
-r = requests.post('https://zenodo.org/api/deposit/depositions/%s/files' % deposition_id,
+r = requests.post('https://sandbox.zenodo.org/api/deposit/depositions/%s/files' % deposition_id,
                    headers=headers, data=data,
                    files=files)
 r.status_code
@@ -351,7 +355,7 @@ headers = {
     'Content-Type': 'application/json',
     'Authorization': f'Bearer {ACCESS_TOKEN}'
 }
-r = requests.put('https://zenodo.org/api/deposit/depositions/%s' % deposition_id,
+r = requests.put('https://sandbox.zenodo.org/api/deposit/depositions/%s' % deposition_id,
                   data=json.dumps(data),
                   headers=headers)
 r.status_code
@@ -368,7 +372,7 @@ r.status_code
 
 ```python
 headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
-r = requests.post('https://zenodo.org/api/deposit/depositions/%s/actions/publish' % deposition_id,
+r = requests.post('https://sandbox.zenodo.org/api/deposit/depositions/%s/actions/publish' % deposition_id,
                       headers=headers)
 r.status_code
 # 202
